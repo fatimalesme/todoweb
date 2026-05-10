@@ -23,6 +23,8 @@ document.addEventListener('DOMContentLoaded', function() {
 		data: data,
 		options: {
 			responsive: true,
+			maintainAspectRatio: false,
+			aspectRatio: 1.2,
 			plugins: {
 				legend: {
 					position: 'bottom',
@@ -34,4 +36,7 @@ document.addEventListener('DOMContentLoaded', function() {
 			}
 		}
 	});
+	// Ajustar altura del canvas para asegurar tamaño correcto
+	ctx.parentElement.style.height = '300px';
+	ctx.style.height = '100%';
 });

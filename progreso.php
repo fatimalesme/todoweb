@@ -22,7 +22,9 @@ $csrf = generarTokenCSRF();
 </head>
 <body>
         <h1>Progreso</h1>
-        <canvas id="grafica-progreso" width="400" height="200"></canvas>
+        <div style="max-width:350px;margin:0 auto 20px auto;padding:10px;box-sizing:border-box;">
+            <canvas id="grafica-progreso"></canvas>
+        </div>
         <br>
         <h2 style="margin-top:30px;">Historial de tareas</h2>
         <table style="width:100%;max-width:600px;margin:20px 0;border-collapse:collapse;">
