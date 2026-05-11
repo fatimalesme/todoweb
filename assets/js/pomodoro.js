@@ -2,6 +2,47 @@
 // Se activa cuando existe el elemento #pomodoro-display en la pagina
 
 document.addEventListener('DOMContentLoaded', () => {
+    const btnStop   = document.getElementById('btn-stop');
+
+    // --- Pomodoro y tareas ---
+    const tareaSelect = document.getElementById('pomodoro-tarea-select');
+    const tareaTiempoDiv = document.getElementById('pomodoro-tarea-tiempo');
+    let tareaIdActual = null;
+
+    function formatearTiempoTotal(seg) {
+        const h = Math.floor(seg / 3600);
+        const m = Math.floor((seg % 3600) / 60);
+        const s = seg % 60;
+        return `${h > 0 ? h + 'h ' : ''}${m}m ${s}s`;
+    }
+
+    function mostrarTiempoTarea(tareaId) {
+        if (!tareaId) {
+            tareaTiempoDiv.textContent = '';
+            return;
+        }
+        fetch(`controllers/pomodoroController.php?tarea_id=${tareaId}`)
+            .then(res => res.json())
+            .then(data => {
+                if (data && typeof data.segundos !== 'undefined') {
+                    tareaTiempoDiv.textContent = `Tiempo Pomodoro dedicado: ${formatearTiempoTotal(data.segundos)}`;
+                } else {
+                    tareaTiempoDiv.textContent = '';
+                }
+            });
+    }
+
+    if (tareaSelect) {
+        tareaSelect.addEventListener('change', function() {
+            tareaIdActual = this.value;
+            mostrarTiempoTarea(tareaIdActual);
+        });
+        // Mostrar tiempo al cargar si hay tarea seleccionada
+        if (tareaSelect.value) {
+            tareaIdActual = tareaSelect.value;
+            mostrarTiempoTarea(tareaIdActual);
+        }
+    }
 
     const display    = document.getElementById('pomodoro-display');
     const btnStart   = document.getElementById('btn-start');
@@ -40,6 +81,16 @@ document.addEventListener('DOMContentLoaded', () => {
         if (!modoTrabajo) {
             sesionesCompletadas++;
             if (contadorSesiones) contadorSesiones.textContent = sesionesCompletadas;
+            // Al terminar un Pomodoro de trabajo, sumar tiempo a la tarea seleccionada
+            if (tareaIdActual) {
+                fetch('controllers/pomodoroController.php', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                    body: `tarea_id=${encodeURIComponent(tareaIdActual)}&segundos=${TRABAJO}`
+                })
+                .then(res => res.json())
+                .then(() => mostrarTiempoTarea(tareaIdActual));
+            }
         }
         actualizarDisplay();
         // Notificacion del navegador si el usuario la concedio
@@ -60,6 +111,11 @@ document.addEventListener('DOMContentLoaded', () => {
     if (btnStart) {
         btnStart.addEventListener('click', () => {
             if (!enPausa) return;
+            if (!tareaSelect || !tareaSelect.value) {
+                alert('Selecciona una tarea antes de iniciar el Pomodoro.');
+                return;
+            }
+            tareaIdActual = tareaSelect.value;
             enPausa = false;
 
             // Pedir permiso para notificaciones del navegador
@@ -70,6 +126,37 @@ document.addEventListener('DOMContentLoaded', () => {
             intervalo = setInterval(tick, 1000);
             btnStart.disabled = true;
             if (btnPause) btnPause.disabled = false;
+            if (btnStop) btnStop.disabled = false;
+        });
+    }
+
+    if (btnStop) {
+        btnStop.disabled = true;
+        btnStop.addEventListener('click', () => {
+            if (enPausa) return;
+            enPausa = true;
+            clearInterval(intervalo);
+            btnStart.disabled = false;
+            if (btnPause) btnPause.disabled = true;
+            btnStop.disabled = true;
+            // Guardar el tiempo trabajado en la tarea seleccionada
+            if (tareaIdActual && modoTrabajo) {
+                const tiempoTrabajado = TRABAJO - segundosRestantes;
+                if (tiempoTrabajado > 0) {
+                    fetch('controllers/pomodoroController.php', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                        body: `tarea_id=${encodeURIComponent(tareaIdActual)}&segundos=${tiempoTrabajado}`
+                    })
+                    .then(res => res.json())
+                    .then(() => mostrarTiempoTarea(tareaIdActual));
+                }
+            }
+            // Reset visual pero no suma sesión
+            segundosRestantes = TRABAJO;
+            modoTrabajo = true;
+            if (labelModo) labelModo.textContent = 'Trabajo';
+            actualizarDisplay();
         });
     }
 

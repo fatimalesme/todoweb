@@ -46,6 +46,7 @@ CREATE TABLE IF NOT EXISTS tareas (
     id_lista           INT          NOT NULL DEFAULT 0,
     texto              VARCHAR(500) NOT NULL,
     descripcion        TEXT         DEFAULT NULL,
+    pomodoro_segundos  INT          NOT NULL DEFAULT 0,
     completada         TINYINT(1)   NOT NULL DEFAULT 0,
     fecha_alta         DATE,
     fecha_limite       DATE,
