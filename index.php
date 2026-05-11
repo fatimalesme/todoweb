@@ -122,7 +122,7 @@ $csrf = generarTokenCSRF();
             placeholder="Descripción de la tarea (opcional)"
             maxlength="1000"
             rows="2"
-            style="resize: vertical; width: 100%; font-size: 1em; margin-top: 6px; margin-bottom: 6px;"
+            style="resize: vertical; width: 100%; font-size: 1em; margin-top: 12px; margin-bottom: 18px; padding: 8px; border-radius: 10px; border: 1px solid #e2e8f0; background: #f8f9fa; color: #1a202c;"
           ></textarea>
         </div>
 

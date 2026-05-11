@@ -27,7 +27,6 @@
     font-weight: 700;
     letter-spacing: 1px;
 }
-}
 /* Cambia el fondo, borde, sombra, padding del Pomodoro */
 
 /* Temporizador grande */
@@ -554,7 +553,7 @@ body:has(.app) {
     gap: 8px;
     margin-bottom: 30px;
     background: rgba(255, 255, 255, 0.95);
-    padding: 14px 16px;
+    padding: 10px 16px;
     border-radius: 20px;
     box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
     border: 1px solid rgba(255, 255, 255, 0.4);
@@ -599,16 +598,14 @@ body:has(.app) {
     display: flex;
     gap: 8px;
     width: 100%;
-    flex-wrap: wrap;
     align-items: flex-end;
 }
 
 /* Cada grupo label + input/select */
 .form-label-group {
     display: flex;
-    flex-direction: column;
     gap: 3px;
-    flex: 1 1 180px;
+    flex: 1 1 18px;
 }
 
 .form-label-group label {
