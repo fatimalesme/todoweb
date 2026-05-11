@@ -269,8 +269,8 @@ select {
 
 input:focus,
 select:focus {
-    border-color: #fc8181;
-    box-shadow: 0 0 0 3px rgba(252, 129, 129, 0.1);
+    border-color: #572331;
+    box-shadow: 0 0 0 3px rgba(87, 35, 49, 0.1);
 }
 
 
@@ -295,7 +295,7 @@ button[name="login"],
 button[name="register"],
 .btn-main,
 button[name="add"] {
-    background: linear-gradient(135deg, #fc8181 0%, #f6ad55 100%);
+    background: linear-gradient(135deg, #572331 0%, #773847 100%);
     color: white;
     box-shadow: 0 4px 15px rgba(252, 129, 129, 0.3);
 }
@@ -406,21 +406,24 @@ body:has(.app) {
 
 /* Formulario para crear nueva categoría en el sidebar */
 .sidebar-form {
-    padding: 10px 15px;
-    margin-top: 10px;
-    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    width: 100%;
+    margin: 16px 0 0 0;
+    padding: 0;
+    border-top: none;
 }
 
 .sidebar-form input {
     width: 100%;
-    padding: 10px 14px;
-    border-radius: 10px;
+    padding: 14px 22px;
+    border-radius: 14px;
     border: 1px solid rgba(255, 255, 255, 0.2);
     background: rgba(255, 255, 255, 0.1);
     color: #fff;
-    font-size: 0.9rem;
+    font-size: 1.08rem;
+    font-weight: 700;
     outline: none;
     margin-bottom: 0;
+    box-sizing: border-box;
 }
 
 .sidebar-form input::placeholder {
@@ -431,24 +434,25 @@ body:has(.app) {
 /* Enlaces destacados para Pomodoro */
 .sidebar-link {
     display: block;
+    width: 100%;
+    box-sizing: border-box;
     color: #fff;
-    background: linear-gradient(135deg, #fc8181 0%, #f6ad55 100%);
+    background: linear-gradient(135deg, #984d61 0%, #954a5c 100%);
     text-decoration: none;
     padding: 14px 22px;
     border-radius: 14px;
-    margin: 16px auto 0 auto;
+    margin: 16px 0 0 0;
     font-weight: 700;
     font-size: 1.08rem;
-    box-shadow: 0 4px 18px rgba(252,129,129,0.18);
+    box-shadow: 0 4px 18px rgba(87, 35, 49, 0.18);
     letter-spacing: 0.5px;
-    max-width: 260px;
     transition: background 0.2s, color 0.2s, transform 0.2s;
 }
 .sidebar-link:hover {
-    background: linear-gradient(135deg, #f6ad55 0%, #fc8181 100%);
-    color: #572331;
+    background: linear-gradient(135deg, #773847 0%, #572331 100%);
+    color: #fff;
     transform: translateY(-2px) scale(1.04);
-    box-shadow: 0 8px 28px rgba(252,129,129,0.28);
+    box-shadow: 0 8px 28px rgba(87, 35, 49, 0.28);
 }
 
 .sidebar-link:hover {
@@ -458,7 +462,7 @@ body:has(.app) {
 
 /* Link de cerrar sesión (rojo) */
 .sidebar-link--danger {
-    color: #fc8181;
+    color: #e53e3e;
     font-weight: 600;
 }
 
@@ -765,7 +769,7 @@ body:has(.app) {
 }
 
 .logout-link:hover {
-    background: #fc8181;
+    background: #572331;
     color: #fff;
     box-shadow: 0 0 20px rgba(252, 129, 129, 0.5);
     transform: translateY(-2px);
