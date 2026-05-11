@@ -1,8 +1,13 @@
 /* ============================================================
-   style.css - ToDoWeb
+   style.css — ToDoWeb
+   ÚNICO archivo de estilos del proyecto.
+   Todos los componentes están aquí, organizados por sección.
    ============================================================ */
 
-/* 1. FUENTES */
+
+/* ============================================================
+   1. FUENTES
+   ============================================================ */
 @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Plus+Jakarta+Sans:wght@300;400;600;700&display=swap');
 
 * {
@@ -12,7 +17,10 @@
     font-family: 'Plus Jakarta Sans', sans-serif;
 }
 
-/* 2. FONDO */
+
+/* ============================================================
+   2. FONDO
+   ============================================================ */
 body {
     background:
         linear-gradient(rgba(43, 30, 62, 0.6), rgba(255, 138, 112, 0.3)),
@@ -27,8 +35,12 @@ body {
     color: #2d3748;
 }
 
-/* 3. LOGIN Y REGISTRO */
-.login-container, .login-card {
+
+/* ============================================================
+   3. LOGIN Y REGISTRO
+   ============================================================ */
+.login-container,
+.login-card {
     background: rgba(255, 255, 255, 0.92);
     backdrop-filter: blur(10px);
     padding: 50px 40px;
@@ -49,10 +61,46 @@ body {
     font-size: 2.2rem;
 }
 
-/* 4. INPUTS */
+/* Mensajes de error y éxito en login/registro */
+.mensaje-error {
+    background: rgba(252, 129, 129, 0.2);
+    color: #c53030;
+    border: 1px solid rgba(252, 129, 129, 0.5);
+    padding: 10px 16px;
+    border-radius: 10px;
+    margin-bottom: 16px;
+    font-size: 0.9rem;
+    font-weight: 600;
+}
+
+.mensaje-exito {
+    background: rgba(72, 187, 120, 0.2);
+    color: #276749;
+    border: 1px solid rgba(72, 187, 120, 0.5);
+    padding: 10px 16px;
+    border-radius: 10px;
+    margin-bottom: 16px;
+    font-size: 0.9rem;
+    font-weight: 600;
+}
+
+/* Texto de requisitos en el registro */
+.requisitos {
+    font-size: 0.8rem;
+    color: #718096;
+    text-align: left;
+    margin-bottom: 16px;
+    line-height: 1.6;
+}
+
+
+/* ============================================================
+   4. INPUTS Y SELECT
+   ============================================================ */
 input[type="text"],
 input[type="password"],
 input[type="date"],
+input[type="datetime-local"],
 select {
     width: 100%;
     padding: 16px;
@@ -66,12 +114,16 @@ select {
     color: #1a202c;
 }
 
-input:focus {
+input:focus,
+select:focus {
     border-color: #fc8181;
     box-shadow: 0 0 0 3px rgba(252, 129, 129, 0.1);
 }
 
-/* 5. BOTONES */
+
+/* ============================================================
+   5. BOTONES
+   ============================================================ */
 button {
     width: 100%;
     padding: 16px;
@@ -107,7 +159,36 @@ button[name="invitado"] {
     text-transform: none;
 }
 
-/* 6. ESTRUCTURA DE LA APP */
+/* Botones de icono dentro de cada tarea (completar, editar, eliminar...) */
+.btn-icon {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 16px;
+    padding: 4px 6px;
+    border-radius: 6px;
+    transition: background 0.2s;
+    width: auto;
+    margin-bottom: 0;
+    text-transform: none;
+    letter-spacing: 0;
+}
+
+.btn-icon:hover {
+    background: rgba(0, 0, 0, 0.07);
+    transform: none;
+    box-shadow: none;
+}
+
+/* Botón eliminar (rojo) */
+.btn-icon.eliminar-tarea {
+    color: #e53e3e;
+}
+
+
+/* ============================================================
+   6. ESTRUCTURA DE LA APP (layout principal)
+   ============================================================ */
 body:has(.app) {
     display: block;
 }
@@ -118,7 +199,10 @@ body:has(.app) {
     min-height: 100vh;
 }
 
-/* SIDEBAR */
+
+/* ============================================================
+   7. SIDEBAR
+   ============================================================ */
 .sidebar {
     width: 280px;
     min-width: 280px;
@@ -142,6 +226,7 @@ body:has(.app) {
     word-break: break-word;
 }
 
+/* Menú de categorías */
 .list-menu {
     list-style: none;
     padding: 0;
@@ -166,7 +251,105 @@ body:has(.app) {
     font-weight: 600;
 }
 
-/* AREA PRINCIPAL */
+/* Formulario para crear nueva categoría en el sidebar */
+.sidebar-form {
+    padding: 10px 15px;
+    margin-top: 10px;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.sidebar-form input {
+    width: 100%;
+    padding: 10px 14px;
+    border-radius: 10px;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    background: rgba(255, 255, 255, 0.1);
+    color: #fff;
+    font-size: 0.9rem;
+    outline: none;
+    margin-bottom: 0;
+}
+
+.sidebar-form input::placeholder {
+    color: rgba(255, 255, 255, 0.6);
+}
+
+/* Links de navegación del sidebar (Progreso, Pomodoro, Cerrar sesión) */
+.sidebar-link {
+    display: block;
+    color: rgba(255, 255, 255, 0.8);
+    text-decoration: none;
+    padding: 10px 18px;
+    border-radius: 10px;
+    margin-top: 8px;
+    font-weight: 500;
+    transition: background 0.2s;
+}
+
+.sidebar-link:hover {
+    background: rgba(255, 255, 255, 0.15);
+    color: #fff;
+}
+
+/* Link de cerrar sesión (rojo) */
+.sidebar-link--danger {
+    color: #fc8181;
+    font-weight: 600;
+}
+
+/* ---- Bloque "Próximas a vencer" en el sidebar ---- */
+.sidebar-proximas {
+    margin: 12px 0 0;
+    padding: 10px 15px;
+    border-top: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+.sidebar-proximas-titulo {
+    font-size: 0.72rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+    color: rgba(255, 255, 255, 0.45);
+    margin-bottom: 8px;
+}
+
+/* Cada tarea próxima a vencer (amarillo por defecto) */
+.proxima-item {
+    display: flex;
+    flex-direction: column;
+    padding: 8px 10px;
+    margin-bottom: 6px;
+    border-radius: 10px;
+    background: rgba(246, 173, 85, 0.15);
+    border-left: 3px solid rgba(246, 173, 85, 0.7);
+    cursor: default;
+}
+
+/* Vence en menos de 24 h → rojo */
+.proxima-item.vence-hoy {
+    background: rgba(252, 129, 129, 0.15);
+    border-left-color: rgba(252, 129, 129, 0.8);
+}
+
+.proxima-item-texto {
+    font-size: 0.8rem;
+    color: rgba(255, 255, 255, 0.9);
+    font-weight: 500;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.proxima-item-tiempo {
+    font-size: 0.7rem;
+    color: rgba(255, 255, 255, 0.5);
+    margin-top: 2px;
+}
+
+
+/* ============================================================
+   8. ÁREA PRINCIPAL
+   ============================================================ */
 .main {
     flex-grow: 1;
     padding: 60px;
@@ -177,54 +360,118 @@ body:has(.app) {
     overflow-y: auto;
 }
 
-.main h1 {
+.main-header {
+    width: 100%;
+    max-width: 700px;
+    margin-bottom: 24px;
+}
+
+.main h1,
+.main-header h1 {
     font-family: 'Playfair Display', serif;
     font-size: 3rem;
     color: #fff;
     text-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
-    margin-bottom: 30px;
-    width: 100%;
-    max-width: 700px;
+    margin-bottom: 0;
     text-align: left;
 }
 
-/* FORMULARIO DE NUEVA TAREA */
+
+/* ============================================================
+   9. FORMULARIO DE NUEVA TAREA
+   ============================================================ */
 .todo-form {
     width: 100%;
     max-width: 700px;
     display: flex;
-    gap: 0;
+    flex-direction: column;
+    gap: 8px;
     margin-bottom: 30px;
     background: rgba(255, 255, 255, 0.95);
-    padding: 8px;
+    padding: 14px 16px;
     border-radius: 20px;
     box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
     border: 1px solid rgba(255, 255, 255, 0.4);
-    flex-wrap: wrap;
 }
 
-.todo-form input {
+/* Fila 1: input de texto + botón Añadir */
+.form-row-top {
+    display: flex;
+    gap: 8px;
+    width: 100%;
+    align-items: center;
+}
+
+.form-row-top input[name="texto"] {
     flex-grow: 1;
     background: transparent;
-    border: none !important;
-    box-shadow: none !important;
-    padding: 15px 20px;
-    font-size: 16px;
+    border: none;
+    box-shadow: none;
+    padding: 12px 16px;
+    font-size: 15px;
     color: #1a202c;
     outline: none;
     margin-bottom: 0;
-    min-width: 120px;
 }
 
-.todo-form button[name="add"] {
+.form-row-top input[name="texto"]:focus {
+    border: none;
+    box-shadow: none;
+}
+
+.form-row-top button[name="add"] {
     width: auto;
-    padding: 0 28px;
+    padding: 0 24px;
+    height: 46px;
     margin-bottom: 0;
-    border-radius: 14px;
+    border-radius: 12px;
     white-space: nowrap;
 }
 
-/* LISTA DE TAREAS */
+/* Fila 2: fecha+hora y selector de categoría */
+.form-row-bottom {
+    display: flex;
+    gap: 8px;
+    width: 100%;
+    flex-wrap: wrap;
+    align-items: flex-end;
+}
+
+/* Cada grupo label + input/select */
+.form-label-group {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+    flex: 1 1 180px;
+}
+
+.form-label-group label {
+    font-size: 11px;
+    font-weight: 700;
+    color: #718096;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    white-space: nowrap;
+}
+
+.form-label-group input[type="datetime-local"],
+.form-label-group select {
+    flex: 1 1 180px;
+    padding: 10px 14px;
+    margin-bottom: 0;
+    font-size: 13px;
+    border-radius: 10px;
+    border: 1.5px solid #e2e8f0;
+    background: #f8f9fa;
+    color: #1a202c;
+    min-width: 150px;
+    cursor: pointer;
+}
+
+
+/* ============================================================
+   10. LISTA DE TAREAS
+   ============================================================ */
 #todo-list {
     width: 100%;
     max-width: 700px;
@@ -252,30 +499,75 @@ body:has(.app) {
     box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
 }
 
-/* CERRAR SESION Y LINKS DEL SIDEBAR */
-.logout-link {
-    display: block;
-    margin-top: auto;
-    color: #ffffff;
-    padding: 14px 20px;
+/* Texto de la tarea */
+.todo-text {
+    flex-grow: 1;
+    word-break: break-word;
+}
+
+/* Tarea completada: tachado y opaco */
+.done {
+    text-decoration: line-through;
+    opacity: 0.5;
+}
+
+/* Contenedor de botones de acción */
+.actions {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+    flex-shrink: 0;
+}
+
+/* Badges de fecha (vencimiento, finalización) */
+.todo-meta {
+    display: inline-block;
+    margin-top: 5px;
+    margin-right: 4px;
+    font-size: 11px;
+    color: #3182ce;
+    background: #ebf4ff;
+    padding: 3px 10px;
+    border-radius: 20px;
     font-weight: 700;
-    text-align: center;
-    border: 1.5px solid rgba(252, 129, 129, 0.7);
-    border-radius: 12px;
-    background: rgba(252, 129, 129, 0.15);
-    transition: all 0.3s ease;
-    text-decoration: none;
-    margin-top: 30px;
+    text-transform: uppercase;
 }
 
-.logout-link:hover {
-    background: #fc8181;
-    color: #fff;
-    box-shadow: 0 0 20px rgba(252, 129, 129, 0.5);
-    transform: translateY(-2px);
+/* Badge de tarea vencida → rojo */
+.todo-meta.badge-vencida {
+    background: #fff5f5;
+    color: #c53030;
 }
 
-/* Pomodoro y paginas secundarias: contenedor centrado */
+/* Badge de tarea completada → verde */
+.todo-meta.badge-fin {
+    background: #f0fff4;
+    color: #276749;
+}
+
+/* Bloque que agrupa los badges debajo del texto */
+.todo-badges {
+    display: block;
+    margin-top: 5px;
+}
+
+/* Botón oculto del formulario del sidebar (se envía con Enter en el input) */
+.btn-hidden {
+    display: none;
+}
+
+/* Mensaje cuando no hay tareas en la categoría activa */
+.msg-sin-tareas {
+    display: none;
+    color: rgba(255, 255, 255, 0.7);
+    margin-top: 20px;
+    font-style: italic;
+}
+
+
+/* ============================================================
+   11. PÁGINAS SECUNDARIAS (Pomodoro, contenedor genérico)
+   ============================================================ */
 .page-container {
     background: rgba(255, 255, 255, 0.92);
     backdrop-filter: blur(10px);
@@ -294,7 +586,32 @@ body:has(.app) {
     color: #1a202c;
 }
 
-/* RESPONSIVE - pantallas pequenas */
+/* Link de cerrar sesión en páginas secundarias */
+.logout-link {
+    display: block;
+    margin-top: 30px;
+    color: #ffffff;
+    padding: 14px 20px;
+    font-weight: 700;
+    text-align: center;
+    border: 1.5px solid rgba(252, 129, 129, 0.7);
+    border-radius: 12px;
+    background: rgba(252, 129, 129, 0.15);
+    transition: all 0.3s ease;
+    text-decoration: none;
+}
+
+.logout-link:hover {
+    background: #fc8181;
+    color: #fff;
+    box-shadow: 0 0 20px rgba(252, 129, 129, 0.5);
+    transform: translateY(-2px);
+}
+
+
+/* ============================================================
+   12. RESPONSIVE — pantallas pequeñas
+   ============================================================ */
 @media (max-width: 768px) {
     .app {
         flex-direction: column;
@@ -333,27 +650,36 @@ body:has(.app) {
         transform: none;
     }
 
+    .sidebar-proximas {
+        width: 100%;
+    }
+
     .main {
         padding: 25px 15px;
     }
 
-    .main h1 {
+    .main h1,
+    .main-header h1 {
         font-size: 2rem;
     }
 
     .todo-form {
-        flex-direction: column;
         padding: 12px;
+    }
+
+    .form-row-top {
+        flex-direction: column;
         gap: 8px;
     }
 
-    .todo-form input {
-        padding: 12px 14px;
+    .form-row-top button[name="add"] {
+        width: 100%;
+        height: auto;
+        padding: 14px;
     }
 
-    .todo-form button[name="add"] {
-        width: 100%;
-        padding: 14px;
+    .form-row-bottom {
+        flex-direction: column;
     }
 
     .logout-link {

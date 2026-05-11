@@ -3,7 +3,7 @@
 
 document.addEventListener('DOMContentLoaded', () => {
 
-    const formTarea  = document.getElementById('form-nueva-tarea');
+    const formTarea = document.getElementById('form-nueva-tarea');
     if (!formTarea) return;
 
     const inputTexto = formTarea.querySelector('input[name="texto"]');
@@ -22,7 +22,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // Validar que la fecha no sea anterior a hoy
         if (inputFecha && inputFecha.value) {
-            const hoy   = new Date();
+            const hoy = new Date();
             hoy.setHours(0, 0, 0, 0);
             const fecha = new Date(inputFecha.value + 'T00:00:00');
             if (fecha < hoy) {
@@ -39,7 +39,7 @@ document.addEventListener('DOMContentLoaded', () => {
     function mostrarError(campo, mensaje) {
         if (!campo) return;
         campo.style.borderColor = '#fc8181';
-        campo.style.boxShadow   = '0 0 0 3px rgba(252,129,129,0.2)';
+        campo.style.boxShadow = '0 0 0 3px rgba(252,129,129,0.2)';
 
         // Evitar duplicar el mensaje si ya existe
         let msg = campo.parentElement.querySelector('.error-msg');
@@ -55,9 +55,20 @@ document.addEventListener('DOMContentLoaded', () => {
     function quitarError(campo) {
         if (!campo) return;
         campo.style.borderColor = '';
-        campo.style.boxShadow   = '';
+        campo.style.boxShadow = '';
         const msg = campo.parentElement.querySelector('.error-msg');
         if (msg) msg.remove();
+    }
+
+    // Botón de acceso como invitado
+    const btnInvitado = document.querySelector('button[name="invitado"]');
+    if (btnInvitado) {
+        btnInvitado.addEventListener('click', () => {
+            const userField = document.getElementById('user-field');
+            const passField = document.getElementById('pass-field');
+            if (userField) userField.removeAttribute('required');
+            if (passField) passField.removeAttribute('required');
+        });
     }
 
 });

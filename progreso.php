@@ -3,13 +3,13 @@ include_once 'includes/db.php';
 include_once 'includes/session.php';
 include_once 'includes/functions.php';
 
-// Obtener datos de progreso
-$usuario_id = $_SESSION['usuario_id'] ?? null;
-$tareas_completadas = $usuario_id ? contarTareasCompletadas($usuario_id) : 0;
-$tareas_totales = $usuario_id ? count(obtenerTareasUsuario($usuario_id)) : 0;
-$pendientes = $tareas_totales - $tareas_completadas;
-$tareas = $usuario_id ? obtenerTareasUsuario($usuario_id) : [];
-$csrf = generarTokenCSRF();
+$usuario_id         = $_SESSION['usuario_id'] ?? null;
+$tareas_completadas = contarTareasCompletadas($usuario_id);
+$tareas_pendientes  = contarTareasPendientes($usuario_id);
+$tareas_totales     = $tareas_completadas + $tareas_pendientes;
+// Solo pedimos la lista completa para el historial (no para contar)
+$tareas             = $usuario_id ? obtenerTareasUsuario($usuario_id) : [];
+$csrf               = generarTokenCSRF();
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -21,58 +21,84 @@ $csrf = generarTokenCSRF();
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
-        <h1>Progreso</h1>
-        <div style="max-width:350px;margin:0 auto 20px auto;padding:10px;box-sizing:border-box;">
-            <canvas id="grafica-progreso"></canvas>
+  <div class="app">
+    <aside class="sidebar">
+      <h2>Hola, <?= htmlspecialchars($_SESSION['username'], ENT_QUOTES, 'UTF-8') ?></h2>
+      <a href="index.php"  class="sidebar-link">← Mis listas</a>
+      <a href="pomodoro.php" class="sidebar-link">Pomodoro</a>
+      <a href="logout.php" class="sidebar-link" style="color:#fc8181;font-weight:600;">Cerrar sesión</a>
+    </aside>
+
+    <main class="main">
+      <header class="main-header">
+        <h1>Mi progreso</h1>
+      </header>
+
+      <!-- Tarjetas de resumen -->
+      <div style="display:flex;gap:16px;margin-bottom:24px;flex-wrap:wrap;">
+        <div style="background:#f0fff4;border:1px solid #9ae6b4;border-radius:12px;padding:16px 24px;min-width:140px;">
+          <div style="font-size:2rem;font-weight:700;color:#276749;"><?= $tareas_completadas ?></div>
+          <div style="color:#2f855a;font-size:0.9rem;">Completadas</div>
         </div>
-        <br>
-        <h2 style="margin-top:30px;">Historial de tareas</h2>
-        <table style="width:100%;max-width:600px;margin:20px 0;border-collapse:collapse;">
+        <div style="background:#fff5f5;border:1px solid #feb2b2;border-radius:12px;padding:16px 24px;min-width:140px;">
+          <div style="font-size:2rem;font-weight:700;color:#c53030;"><?= $tareas_pendientes ?></div>
+          <div style="color:#c53030;font-size:0.9rem;">Pendientes</div>
+        </div>
+        <div style="background:#ebf4ff;border:1px solid #90cdf4;border-radius:12px;padding:16px 24px;min-width:140px;">
+          <div style="font-size:2rem;font-weight:700;color:#2b6cb0;"><?= $tareas_totales ?></div>
+          <div style="color:#2b6cb0;font-size:0.9rem;">Total</div>
+        </div>
+      </div>
+
+      <!-- Gráfica -->
+      <div style="max-width:300px;margin-bottom:32px;">
+        <canvas id="grafica-progreso"></canvas>
+      </div>
+
+      <!-- Historial -->
+      <?php if (empty($tareas)): ?>
+        <p style="color:#718096;">Aún no tienes tareas registradas.</p>
+      <?php else: ?>
+        <h2 style="margin-bottom:12px;">Historial de tareas</h2>
+        <div style="overflow-x:auto;">
+          <table style="width:100%;max-width:720px;border-collapse:collapse;font-size:0.9rem;">
             <thead>
-                <tr style="background:#f7fafc;">
-                    <th style="padding:8px;border:1px solid #e2e8f0;">Tarea</th>
-                    <th style="padding:8px;border:1px solid #e2e8f0;">Alta</th>
-                    <th style="padding:8px;border:1px solid #e2e8f0;">Límite</th>
-                    <th style="padding:8px;border:1px solid #e2e8f0;">Finalización</th>
-                    <th style="padding:8px;border:1px solid #e2e8f0;">Estado</th>
-                </tr>
+              <tr style="background:#f7fafc;text-align:left;">
+                <th style="padding:10px 12px;border-bottom:2px solid #e2e8f0;">Tarea</th>
+                <th style="padding:10px 12px;border-bottom:2px solid #e2e8f0;">Alta</th>
+                <th style="padding:10px 12px;border-bottom:2px solid #e2e8f0;">Límite</th>
+                <th style="padding:10px 12px;border-bottom:2px solid #e2e8f0;">Finalización</th>
+                <th style="padding:10px 12px;border-bottom:2px solid #e2e8f0;">Estado</th>
+              </tr>
             </thead>
             <tbody>
-                <?php
-                function formatear_fecha($fecha) {
-                    if (!$fecha || $fecha === '-') return '-';
-                    $f = date_create($fecha);
-                    if (!$f) return htmlspecialchars($fecha, ENT_QUOTES, 'UTF-8');
-                    return date_format($f, 'd/m/Y H:i');
-                }
-                foreach ($tareas as $t): ?>
-                    <tr>
-                        <td style="padding:8px;border:1px solid #e2e8f0;">
-                            <?= htmlspecialchars($t['texto'], ENT_QUOTES, 'UTF-8') ?>
-                        </td>
-                        <td style="padding:8px;border:1px solid #e2e8f0;">
-                            <?= formatear_fecha($t['fecha_alta'] ?? '-') ?>
-                        </td>
-                        <td style="padding:8px;border:1px solid #e2e8f0;">
-                            <?= formatear_fecha($t['fecha_limite'] ?? '-') ?>
-                        </td>
-                        <td style="padding:8px;border:1px solid #e2e8f0;">
-                            <?= !empty($t['fecha_finalizacion']) ? formatear_fecha($t['fecha_finalizacion']) : '-' ?>
-                        </td>
-                        <td style="padding:8px;border:1px solid #e2e8f0;">
-                            <?= $t['completada'] ? 'Completada' : 'Pendiente' ?>
-                        </td>
-                    </tr>
-                <?php endforeach; ?>
+              <?php foreach ($tareas as $t): ?>
+                <tr style="border-bottom:1px solid #edf2f7;">
+                  <td style="padding:10px 12px;"><?= htmlspecialchars($t['texto'], ENT_QUOTES, 'UTF-8') ?></td>
+                  <td style="padding:10px 12px;"><?= formatear_fecha($t['fecha_alta'] ?? '-') ?></td>
+                  <td style="padding:10px 12px;"><?= formatear_fecha($t['fecha_limite'] ?? '-') ?></td>
+                  <td style="padding:10px 12px;"><?= !empty($t['fecha_finalizacion']) ? formatear_fecha($t['fecha_finalizacion']) : '-' ?></td>
+                  <td style="padding:10px 12px;">
+                    <?php if ($t['completada']): ?>
+                      <span style="background:#f0fff4;color:#276749;padding:3px 10px;border-radius:20px;font-size:0.8rem;font-weight:600;">✔ Completada</span>
+                    <?php else: ?>
+                      <span style="background:#fff5f5;color:#c53030;padding:3px 10px;border-radius:20px;font-size:0.8rem;font-weight:600;">⏳ Pendiente</span>
+                    <?php endif; ?>
+                  </td>
+                </tr>
+              <?php endforeach; ?>
             </tbody>
-        </table>
-        <a href="index.php" class="sidebar-link">&larr; Volver al menú principal</a>
-        <script src="assets/js/graficas.js"></script>
-        <script>
-                // Datos para la gráfica
-                const completadas = <?= $tareas_completadas ?>;
-                const pendientes = <?= $pendientes ?>;
-                window.datosProgreso = { completadas, pendientes };
-        </script>
+          </table>
+        </div>
+      <?php endif; ?>
+    </main>
+  </div>
+
+  <script src="assets/js/graficas.js"></script>
+  <script>
+    const completadas = <?= $tareas_completadas ?>;
+    const pendientes  = <?= $tareas_pendientes ?>;
+    window.datosProgreso = { completadas, pendientes };
+  </script>
 </body>
 </html>

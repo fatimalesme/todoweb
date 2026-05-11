@@ -73,7 +73,7 @@ $exito  = $exitos[$_GET['exito']   ?? ''] ?? null;
             <input type="password" name="pass" placeholder="Contrasena"  maxlength="100" autocomplete="current-password" id="pass-field">
             <button type="submit" name="login">Entrar</button>
             <hr style="margin: 15px 0; border: 0.5px solid #e2e8f0;">
-            <button type="submit" name="invitado" style="background:rgba(255,255,255,0.8);color:#4a5568;border:1px solid #e2e8f0;" onclick="document.getElementById('user-field').removeAttribute('required');document.getElementById('pass-field').removeAttribute('required');">
+            <button type="submit" name="invitado" style="background:rgba(255,255,255,0.8);color:#4a5568;border:1px solid #e2e8f0;">
                 Entrar como invitado
             </button>
             <p style="margin-top: 15px; font-size: 0.9em;">

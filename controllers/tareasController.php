@@ -3,7 +3,7 @@ if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
 
-// Verificar que hay sesion activa antes de hacer cualquier cosa
+// Verificar que hay sesión activa antes de hacer cualquier cosa
 $tiene_sesion_usuario  = isset($_SESSION['usuario_id']);
 $tiene_sesion_invitado = isset($_SESSION['rol']) && $_SESSION['rol'] === 'guest';
 
@@ -18,14 +18,13 @@ include_once '../includes/functions.php';
 $usuario_id = $_SESSION['usuario_id'] ?? null;
 $rol        = $_SESSION['rol'] ?? 'user';
 
-// Todas las acciones POST deben validar el CSRF token
-// Las acciones AJAX (completar, eliminar, editar, postergar) tambien lo incluyen
+// Todas las acciones POST validan el CSRF token
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     validarTokenCSRF($_POST['csrf_token'] ?? '');
 }
 
 // -----------------------------------------------------------------------
-// ANADIR NUEVA LISTA
+// AÑADIR NUEVA LISTA / CATEGORÍA
 // -----------------------------------------------------------------------
 if (isset($_POST['add_list'])) {
     $nombre = trim($_POST['nombre_lista'] ?? '');
@@ -42,16 +41,26 @@ if (isset($_POST['add_list'])) {
 }
 
 // -----------------------------------------------------------------------
-// ANADIR NUEVA TAREA
+// AÑADIR NUEVA TAREA
+// Cambio principal: ahora recibimos 'fecha_limite' como datetime-local
+// (formato: "YYYY-MM-DDTHH:MM") en lugar de un DATE simple.
 // -----------------------------------------------------------------------
 if (isset($_POST['add'])) {
-    $texto       = trim($_POST['texto'] ?? '');
-    $id_lista    = (int) ($_POST['id_lista'] ?? 0);
-    $fecha_limite = $_POST['fecha_limite'] ?? null;
+    $texto        = trim($_POST['texto'] ?? '');
+    $id_lista     = (int) ($_POST['id_lista'] ?? 0);
+    $fecha_limite = $_POST['fecha_limite'] ?? null;  // viene como "2025-06-15T14:30"
 
-    // Validar que la fecha tenga formato correcto
-    if ($fecha_limite && !preg_match('/^\d{4}-\d{2}-\d{2}$/', $fecha_limite)) {
-        $fecha_limite = null;
+    // Validar y normalizar el DATETIME recibido del input datetime-local.
+    // El navegador envía "YYYY-MM-DDTHH:MM", MySQL espera "YYYY-MM-DD HH:MM:SS".
+    if ($fecha_limite) {
+        // Reemplazar la T por espacio y añadir segundos
+        $fecha_limite = str_replace('T', ' ', $fecha_limite) . ':00';
+
+        // Comprobar que el formato resultante es un datetime válido
+        $dt = DateTime::createFromFormat('Y-m-d H:i:s', $fecha_limite);
+        if (!$dt) {
+            $fecha_limite = null; // si algo falla, guardamos sin fecha
+        }
     }
 
     if ($texto === '') {
@@ -63,20 +72,24 @@ if (isset($_POST['add'])) {
         if (!isset($_SESSION['tareas_invitado'])) {
             $_SESSION['tareas_invitado'] = [];
         }
+        // Los invitados guardan la tarea en sesión (sin BD)
         $_SESSION['tareas_invitado'][] = [
-            'texto'            => htmlspecialchars($texto, ENT_QUOTES, 'UTF-8'),
-            'id_lista'         => $id_lista,
-            'completada'       => false,
-            'fecha_limite'     => $fecha_limite,
-            'fecha_alta'       => date('Y-m-d'),
+            'texto'              => htmlspecialchars($texto, ENT_QUOTES, 'UTF-8'),
+            'id_lista'           => $id_lista,
+            'completada'         => false,
+            'fecha_limite'       => $fecha_limite,
+            'fecha_alta'         => date('Y-m-d H:i:s'),
             'fecha_finalizacion' => null,
-            'postergaciones'   => 0,
+            'postergaciones'     => 0,
             'max_postergaciones' => 3
         ];
     } else {
+        // Guardamos el DATETIME completo en BD
         $stmt = $conexion->prepare(
-            'INSERT INTO tareas (id_usuario, id_lista, texto, fecha_alta, fecha_limite, postergaciones, max_postergaciones)
-             VALUES (?, ?, ?, CURDATE(), ?, 0, 3)'
+            'INSERT INTO tareas
+                (id_usuario, id_lista, texto, fecha_alta, fecha_limite, postergaciones, max_postergaciones)
+             VALUES
+                (?, ?, ?, NOW(), ?, 0, 3)'
         );
         $stmt->bind_param('iiss', $usuario_id, $id_lista, $texto, $fecha_limite);
         $stmt->execute();
@@ -89,6 +102,7 @@ if (isset($_POST['add'])) {
 
 // -----------------------------------------------------------------------
 // COMPLETAR TAREA (llamada AJAX)
+// NOW() ya devuelve DATETIME, así que fecha_finalizacion guarda hora exacta.
 // -----------------------------------------------------------------------
 if (isset($_POST['completar_id'])) {
     $id = (int) $_POST['completar_id'];
@@ -97,13 +111,17 @@ if (isset($_POST['completar_id'])) {
         if (isset($_SESSION['tareas_invitado'][$id])) {
             $estado_actual = $_SESSION['tareas_invitado'][$id]['completada'];
             $_SESSION['tareas_invitado'][$id]['completada']        = !$estado_actual;
-            $_SESSION['tareas_invitado'][$id]['fecha_finalizacion'] = !$estado_actual ? date('Y-m-d') : null;
+            $_SESSION['tareas_invitado'][$id]['fecha_finalizacion'] = !$estado_actual
+                ? date('Y-m-d H:i:s')  // guarda fecha Y hora exacta
+                : null;
         }
     } else {
-        // IF(completada, NULL, NOW()) pone la fecha si se completa y la quita si se desmarca
+        // IF(completada = 0, NOW(), NULL):
+        // - Si la tarea estaba pendiente → la marca como completada y guarda NOW() con hora
+        // - Si ya estaba completada → la desmarca y borra la fecha de finalización
         $stmt = $conexion->prepare(
             'UPDATE tareas
-             SET completada = NOT completada,
+             SET completada         = NOT completada,
                  fecha_finalizacion = IF(completada = 0, NOW(), NULL)
              WHERE id = ? AND id_usuario = ?'
         );
@@ -126,11 +144,10 @@ if (isset($_POST['eliminar_id'])) {
     if ($rol === 'guest') {
         if (isset($_SESSION['tareas_invitado'][$id])) {
             unset($_SESSION['tareas_invitado'][$id]);
-            // Reindexar el array para que los indices sean consecutivos
             $_SESSION['tareas_invitado'] = array_values($_SESSION['tareas_invitado']);
         }
     } else {
-        // La condicion id_usuario evita que un usuario borre tareas de otro
+        // id_usuario en el WHERE evita que un usuario borre tareas de otro
         $stmt = $conexion->prepare('DELETE FROM tareas WHERE id = ? AND id_usuario = ?');
         $stmt->bind_param('ii', $id, $usuario_id);
         $stmt->execute();
@@ -150,7 +167,8 @@ if (isset($_POST['editar_id']) && isset($_POST['nuevo_texto'])) {
     $nuevo = trim($_POST['nuevo_texto']);
 
     if ($nuevo === '') {
-        echo json_encode(['success' => false, 'error' => 'El texto no puede estar vacio']);
+        header('Content-Type: application/json');
+        echo json_encode(['success' => false, 'error' => 'El texto no puede estar vacío']);
         exit();
     }
 
@@ -172,6 +190,7 @@ if (isset($_POST['editar_id']) && isset($_POST['nuevo_texto'])) {
 
 // -----------------------------------------------------------------------
 // POSTERGAR TAREA (llamada AJAX)
+// DATE_ADD funciona igual con DATETIME, así que no hay que cambiar nada aquí.
 // -----------------------------------------------------------------------
 if (isset($_POST['postergar_id'])) {
     $id   = (int) $_POST['postergar_id'];
@@ -181,12 +200,12 @@ if (isset($_POST['postergar_id'])) {
         if (isset($_SESSION['tareas_invitado'][$id])) {
             $tarea = &$_SESSION['tareas_invitado'][$id];
             if ($tarea['postergaciones'] < $tarea['max_postergaciones']) {
-                $tarea['fecha_limite']  = date('Y-m-d', strtotime($tarea['fecha_limite'] . " +$dias day"));
+                // strtotime funciona con DATETIME completo
+                $tarea['fecha_limite']   = date('Y-m-d H:i:s', strtotime($tarea['fecha_limite'] . " +$dias day"));
                 $tarea['postergaciones']++;
             }
         }
     } else {
-        // Solo actualiza si no se ha llegado al limite de postergaciones
         $stmt = $conexion->prepare(
             'UPDATE tareas
              SET fecha_limite   = DATE_ADD(fecha_limite, INTERVAL ? DAY),
@@ -203,6 +222,6 @@ if (isset($_POST['postergar_id'])) {
     exit();
 }
 
-// Si llega aqui sin hacer match de ninguna accion, redirigir al inicio
+// Si llega aquí sin hacer match de ninguna acción, redirigir al inicio
 header('Location: ../index.php');
 exit();
