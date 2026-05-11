@@ -47,6 +47,7 @@ if (isset($_POST['add_list'])) {
 // -----------------------------------------------------------------------
 if (isset($_POST['add'])) {
     $texto        = trim($_POST['texto'] ?? '');
+    $descripcion  = trim($_POST['descripcion'] ?? '');
     $id_lista     = (int) ($_POST['id_lista'] ?? 0);
     $fecha_limite = $_POST['fecha_limite'] ?? null;  // viene como "2025-06-15T14:30"
 
@@ -75,6 +76,7 @@ if (isset($_POST['add'])) {
         // Los invitados guardan la tarea en sesión (sin BD)
         $_SESSION['tareas_invitado'][] = [
             'texto'              => htmlspecialchars($texto, ENT_QUOTES, 'UTF-8'),
+            'descripcion'        => htmlspecialchars($descripcion, ENT_QUOTES, 'UTF-8'),
             'id_lista'           => $id_lista,
             'completada'         => false,
             'fecha_limite'       => $fecha_limite,
@@ -87,11 +89,11 @@ if (isset($_POST['add'])) {
         // Guardamos el DATETIME completo en BD
         $stmt = $conexion->prepare(
             'INSERT INTO tareas
-                (id_usuario, id_lista, texto, fecha_alta, fecha_limite, postergaciones, max_postergaciones)
+                (id_usuario, id_lista, texto, descripcion, fecha_alta, fecha_limite, postergaciones, max_postergaciones)
              VALUES
-                (?, ?, ?, NOW(), ?, 0, 3)'
+                (?, ?, ?, ?, NOW(), ?, 0, 3)'
         );
-        $stmt->bind_param('iiss', $usuario_id, $id_lista, $texto, $fecha_limite);
+        $stmt->bind_param('iisss', $usuario_id, $id_lista, $texto, $descripcion, $fecha_limite);
         $stmt->execute();
         $stmt->close();
     }
@@ -163,8 +165,21 @@ if (isset($_POST['eliminar_id'])) {
 // EDITAR TAREA (llamada AJAX)
 // -----------------------------------------------------------------------
 if (isset($_POST['editar_id']) && isset($_POST['nuevo_texto'])) {
+
+
     $id    = (int) $_POST['editar_id'];
     $nuevo = trim($_POST['nuevo_texto']);
+    $nuevaDesc = isset($_POST['nueva_descripcion']) ? trim($_POST['nueva_descripcion']) : '';
+    $nuevaFecha = array_key_exists('nueva_fecha', $_POST) ? trim($_POST['nueva_fecha']) : null;
+    $nuevaCat = isset($_POST['nueva_categoria']) ? (int) $_POST['nueva_categoria'] : 0;
+
+    // Normalizar fecha si viene en formato datetime-local
+    if ($nuevaFecha !== null && $nuevaFecha !== '') {
+        $nuevaFecha = str_replace('T', ' ', $nuevaFecha);
+        if (strlen($nuevaFecha) === 16) $nuevaFecha .= ':00';
+    } else {
+        $nuevaFecha = null;
+    }
 
     if ($nuevo === '') {
         header('Content-Type: application/json');
@@ -175,10 +190,21 @@ if (isset($_POST['editar_id']) && isset($_POST['nuevo_texto'])) {
     if ($rol === 'guest') {
         if (isset($_SESSION['tareas_invitado'][$id])) {
             $_SESSION['tareas_invitado'][$id]['texto'] = htmlspecialchars($nuevo, ENT_QUOTES, 'UTF-8');
+            $_SESSION['tareas_invitado'][$id]['descripcion'] = htmlspecialchars($nuevaDesc, ENT_QUOTES, 'UTF-8');
+            if ($nuevaFecha !== null) {
+                $_SESSION['tareas_invitado'][$id]['fecha_limite'] = $nuevaFecha;
+            }
+            $_SESSION['tareas_invitado'][$id]['id_lista'] = $nuevaCat;
         }
     } else {
-        $stmt = $conexion->prepare('UPDATE tareas SET texto = ? WHERE id = ? AND id_usuario = ?');
-        $stmt->bind_param('sii', $nuevo, $id, $usuario_id);
+        // Si no se envía nuevaFecha, conservar la fecha actual
+        if ($nuevaFecha !== null) {
+            $stmt = $conexion->prepare('UPDATE tareas SET texto = ?, descripcion = ?, fecha_limite = ?, id_lista = ? WHERE id = ? AND id_usuario = ?');
+            $stmt->bind_param('sssiii', $nuevo, $nuevaDesc, $nuevaFecha, $nuevaCat, $id, $usuario_id);
+        } else {
+            $stmt = $conexion->prepare('UPDATE tareas SET texto = ?, descripcion = ?, id_lista = ? WHERE id = ? AND id_usuario = ?');
+            $stmt->bind_param('sssii', $nuevo, $nuevaDesc, $nuevaCat, $id, $usuario_id);
+        }
         $stmt->execute();
         $stmt->close();
     }

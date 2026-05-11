@@ -115,7 +115,18 @@ $csrf = generarTokenCSRF();
           <button type="submit" name="add">Añadir</button>
         </div>
 
-        <!-- Fila 2: fecha+hora y categoría -->
+        <!-- Fila 2: descripción -->
+        <div class="form-row-desc">
+          <textarea
+            name="descripcion"
+            placeholder="Descripción de la tarea (opcional)"
+            maxlength="1000"
+            rows="2"
+            style="resize: vertical; width: 100%; font-size: 1em; margin-top: 6px; margin-bottom: 6px;"
+          ></textarea>
+        </div>
+
+        <!-- Fila 3: fecha+hora y categoría -->
         <div class="form-row-bottom">
           <div class="form-label-group">
             <label for="campo-fecha">📅 Vence el</label>
@@ -123,13 +134,14 @@ $csrf = generarTokenCSRF();
               type="datetime-local"
               name="fecha_limite"
               id="campo-fecha"
-              min="<?= date('Y-m-d\TH:i') ?>"
+              min="<?= date('Y-m-d\\TH:i') ?>"
+              style="width: 160px; font-size: 0.95em; padding: 4px 8px;"
             >
           </div>
 
           <div class="form-label-group">
             <label for="select-categoria">🏷 Categoría</label>
-            <select name="id_lista" id="select-categoria">
+            <select name="id_lista" id="select-categoria" style="width: 150px; font-size: 0.95em; padding: 4px 8px;">
               <option value="0">— Sin categoría (Mi Día) —</option>
               <?php foreach ($listas as $L): ?>
                 <option value="<?= (int) $L['id'] ?>">
@@ -149,11 +161,22 @@ $csrf = generarTokenCSRF();
             $vencida = $t['fecha_limite']
                        && new DateTime($t['fecha_limite']) < $ahora
                        && !$t['completada'];
+            $desc = $t['descripcion'] ?? '';
           ?>
-          <li class="todo-item" data-list="<?= (int) ($t['id_lista'] ?? 0) ?>">
+          <li class="todo-item" data-list="<?= (int) ($t['id_lista'] ?? 0) ?>"
+              data-id="<?= (int) $t['id'] ?>"
+              data-texto="<?= htmlspecialchars($t['texto'], ENT_QUOTES, 'UTF-8') ?>"
+              data-descripcion="<?= htmlspecialchars($desc, ENT_QUOTES, 'UTF-8') ?>">
 
-            <span class="todo-text <?= $t['completada'] ? 'done' : '' ?>">
-              <?= htmlspecialchars($t['texto'], ENT_QUOTES, 'UTF-8') ?>
+            <div class="todo-view">
+              <span class="todo-text <?= $t['completada'] ? 'done' : '' ?>">
+                <?= htmlspecialchars($t['texto'], ENT_QUOTES, 'UTF-8') ?>
+              </span>
+              <?php if (!empty($desc)): ?>
+                <div class="todo-desc">
+                  <?= nl2br(htmlspecialchars($desc, ENT_QUOTES, 'UTF-8')) ?>
+                </div>
+              <?php endif; ?>
 
               <span class="todo-badges">
                 <?php if (!empty($t['fecha_limite'])): ?>
@@ -168,28 +191,47 @@ $csrf = generarTokenCSRF();
                   </span>
                 <?php endif; ?>
               </span>
-            </span>
 
-            <div class="actions">
-              <button class="btn-icon completar-tarea" data-id="<?= (int) $t['id'] ?>" title="Completar/Desmarcar">
-                <?= $t['completada'] ? '↩️' : '✔️' ?>
-              </button>
-              <button class="btn-icon editar-tarea"
-                data-id="<?= (int) $t['id'] ?>"
-                data-texto="<?= htmlspecialchars($t['texto'], ENT_QUOTES, 'UTF-8') ?>"
-                title="Editar">
-                📝
-              </button>
-              <button class="btn-icon eliminar-tarea" data-id="<?= (int) $t['id'] ?>" title="Eliminar">
-                🗑️
-              </button>
-              <?php if ((int)($t['postergaciones'] ?? 0) < (int)($t['max_postergaciones'] ?? 3)): ?>
-                <button class="btn-icon postergar-tarea" data-id="<?= (int) $t['id'] ?>" title="Postergar 1 día">
-                  +1 día
+              <div class="actions">
+                <button class="btn-icon completar-tarea" data-id="<?= (int) $t['id'] ?>" title="Completar/Desmarcar">
+                  <?= $t['completada'] ? '↩️' : '✔️' ?>
                 </button>
-              <?php endif; ?>
+                <button class="btn-icon editar-tarea"
+                  data-id="<?= (int) $t['id'] ?>"
+                  data-texto="<?= htmlspecialchars($t['texto'], ENT_QUOTES, 'UTF-8') ?>"
+                  data-descripcion="<?= htmlspecialchars($desc, ENT_QUOTES, 'UTF-8') ?>"
+                  title="Editar">
+                  📝
+                </button>
+                <button class="btn-icon eliminar-tarea" data-id="<?= (int) $t['id'] ?>" title="Eliminar">
+                  🗑️
+                </button>
+                <?php if ((int)($t['postergaciones'] ?? 0) < (int)($t['max_postergaciones'] ?? 3)): ?>
+                  <button class="btn-icon postergar-tarea" data-id="<?= (int) $t['id'] ?>" title="Postergar 1 día">
+                    +1 día
+                  </button>
+                <?php endif; ?>
+              </div>
             </div>
 
+            <!-- Inline edit form, hidden by default -->
+            <form class="todo-edit" style="display:none; margin-top:4px;">
+              <input type="text" name="texto" maxlength="300" required style="width:98%; margin-bottom:4px;">
+              <textarea name="descripcion" maxlength="1000" rows="2" style="width:98%; resize:vertical; margin-bottom:4px;"></textarea>
+              <input type="datetime-local" name="fecha_limite" style="width:98%; margin-bottom:4px;" min="<?= date('Y-m-d\TH:i') ?>">
+              <select name="id_lista" style="width:98%; margin-bottom:4px;">
+                <option value="0">— Sin categoría (Mi Día) —</option>
+                <?php foreach ($listas as $L): ?>
+                  <option value="<?= (int) $L['id'] ?>">
+                    <?= htmlspecialchars($L['nombre'], ENT_QUOTES, 'UTF-8') ?>
+                  </option>
+                <?php endforeach; ?>
+              </select>
+              <div style="display:flex; gap:8px;">
+                <button type="submit" class="btn-guardar">Guardar</button>
+                <button type="button" class="btn-cancelar">Cancelar</button>
+              </div>
+            </form>
           </li>
         <?php endforeach; ?>
       </ul>

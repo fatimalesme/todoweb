@@ -45,6 +45,7 @@ CREATE TABLE IF NOT EXISTS tareas (
     id_usuario         INT          NOT NULL,
     id_lista           INT          NOT NULL DEFAULT 0,
     texto              VARCHAR(500) NOT NULL,
+    descripcion        TEXT         DEFAULT NULL,
     completada         TINYINT(1)   NOT NULL DEFAULT 0,
     fecha_alta         DATE,
     fecha_limite       DATE,

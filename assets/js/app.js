@@ -120,19 +120,51 @@ document.addEventListener('DOMContentLoaded', () => {
         // EDITAR tarea
         const btnEditar = e.target.closest('.editar-tarea');
         if (btnEditar) {
-            const id          = btnEditar.dataset.id;
-            const textoActual = btnEditar.dataset.texto;
-            const nuevoTexto  = prompt('Editar tarea:', textoActual);
+            const item = btnEditar.closest('.todo-item');
+            if (!item) return;
+            const viewDiv = item.querySelector('.todo-view');
+            const editForm = item.querySelector('.todo-edit');
+            if (!editForm || !viewDiv) return;
 
-            if (nuevoTexto === null) return;             // canceló el prompt
-            if (nuevoTexto.trim() === '') {
-                alert('El texto de la tarea no puede estar vacío.');
-                return;
+            // Rellenar campos con valores actuales
+            editForm.texto.value = item.dataset.texto || '';
+            editForm.descripcion.value = item.dataset.descripcion || '';
+
+            // Fecha y categoría actuales
+            const fechaLimite = item.querySelector('.todo-meta')?.textContent?.includes('Vence:') ? item.querySelector('.todo-meta').textContent.replace(/[^\d\-T:]/g, '').replace('Vence:', '').trim() : '';
+            if (fechaLimite) editForm.fecha_limite.value = fechaLimite;
+            else editForm.fecha_limite.value = '';
+
+            // Seleccionar categoría actual
+            if (editForm.id_lista) {
+                editForm.id_lista.value = item.dataset.list || '0';
             }
 
-            enviarAccion({ editar_id: id, nuevo_texto: nuevoTexto.trim() }).then(data => {
-                if (data.success) location.reload();
-            });
+            // Mostrar formulario y ocultar vista
+            viewDiv.style.display = 'none';
+            editForm.style.display = 'block';
+
+            // Al guardar
+            editForm.onsubmit = function(ev) {
+                ev.preventDefault();
+                const nuevoTexto = editForm.texto.value.trim();
+                const nuevaDesc = editForm.descripcion.value.trim();
+                const nuevaFecha = editForm.fecha_limite.value;
+                const nuevaCat = editForm.id_lista.value;
+                if (nuevoTexto === '') {
+                    alert('El texto de la tarea no puede estar vacío.');
+                    return;
+                }
+                enviarAccion({ editar_id: item.dataset.id, nuevo_texto: nuevoTexto, nueva_descripcion: nuevaDesc, nueva_fecha: nuevaFecha, nueva_categoria: nuevaCat }).then(data => {
+                    if (data.success) location.reload();
+                });
+            };
+
+            // Al cancelar
+            editForm.querySelector('.btn-cancelar').onclick = function() {
+                editForm.style.display = 'none';
+                viewDiv.style.display = '';
+            };
         }
 
         // POSTERGAR tarea

@@ -8,6 +8,41 @@
 /* ============================================================
    1. FUENTES
    ============================================================ */
+
+/* Mejorar campos de fecha y categoría en el formulario de tareas */
+/* Inputs de fecha y select más pequeños y discretos */
+.todo-form .form-label-group input[type="datetime-local"],
+.todo-form .form-label-group select,
+.todo-edit input[type="datetime-local"],
+.todo-edit select {
+    width: 110px;
+    font-size: 0.88em;
+    padding: 2px 6px;
+    border-radius: 5px;
+    border: 1px solid #e5e7eb;
+    background: #fafbfc;
+    color: #444;
+    margin-bottom: 0;
+    box-shadow: none;
+    transition: border 0.2s;
+}
+.todo-form .form-label-group input[type="datetime-local"]:focus,
+.todo-form .form-label-group select:focus,
+.todo-edit input[type="datetime-local"]:focus,
+.todo-edit select:focus {
+    border: 1.5px solid #a78bfa;
+    outline: none;
+    background: #fff;
+}
+
+/* Descripción de la tarea */
+.todo-desc {
+    font-size: 0.97em;
+    color: #6b7280;
+    margin-top: 2px;
+    margin-bottom: 2px;
+    white-space: pre-line;
+}
 @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Plus+Jakarta+Sans:wght@300;400;600;700&display=swap');
 
 * {
