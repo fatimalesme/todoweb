@@ -15,8 +15,9 @@ $csrf = generarTokenCSRF();
     <link rel="stylesheet" href="assets/css/style.css">
 </head>
 <body>
+    <div class="pomodoro-box">
     <h1>Pomodoro</h1>
-    <form id="pomodoro-tarea-form" style="margin-bottom: 12px;">
+    <form id="pomodoro-tarea-form" style="margin-bottom: 12px; width:100%;">
         <label for="pomodoro-tarea-select">Selecciona una tarea:</label>
         <select id="pomodoro-tarea-select" name="tarea_id" required>
             <option value="">-- Elige una tarea --</option>
@@ -32,7 +33,7 @@ $csrf = generarTokenCSRF();
         </select>
     </form>
     <div id="pomodoro-display">25:00</div>
-    <div>
+    <div class="pomodoro-buttons">
         <button id="btn-start">Iniciar</button>
         <button id="btn-pause">Pausar</button>
         <button id="btn-reset">Reiniciar</button>
@@ -45,6 +46,8 @@ $csrf = generarTokenCSRF();
     <div id="pomodoro-tarea-tiempo" style="margin-top:10px; color:#555;"></div>
     <br>
     <a href="index.php" class="sidebar-link">&larr; Volver al menú principal</a>
+    <a href="progreso.php" class="sidebar-link">Ver progreso</a>
+    </div>
     <script src="assets/js/pomodoro.js"></script>
 </body>
 </html>
