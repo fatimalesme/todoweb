@@ -1,5 +1,5 @@
-// Gestion visual de los avisos en el dashboard
-// Los avisos ya se renderizan desde PHP; este script añade animacion y la opcion de cerrarlos
+// Gestión visual de los avisos en el dashboard
+// Los avisos ya se renderizan desde PHP; este script añade animación y la opción de cerrarlos
 
 document.addEventListener('DOMContentLoaded', () => {
 
@@ -7,48 +7,31 @@ document.addEventListener('DOMContentLoaded', () => {
     if (!avisos.length) return;
 
     avisos.forEach((aviso) => {
-        // Añadir boton de cerrar a cada aviso
+        // Añadir botón de cerrar con clase CSS 
         const btnCerrar = document.createElement('button');
-        btnCerrar.textContent = 'x';
+        btnCerrar.textContent = '×';
         btnCerrar.title       = 'Cerrar aviso';
-        btnCerrar.style.cssText = `
-            float: right;
-            background: none;
-            border: none;
-            cursor: pointer;
-            font-weight: bold;
-            font-size: 1rem;
-            padding: 0 0 0 10px;
-            color: inherit;
-            width: auto;
-            margin-bottom: 0;
-            line-height: 1;
-        `;
+        btnCerrar.className   = 'aviso-cerrar';
         aviso.prepend(btnCerrar);
 
-        // Animacion de entrada
-        aviso.style.opacity   = '0';
-        aviso.style.transform = 'translateY(-8px)';
-        aviso.style.transition = 'opacity 0.4s ease, transform 0.4s ease';
+        // Animación de entrada usando clases CSS 
         setTimeout(() => {
-            aviso.style.opacity   = '1';
-            aviso.style.transform = 'translateY(0)';
+            aviso.classList.add('visible');
         }, 50);
 
-        // Cerrar con animacion al hacer click
-        btnCerrar.addEventListener('click', () => {
-            aviso.style.opacity   = '0';
-            aviso.style.transform = 'translateY(-8px)';
+        // Función auxiliar para ocultar con animación
+        function ocultarAviso() {
+            aviso.classList.remove('visible');
+            aviso.classList.add('oculto');
             setTimeout(() => aviso.remove(), 400);
-        });
+        }
 
-        // Cerrar automaticamente despues de 8 segundos
+        // Cerrar al hacer clic
+        btnCerrar.addEventListener('click', ocultarAviso);
+
+        // Cerrar automáticamente después de 8 segundos
         setTimeout(() => {
-            if (aviso.isConnected) {
-                aviso.style.opacity   = '0';
-                aviso.style.transform = 'translateY(-8px)';
-                setTimeout(() => aviso.remove(), 400);
-            }
+            if (aviso.isConnected) ocultarAviso();
         }, 8000);
     });
 

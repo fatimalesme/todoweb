@@ -1,183 +1,29 @@
 /* ============================================================
-   POMODORO — Personalización visual
-   ============================================================ */
-
-/* Contenedor general del Pomodoro */
-.pomodoro-box {
-    background: rgba(255,255,255,0.97);
-    border-radius: 22px;
-    box-shadow: 0 8px 32px rgba(252,129,129,0.13);
-    padding: 36px 32px 28px 32px;
-    max-width: 420px;
-    margin: 0 auto 32px auto;
-    text-align: center;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 18px;
-}
-/* Título Pomodoro centrado arriba */
-.pomodoro-box h1 {
-    width: 100%;
-    text-align: center;
-    margin-bottom: 0.5em;
-    font-size: 2.2rem;
-    color: #572331;
-    font-family: 'Playfair Display', serif;
-    font-weight: 700;
-    letter-spacing: 1px;
-}
-/* Cambia el fondo, borde, sombra, padding del Pomodoro */
-
-/* Temporizador grande */
-#pomodoro-display {
-    font-size: 3.2rem;
-    font-family: 'Playfair Display', serif;
-    color: #000000;
-    letter-spacing: 2px;
-    margin: 0 0 18px 0;
-    font-weight: 700;
-    text-shadow: 0 2px 12px rgba(252,129,129,0.13);
-    width: 100%;
-}
-/* Cambia tamaño, color, fuente, sombra del temporizador */
-
-/* Botones Pomodoro */
-/* Botones Pomodoro en columna */
-.pomodoro-buttons {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-    width: 100%;
-    align-items: center;
-    margin-bottom: 10px;
-}
-#btn-start, #btn-pause, #btn-reset, #btn-stop {
-    width: 80%;
-    min-width: 120px;
-    padding: 12px 0;
-    margin: 0;
-    border-radius: 10px;
-    font-size: 1.05rem;
-    font-weight: 600;
-    background: linear-gradient(135deg, #572331 0%, #773847 100%);
-    color: #fff;
-    border: none;
-    box-shadow: 0 2px 8px rgba(252,129,129,0.10);
-    transition: background 0.2s, transform 0.2s;
-    cursor: pointer;
-    outline: none;
-    margin-bottom: 0;
-}
-#btn-start:hover, #btn-pause:hover, #btn-reset:hover, #btn-stop:hover {
-    background: linear-gradient(135deg, #773847 0%, #572331 100%);
-    transform: translateY(-2px) scale(1.04);
-}
-/* Cambia color, tamaño, borde, sombra, hover de los botones */
-
-/* Selector de tarea */
-#pomodoro-tarea-select {
-    width: 80%;
-    max-width: 320px;
-    padding: 8px 12px;
-    border-radius: 8px;
-    border: 1.5px solid #572331;
-    font-size: 1rem;
-    margin-bottom: 16px;
-    background: #fff8f6;
-    color: #572331;
-    font-weight: 600;
-}
-#pomodoro-tarea-select:focus {
-    border-color: #f6ad55;
-    outline: none;
-}
-/* Cambia ancho, color, borde, fondo, fuente del select de tarea */
-
-/* Texto de modo y sesiones */
-#pomodoro-modo {
-    color: #572331;
-    font-weight: 700;
-    font-size: 1.1rem;
-    margin-right: 8px;
-}
-#pomodoro-sesiones {
-    color: #773847;
-    font-weight: 700;
-    font-size: 1.1rem;
-}
-/* Cambia color, tamaño, fuente del modo y sesiones */
-
-/* Tiempo total dedicado */
-#pomodoro-tarea-tiempo {
-    color: #2d3748;
-    font-size: 1.05rem;
-    margin-top: 10px;
-    font-weight: 500;
-}
-/* Cambia color, tamaño, margen del tiempo total dedicado */
-/* ============================================================
    style.css — ToDoWeb
    ÚNICO archivo de estilos del proyecto.
-   Todos los componentes están aquí, organizados por sección.
    ============================================================ */
 
 
 /* ============================================================
    1. FUENTES
    ============================================================ */
-
-/* Mejorar campos de fecha y categoría en el formulario de tareas */
-/* Inputs de fecha y select más pequeños y discretos */
-.todo-form .form-label-group input[type="datetime-local"],
-.todo-form .form-label-group select,
-.todo-edit input[type="datetime-local"],
-.todo-edit select {
-    width: 110px;
-    font-size: 0.88em;
-    padding: 2px 6px;
-    border-radius: 5px;
-    border: 1px solid #e5e7eb;
-    background: #fafbfc;
-    color: #444;
-    margin-bottom: 0;
-    box-shadow: none;
-    transition: border 0.2s;
-}
-.todo-form .form-label-group input[type="datetime-local"]:focus,
-.todo-form .form-label-group select:focus,
-.todo-edit input[type="datetime-local"]:focus,
-.todo-edit select:focus {
-    border: 1.5px solid #a78bfa;
-    outline: none;
-    background: #fff;
-}
-
-/* Descripción de la tarea */
-.todo-desc {
-    font-size: 0.97em;
-    color: #6b7280;
-    margin-top: 2px;
-    margin-bottom: 2px;
-    white-space: pre-line;
-}
-@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Plus+Jakarta+Sans:wght@300;400;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Inter:wght@300;400;500;600;700&display=swap');
 
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-family: 'Inter', sans-serif;
 }
 
 
 /* ============================================================
-   2. FONDO
+   2. FONDO (compartido por todas las páginas)
    ============================================================ */
 body {
     background:
-        linear-gradient(rgba(43, 30, 62, 0.6), rgba(255, 138, 112, 0.3)),
-        url('https://images.unsplash.com/photo-1614850523296-d8c1af93d400?q=80&w=2070');
+        linear-gradient(135deg, rgba(15, 23, 42, 0.88) 0%, rgba(88, 28, 135, 0.65) 50%, rgba(15, 23, 42, 0.92) 100%),
+        url('https://images.unsplash.com/photo-1451187580459-43490279c0fa?q=80&w=2072');
     background-size: cover;
     background-position: center;
     background-attachment: fixed;
@@ -185,7 +31,7 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    color: #2d3748;
+    color: #e2e8f0;
 }
 
 
@@ -194,56 +40,102 @@ body {
    ============================================================ */
 .login-container,
 .login-card {
-    background: rgba(255, 255, 255, 0.92);
-    backdrop-filter: blur(10px);
-    padding: 50px 40px;
-    border-radius: 24px;
-    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+    background: rgba(15, 23, 42, 0.78);
+    backdrop-filter: blur(24px);
+    -webkit-backdrop-filter: blur(24px);
+    padding: 52px 44px;
+    border-radius: 20px;
+    box-shadow: 0 25px 60px rgba(0, 0, 0, 0.5),
+                inset 0 1px 0 rgba(255, 255, 255, 0.07);
     width: 100%;
     max-width: 420px;
     text-align: center;
-    border: 1px solid rgba(255, 255, 255, 0.3);
+    border: 1px solid rgba(255, 255, 255, 0.08);
 }
 
 .login-container h2,
 .login-card h1 {
-    font-family: 'Playfair Display', serif;
-    font-weight: 700;
-    margin-bottom: 30px;
-    color: #1a202c;
-    font-size: 2.2rem;
+    font-family: 'DM Serif Display', serif;
+    font-weight: 400;
+    margin-bottom: 8px;
+    color: #f1f5f9;
+    font-size: 2.4rem;
+    letter-spacing: -0.5px;
 }
 
-/* Mensajes de error y éxito en login/registro */
+.login-subtitle {
+    color: rgba(148, 163, 184, 0.75);
+    font-size: 0.9rem;
+    margin-bottom: 32px;
+    font-weight: 400;
+}
+
+.login-separator {
+    margin: 16px 0;
+    border: none;
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.login-footer-text {
+    margin-top: 16px;
+    font-size: 0.9em;
+    color: rgba(148, 163, 184, 0.8);
+}
+
+.login-footer-text a {
+    color: #a78bfa;
+    font-weight: 600;
+    text-decoration: none;
+    transition: color 0.2s;
+}
+
+.login-footer-text a:hover {
+    color: #c4b5fd;
+}
+
 .mensaje-error {
-    background: rgba(252, 129, 129, 0.2);
-    color: #c53030;
-    border: 1px solid rgba(252, 129, 129, 0.5);
+    background: rgba(239, 68, 68, 0.12);
+    color: #fca5a5;
+    border: 1px solid rgba(239, 68, 68, 0.25);
     padding: 10px 16px;
     border-radius: 10px;
     margin-bottom: 16px;
     font-size: 0.9rem;
-    font-weight: 600;
+    font-weight: 500;
 }
 
 .mensaje-exito {
-    background: rgba(72, 187, 120, 0.2);
-    color: #276749;
-    border: 1px solid rgba(72, 187, 120, 0.5);
+    background: rgba(34, 197, 94, 0.12);
+    color: #86efac;
+    border: 1px solid rgba(34, 197, 94, 0.25);
     padding: 10px 16px;
     border-radius: 10px;
     margin-bottom: 16px;
     font-size: 0.9rem;
-    font-weight: 600;
+    font-weight: 500;
 }
 
-/* Texto de requisitos en el registro */
 .requisitos {
     font-size: 0.8rem;
-    color: #718096;
+    color: rgba(148, 163, 184, 0.7);
     text-align: left;
     margin-bottom: 16px;
     line-height: 1.6;
+}
+
+.link-ya-tengo-cuenta {
+    display: block;
+    margin-top: 12px;
+    color: #a78bfa;
+    font-size: 0.9rem;
+    font-weight: 500;
+    text-align: center;
+    text-decoration: none;
+    transition: color 0.2s;
+}
+
+.link-ya-tengo-cuenta:hover {
+    color: #c4b5fd;
 }
 
 
@@ -254,23 +146,51 @@ input[type="text"],
 input[type="password"],
 input[type="date"],
 input[type="datetime-local"],
-select {
+select,
+textarea {
     width: 100%;
-    padding: 16px;
-    margin-bottom: 20px;
-    border: 1.5px solid #e2e8f0;
-    border-radius: 14px;
+    padding: 14px 16px;
+    margin-bottom: 16px;
+    border: 1.5px solid rgba(255, 255, 255, 0.08);
+    border-radius: 12px;
     outline: none;
     font-size: 15px;
-    background-color: #fff;
-    transition: border-color 0.3s, box-shadow 0.3s;
-    color: #1a202c;
+    background-color: rgba(255, 255, 255, 0.05);
+    transition: border-color 0.3s, box-shadow 0.3s, background 0.3s;
+    color: #f1f5f9;
+    font-family: 'Inter', sans-serif;
+}
+
+input::placeholder,
+textarea::placeholder {
+    color: rgba(148, 163, 184, 0.45);
 }
 
 input:focus,
-select:focus {
-    border-color: #572331;
-    box-shadow: 0 0 0 3px rgba(87, 35, 49, 0.1);
+select:focus,
+textarea:focus {
+    border-color: #a78bfa;
+    box-shadow: 0 0 0 3px rgba(167, 139, 250, 0.12);
+    background-color: rgba(255, 255, 255, 0.08);
+}
+
+select option {
+    background: #1e293b;
+    color: #f1f5f9;
+}
+
+/* Mensajes de error de validación (generados por validaciones.js) */
+.error-msg {
+    color: #fca5a5;
+    font-size: 0.8rem;
+    display: block;
+    margin-top: -10px;
+    margin-bottom: 8px;
+}
+
+.input-error {
+    border-color: #ef4444 !important;
+    box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.15) !important;
 }
 
 
@@ -279,63 +199,100 @@ select:focus {
    ============================================================ */
 button {
     width: 100%;
-    padding: 16px;
+    padding: 14px;
     border: none;
-    border-radius: 14px;
+    border-radius: 12px;
     cursor: pointer;
-    font-weight: 700;
-    font-size: 1rem;
-    margin-bottom: 12px;
-    transition: all 0.3s ease;
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
+    font-weight: 600;
+    font-size: 0.95rem;
+    margin-bottom: 10px;
+    transition: all 0.25s ease;
+    letter-spacing: 0.3px;
+    font-family: 'Inter', sans-serif;
 }
 
 button[name="login"],
 button[name="register"],
 .btn-main,
 button[name="add"] {
-    background: linear-gradient(135deg, #572331 0%, #773847 100%);
+    background: linear-gradient(135deg, #7c3aed 0%, #a855f7 100%);
     color: white;
-    box-shadow: 0 4px 15px rgba(252, 129, 129, 0.3);
+    box-shadow: 0 4px 20px rgba(124, 58, 237, 0.35);
 }
 
-button:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 8px 25px rgba(252, 129, 129, 0.4);
+button[name="login"]:hover,
+button[name="register"]:hover,
+.btn-main:hover,
+button[name="add"]:hover {
+    background: linear-gradient(135deg, #6d28d9 0%, #9333ea 100%);
+    transform: translateY(-1px);
+    box-shadow: 0 8px 28px rgba(124, 58, 237, 0.45);
 }
 
 button[name="invitado"] {
-    background-color: rgba(255, 255, 255, 0.8);
-    color: #4a5568;
-    border: 1px solid #e2e8f0;
-    text-transform: none;
+    background: rgba(255, 255, 255, 0.06);
+    color: rgba(148, 163, 184, 0.9);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    font-weight: 500;
 }
 
-/* Botones de icono dentro de cada tarea (completar, editar, eliminar...) */
+button[name="invitado"]:hover {
+    background: rgba(255, 255, 255, 0.1);
+    color: #f1f5f9;
+    transform: translateY(-1px);
+}
+
 .btn-icon {
     background: none;
     border: none;
     cursor: pointer;
     font-size: 16px;
-    padding: 4px 6px;
-    border-radius: 6px;
+    padding: 5px 7px;
+    border-radius: 8px;
     transition: background 0.2s;
     width: auto;
     margin-bottom: 0;
-    text-transform: none;
     letter-spacing: 0;
 }
 
 .btn-icon:hover {
-    background: rgba(0, 0, 0, 0.07);
+    background: rgba(255, 255, 255, 0.1);
     transform: none;
     box-shadow: none;
 }
 
-/* Botón eliminar (rojo) */
 .btn-icon.eliminar-tarea {
-    color: #e53e3e;
+    color: #f87171;
+}
+
+.btn-guardar {
+    background: linear-gradient(135deg, #7c3aed 0%, #a855f7 100%);
+    color: #fff;
+    padding: 8px 20px;
+    width: auto;
+    margin-bottom: 0;
+    font-size: 0.9rem;
+    box-shadow: 0 2px 10px rgba(124, 58, 237, 0.3);
+}
+
+.btn-guardar:hover {
+    background: linear-gradient(135deg, #6d28d9 0%, #9333ea 100%);
+    transform: translateY(-1px);
+}
+
+.btn-cancelar {
+    background: rgba(255, 255, 255, 0.06);
+    color: rgba(148, 163, 184, 0.9);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    padding: 8px 20px;
+    width: auto;
+    margin-bottom: 0;
+    font-size: 0.9rem;
+}
+
+.btn-cancelar:hover {
+    background: rgba(255, 255, 255, 0.1);
+    color: #f1f5f9;
 }
 
 
@@ -357,152 +314,155 @@ body:has(.app) {
    7. SIDEBAR
    ============================================================ */
 .sidebar {
-    width: 280px;
-    min-width: 280px;
-    background-color: rgba(15, 15, 25, 0.45);
-    backdrop-filter: blur(20px);
-    border-right: 1px solid rgba(255, 255, 255, 0.15);
-    padding: 45px 25px;
+    width: 270px;
+    min-width: 270px;
+    background: rgba(8, 8, 20, 0.55);
+    backdrop-filter: blur(28px);
+    -webkit-backdrop-filter: blur(28px);
+    border-right: 1px solid rgba(255, 255, 255, 0.06);
+    padding: 40px 20px;
     display: flex;
     flex-direction: column;
-    box-shadow: 10px 0 40px rgba(0, 0, 0, 0.25);
+    gap: 4px;
 }
 
 .sidebar h2 {
-    color: #ffffff;
-    font-family: 'Playfair Display', serif;
-    font-size: 1.4rem;
-    letter-spacing: 1px;
-    text-transform: uppercase;
-    margin-bottom: 40px;
-    text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+    color: #f1f5f9;
+    font-family: 'DM Serif Display', serif;
+    font-weight: 400;
+    font-size: 1.25rem;
+    margin-bottom: 28px;
     word-break: break-word;
+    letter-spacing: -0.2px;
 }
 
-/* Menú de categorías */
 .list-menu {
     list-style: none;
     padding: 0;
+    margin-bottom: 8px;
 }
 
 .list-menu li {
-    padding: 14px 18px;
-    margin-bottom: 10px;
-    border-radius: 12px;
+    padding: 10px 14px;
+    margin-bottom: 2px;
+    border-radius: 10px;
     cursor: pointer;
-    color: rgba(255, 255, 255, 0.85);
+    color: rgba(148, 163, 184, 0.8);
     font-weight: 400;
-    transition: all 0.3s;
+    font-size: 0.92rem;
+    transition: all 0.2s;
     user-select: none;
+    border-left: 3px solid transparent;
 }
 
-.list-menu li:hover,
+.list-menu li:hover {
+    background: rgba(167, 139, 250, 0.1);
+    color: #e2e8f0;
+}
+
 .list-menu li.active {
-    background-color: rgba(255, 255, 255, 0.2);
-    color: #fff;
-    transform: translateX(8px);
-    font-weight: 600;
+    background: rgba(167, 139, 250, 0.15);
+    color: #e2e8f0;
+    font-weight: 500;
+    border-left-color: #a78bfa;
 }
 
-/* Formulario para crear nueva categoría en el sidebar */
 .sidebar-form {
     width: 100%;
-    margin: 16px 0 0 0;
+    margin: 12px 0 0 0;
     padding: 0;
-    border-top: none;
 }
 
 .sidebar-form input {
     width: 100%;
-    padding: 14px 22px;
-    border-radius: 14px;
-    border: 1px solid rgba(255, 255, 255, 0.2);
-    background: rgba(255, 255, 255, 0.1);
-    color: #fff;
-    font-size: 1.08rem;
-    font-weight: 700;
+    padding: 10px 14px;
+    border-radius: 10px;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    background: rgba(255, 255, 255, 0.05);
+    color: #e2e8f0;
+    font-size: 0.9rem;
+    font-weight: 400;
     outline: none;
     margin-bottom: 0;
     box-sizing: border-box;
+    transition: border 0.2s, background 0.2s;
 }
 
 .sidebar-form input::placeholder {
-    color: rgba(255, 255, 255, 0.6);
+    color: rgba(148, 163, 184, 0.4);
+    font-size: 0.88rem;
 }
 
-/* Links de navegación del sidebar (Progreso, Pomodoro, Cerrar sesión) */
-/* Enlaces destacados para Pomodoro */
+.sidebar-form input:focus {
+    border-color: #a78bfa;
+    background: rgba(255, 255, 255, 0.08);
+    box-shadow: none;
+}
+
 .sidebar-link {
     display: block;
     width: 100%;
     box-sizing: border-box;
-    color: #fff;
-    background: linear-gradient(135deg, #984d61 0%, #954a5c 100%);
+    color: rgba(148, 163, 184, 0.8);
+    background: transparent;
     text-decoration: none;
-    padding: 14px 22px;
-    border-radius: 14px;
-    margin: 16px 0 0 0;
-    font-weight: 700;
-    font-size: 1.08rem;
-    box-shadow: 0 4px 18px rgba(87, 35, 49, 0.18);
-    letter-spacing: 0.5px;
-    transition: background 0.2s, color 0.2s, transform 0.2s;
-}
-.sidebar-link:hover {
-    background: linear-gradient(135deg, #773847 0%, #572331 100%);
-    color: #fff;
-    transform: translateY(-2px) scale(1.04);
-    box-shadow: 0 8px 28px rgba(87, 35, 49, 0.28);
+    padding: 10px 14px;
+    border-radius: 10px;
+    margin-top: 4px;
+    font-weight: 400;
+    font-size: 0.92rem;
+    transition: background 0.2s, color 0.2s;
 }
 
 .sidebar-link:hover {
-    background: rgba(255, 255, 255, 0.15);
-    color: #fff;
+    background: rgba(255, 255, 255, 0.07);
+    color: #f1f5f9;
 }
 
-/* Link de cerrar sesión (rojo) */
 .sidebar-link--danger {
-    color: #e53e3e;
-    font-weight: 600;
+    color: #f87171;
+    margin-top: 16px;
 }
 
-/* ---- Bloque "Próximas a vencer" en el sidebar ---- */
+.sidebar-link--danger:hover {
+    background: rgba(239, 68, 68, 0.1);
+    color: #fca5a5;
+}
+
 .sidebar-proximas {
-    margin: 12px 0 0;
-    padding: 10px 15px;
-    border-top: 1px solid rgba(255, 255, 255, 0.12);
+    margin: 16px 0 0;
+    padding: 12px 10px;
+    border-top: 1px solid rgba(255, 255, 255, 0.06);
 }
 
 .sidebar-proximas-titulo {
-    font-size: 0.72rem;
-    font-weight: 700;
+    font-size: 0.68rem;
+    font-weight: 600;
     text-transform: uppercase;
-    letter-spacing: 0.8px;
-    color: rgba(255, 255, 255, 0.45);
+    letter-spacing: 1px;
+    color: rgba(148, 163, 184, 0.4);
     margin-bottom: 8px;
 }
 
-/* Cada tarea próxima a vencer (amarillo por defecto) */
 .proxima-item {
     display: flex;
     flex-direction: column;
-    padding: 8px 10px;
-    margin-bottom: 6px;
-    border-radius: 10px;
-    background: rgba(246, 173, 85, 0.15);
-    border-left: 3px solid rgba(246, 173, 85, 0.7);
+    padding: 7px 10px;
+    margin-bottom: 5px;
+    border-radius: 8px;
+    background: rgba(234, 179, 8, 0.08);
+    border-left: 2px solid rgba(234, 179, 8, 0.5);
     cursor: default;
 }
 
-/* Vence en menos de 24 h → rojo */
 .proxima-item.vence-hoy {
-    background: rgba(252, 129, 129, 0.15);
-    border-left-color: rgba(252, 129, 129, 0.8);
+    background: rgba(239, 68, 68, 0.1);
+    border-left-color: rgba(239, 68, 68, 0.6);
 }
 
 .proxima-item-texto {
-    font-size: 0.8rem;
-    color: rgba(255, 255, 255, 0.9);
+    font-size: 0.78rem;
+    color: rgba(226, 232, 240, 0.85);
     font-weight: 500;
     white-space: nowrap;
     overflow: hidden;
@@ -510,8 +470,8 @@ body:has(.app) {
 }
 
 .proxima-item-tiempo {
-    font-size: 0.7rem;
-    color: rgba(255, 255, 255, 0.5);
+    font-size: 0.68rem;
+    color: rgba(148, 163, 184, 0.5);
     margin-top: 2px;
 }
 
@@ -521,7 +481,7 @@ body:has(.app) {
    ============================================================ */
 .main {
     flex-grow: 1;
-    padding: 60px;
+    padding: 52px 60px;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -532,17 +492,18 @@ body:has(.app) {
 .main-header {
     width: 100%;
     max-width: 700px;
-    margin-bottom: 24px;
+    margin-bottom: 28px;
 }
 
 .main h1,
 .main-header h1 {
-    font-family: 'Playfair Display', serif;
-    font-size: 3rem;
-    color: #fff;
-    text-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+    font-family: 'DM Serif Display', serif;
+    font-weight: 400;
+    font-size: 2.8rem;
+    color: #f1f5f9;
     margin-bottom: 0;
     text-align: left;
+    letter-spacing: -0.5px;
 }
 
 
@@ -554,16 +515,17 @@ body:has(.app) {
     max-width: 700px;
     display: flex;
     flex-direction: column;
-    gap: 8px;
-    margin-bottom: 30px;
-    background: rgba(255, 255, 255, 0.95);
-    padding: 10px 16px;
-    border-radius: 20px;
-    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
-    border: 1px solid rgba(255, 255, 255, 0.4);
+    gap: 4px;
+    margin-bottom: 28px;
+    background: rgba(15, 23, 42, 0.6);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    padding: 12px 16px;
+    border-radius: 16px;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
 }
 
-/* Fila 1: input de texto + botón Añadir */
 .form-row-top {
     display: flex;
     gap: 8px;
@@ -576,46 +538,66 @@ body:has(.app) {
     background: transparent;
     border: none;
     box-shadow: none;
-    padding: 12px 16px;
+    padding: 12px 8px;
     font-size: 15px;
-    color: #1a202c;
+    color: #f1f5f9;
     outline: none;
     margin-bottom: 0;
+}
+
+.form-row-top input[name="texto"]::placeholder {
+    color: rgba(148, 163, 184, 0.4);
 }
 
 .form-row-top input[name="texto"]:focus {
     border: none;
     box-shadow: none;
+    background: transparent;
 }
 
 .form-row-top button[name="add"] {
     width: auto;
-    padding: 0 24px;
-    height: 46px;
+    padding: 0 22px;
+    height: 44px;
     margin-bottom: 0;
-    border-radius: 12px;
+    border-radius: 10px;
     white-space: nowrap;
+    font-size: 0.88rem;
 }
 
-/* Fila 2: fecha+hora y selector de categoría */
+.form-row-desc textarea {
+    resize: vertical;
+    width: 100%;
+    font-size: 0.9em;
+    margin-top: 4px;
+    margin-bottom: 4px;
+    padding: 8px 10px;
+    border-radius: 10px;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    background: rgba(255, 255, 255, 0.04);
+    color: #e2e8f0;
+    min-height: 52px;
+}
+
 .form-row-bottom {
     display: flex;
     gap: 8px;
     width: 100%;
-    align-items: flex-end;
+    align-items: center;
+    padding-bottom: 4px;
 }
 
-/* Cada grupo label + input/select */
 .form-label-group {
     display: flex;
-    gap: 3px;
-    flex: 1 1 18px;
+    align-items: center;
+    gap: 6px;
+    flex: 1;
 }
 
 .form-label-group label {
     font-size: 11px;
-    font-weight: 700;
-    color: #718096;
+    font-weight: 600;
+    color: rgba(148, 163, 184, 0.6);
     text-transform: uppercase;
     letter-spacing: 0.5px;
     white-space: nowrap;
@@ -623,16 +605,25 @@ body:has(.app) {
 
 .form-label-group input[type="datetime-local"],
 .form-label-group select {
-    flex: 1 1 180px;
-    padding: 10px 14px;
+    flex: 1;
+    padding: 7px 10px;
     margin-bottom: 0;
-    font-size: 13px;
-    border-radius: 10px;
-    border: 1.5px solid #e2e8f0;
-    background: #f8f9fa;
-    color: #1a202c;
-    min-width: 150px;
+    font-size: 0.82rem;
+    border-radius: 8px;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    background: rgba(255, 255, 255, 0.05);
+    color: #cbd5e1;
     cursor: pointer;
+    min-width: 0;
+    width: auto;
+}
+
+.form-label-group input[type="datetime-local"]:focus,
+.form-label-group select:focus {
+    border-color: #a78bfa;
+    outline: none;
+    background: rgba(255, 255, 255, 0.08);
+    box-shadow: none;
 }
 
 
@@ -646,138 +637,440 @@ body:has(.app) {
 }
 
 .todo-item {
-    background: rgba(255, 255, 255, 0.88);
-    backdrop-filter: blur(5px);
-    padding: 18px 24px;
-    border-radius: 18px;
-    margin-bottom: 14px;
+    background: rgba(15, 23, 42, 0.55);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    padding: 16px 20px;
+    border-radius: 14px;
+    margin-bottom: 10px;
     display: flex;
-    justify-content: space-between;
-    align-items: center;
-    gap: 12px;
-    border: 1px solid rgba(255, 255, 255, 0.5);
-    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.06);
-    transition: all 0.3s ease;
+    flex-direction: column;
+    gap: 0;
+    border: 1px solid rgba(255, 255, 255, 0.07);
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
+    transition: all 0.25s ease;
 }
 
 .todo-item:hover {
-    transform: translateY(-2px) scale(1.005);
-    background: rgba(255, 255, 255, 0.95);
-    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+    transform: translateY(-1px);
+    background: rgba(15, 23, 42, 0.7);
+    border-color: rgba(167, 139, 250, 0.2);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
 }
 
-/* Texto de la tarea */
+.todo-view {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
+.todo-view-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+}
+
 .todo-text {
     flex-grow: 1;
     word-break: break-word;
+    color: #e2e8f0;
+    font-size: 0.97rem;
 }
 
-/* Tarea completada: tachado y opaco */
+.todo-desc {
+    font-size: 0.85rem;
+    color: rgba(148, 163, 184, 0.7);
+    margin-top: 4px;
+    margin-bottom: 2px;
+    white-space: pre-line;
+}
+
 .done {
     text-decoration: line-through;
-    opacity: 0.5;
+    opacity: 0.45;
+    color: rgba(148, 163, 184, 0.6);
 }
 
-/* Contenedor de botones de acción */
 .actions {
     display: flex;
-    gap: 8px;
+    gap: 4px;
     align-items: center;
     flex-shrink: 0;
 }
 
-/* Badges de fecha (vencimiento, finalización) */
 .todo-meta {
     display: inline-block;
     margin-top: 5px;
     margin-right: 4px;
-    font-size: 11px;
-    color: #3182ce;
-    background: #ebf4ff;
-    padding: 3px 10px;
+    font-size: 0.7rem;
+    color: #93c5fd;
+    background: rgba(59, 130, 246, 0.12);
+    padding: 2px 9px;
     border-radius: 20px;
-    font-weight: 700;
+    font-weight: 600;
     text-transform: uppercase;
+    letter-spacing: 0.3px;
 }
 
-/* Badge de tarea vencida → rojo */
 .todo-meta.badge-vencida {
-    background: #fff5f5;
-    color: #c53030;
+    background: rgba(239, 68, 68, 0.12);
+    color: #fca5a5;
 }
 
-/* Badge de tarea completada → verde */
 .todo-meta.badge-fin {
-    background: #f0fff4;
-    color: #276749;
+    background: rgba(34, 197, 94, 0.1);
+    color: #86efac;
 }
 
-/* Bloque que agrupa los badges debajo del texto */
 .todo-badges {
     display: block;
-    margin-top: 5px;
+    margin-top: 4px;
 }
 
-/* Botón oculto del formulario del sidebar (se envía con Enter en el input) */
+/* Formulario de edición inline (oculto por defecto vía JS) */
+.todo-edit {
+    margin-top: 8px;
+    display: none;
+}
+
+.todo-edit input[type="text"],
+.todo-edit textarea,
+.todo-edit input[type="datetime-local"],
+.todo-edit select {
+    width: 100%;
+    margin-bottom: 6px;
+    padding: 8px 10px;
+    border-radius: 8px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    background: rgba(255, 255, 255, 0.05);
+    color: #e2e8f0;
+    font-size: 0.9rem;
+    resize: vertical;
+}
+
+.todo-edit-actions {
+    display: flex;
+    gap: 8px;
+    margin-top: 4px;
+}
+
 .btn-hidden {
     display: none;
 }
 
-/* Mensaje cuando no hay tareas en la categoría activa */
 .msg-sin-tareas {
     display: none;
-    color: rgba(255, 255, 255, 0.7);
+    color: rgba(148, 163, 184, 0.5);
     margin-top: 20px;
     font-style: italic;
+    font-size: 0.9rem;
 }
 
 
 /* ============================================================
-   11. PÁGINAS SECUNDARIAS (Pomodoro, contenedor genérico)
+   11. PÁGINAS SECUNDARIAS (contenedor genérico)
    ============================================================ */
 .page-container {
-    background: rgba(255, 255, 255, 0.92);
-    backdrop-filter: blur(10px);
+    background: rgba(15, 23, 42, 0.72);
+    backdrop-filter: blur(24px);
+    -webkit-backdrop-filter: blur(24px);
     padding: 50px 40px;
-    border-radius: 24px;
-    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+    border-radius: 20px;
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.4);
     width: 100%;
     max-width: 500px;
     text-align: center;
+    border: 1px solid rgba(255, 255, 255, 0.07);
 }
 
 .page-container h1 {
-    font-family: 'Playfair Display', serif;
+    font-family: 'DM Serif Display', serif;
     font-size: 2rem;
     margin-bottom: 30px;
-    color: #1a202c;
+    color: #f1f5f9;
+    font-weight: 400;
 }
 
-/* Link de cerrar sesión en páginas secundarias */
 .logout-link {
     display: block;
     margin-top: 30px;
-    color: #ffffff;
-    padding: 14px 20px;
-    font-weight: 700;
+    color: #a78bfa;
+    padding: 12px 20px;
+    font-weight: 500;
+    font-size: 0.9rem;
     text-align: center;
-    border: 1.5px solid rgba(252, 129, 129, 0.7);
+    border: 1.5px solid rgba(167, 139, 250, 0.3);
     border-radius: 12px;
-    background: rgba(252, 129, 129, 0.15);
-    transition: all 0.3s ease;
+    background: rgba(167, 139, 250, 0.07);
+    transition: all 0.25s ease;
     text-decoration: none;
 }
 
 .logout-link:hover {
-    background: #572331;
-    color: #fff;
-    box-shadow: 0 0 20px rgba(252, 129, 129, 0.5);
-    transform: translateY(-2px);
+    background: rgba(167, 139, 250, 0.15);
+    color: #c4b5fd;
+    border-color: rgba(167, 139, 250, 0.5);
+    transform: translateY(-1px);
 }
 
 
 /* ============================================================
-   12. RESPONSIVE — pantallas pequeñas
+   12. PÁGINA DE PROGRESO
+   ============================================================ */
+.stats-cards {
+    display: flex;
+    gap: 16px;
+    margin-bottom: 28px;
+    flex-wrap: wrap;
+}
+
+.stat-card {
+    border-radius: 14px;
+    padding: 18px 24px;
+    min-width: 130px;
+    border: 1px solid transparent;
+}
+
+.stat-card--completadas {
+    background: rgba(34, 197, 94, 0.08);
+    border-color: rgba(34, 197, 94, 0.2);
+}
+
+.stat-card--pendientes {
+    background: rgba(239, 68, 68, 0.08);
+    border-color: rgba(239, 68, 68, 0.2);
+}
+
+.stat-card--total {
+    background: rgba(59, 130, 246, 0.08);
+    border-color: rgba(59, 130, 246, 0.2);
+}
+
+.stat-card-numero {
+    font-size: 2rem;
+    font-weight: 700;
+    line-height: 1;
+    margin-bottom: 4px;
+}
+
+.stat-card--completadas .stat-card-numero { color: #86efac; }
+.stat-card--pendientes  .stat-card-numero { color: #fca5a5; }
+.stat-card--total       .stat-card-numero { color: #93c5fd; }
+
+.stat-card-label {
+    font-size: 0.85rem;
+    font-weight: 500;
+}
+
+.stat-card--completadas .stat-card-label { color: rgba(134, 239, 172, 0.7); }
+.stat-card--pendientes  .stat-card-label { color: rgba(252, 165, 165, 0.7); }
+.stat-card--total       .stat-card-label { color: rgba(147, 197, 253, 0.7); }
+
+.chart-wrapper {
+    max-width: 280px;
+    margin-bottom: 32px;
+}
+
+.progreso-empty {
+    color: rgba(148, 163, 184, 0.6);
+    font-style: italic;
+    font-size: 0.9rem;
+}
+
+.historial-titulo {
+    font-family: 'DM Serif Display', serif;
+    font-weight: 400;
+    font-size: 1.4rem;
+    color: #f1f5f9;
+    margin-bottom: 16px;
+    text-align: left;
+    width: 100%;
+    max-width: 720px;
+}
+
+.tabla-wrapper {
+    overflow-x: auto;
+    width: 100%;
+    max-width: 720px;
+}
+
+.tabla-historial {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.88rem;
+}
+
+.tabla-historial thead tr {
+    background: rgba(255, 255, 255, 0.04);
+    text-align: left;
+}
+
+.tabla-historial th {
+    padding: 10px 14px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    color: rgba(148, 163, 184, 0.7);
+    font-weight: 600;
+    font-size: 0.78rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.tabla-historial tbody tr {
+    border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+    transition: background 0.2s;
+}
+
+.tabla-historial tbody tr:hover {
+    background: rgba(255, 255, 255, 0.03);
+}
+
+.tabla-historial td {
+    padding: 10px 14px;
+    color: #cbd5e1;
+    vertical-align: middle;
+}
+
+.badge-completada {
+    background: rgba(34, 197, 94, 0.1);
+    color: #86efac;
+    padding: 3px 10px;
+    border-radius: 20px;
+    font-size: 0.78rem;
+    font-weight: 600;
+    white-space: nowrap;
+}
+
+.badge-pendiente {
+    background: rgba(239, 68, 68, 0.1);
+    color: #fca5a5;
+    padding: 3px 10px;
+    border-radius: 20px;
+    font-size: 0.78rem;
+    font-weight: 600;
+    white-space: nowrap;
+}
+
+
+/* ============================================================
+   13. POMODORO
+   ============================================================ */
+.pomodoro-box {
+    background: rgba(15, 23, 42, 0.72);
+    backdrop-filter: blur(24px);
+    -webkit-backdrop-filter: blur(24px);
+    border-radius: 20px;
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.4);
+    border: 1px solid rgba(255, 255, 255, 0.07);
+    padding: 40px 36px 32px;
+    max-width: 420px;
+    width: 100%;
+    margin: 0 auto;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
+}
+
+.pomodoro-box h1 {
+    font-family: 'DM Serif Display', serif;
+    font-weight: 400;
+    font-size: 2.2rem;
+    color: #f1f5f9;
+    letter-spacing: -0.3px;
+    margin-bottom: 0;
+}
+
+.pomodoro-tarea-form {
+    width: 100%;
+}
+
+#pomodoro-display {
+    font-size: 3.5rem;
+    font-family: 'DM Serif Display', serif;
+    color: #f1f5f9;
+    letter-spacing: 2px;
+    font-weight: 400;
+    width: 100%;
+}
+
+.pomodoro-buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    width: 100%;
+    align-items: center;
+}
+
+#btn-start, #btn-pause, #btn-reset, #btn-stop {
+    width: 75%;
+    min-width: 120px;
+    padding: 11px 0;
+    margin: 0;
+    border-radius: 10px;
+    font-size: 0.95rem;
+    font-weight: 600;
+    background: linear-gradient(135deg, #7c3aed 0%, #a855f7 100%);
+    color: #fff;
+    border: none;
+    box-shadow: 0 4px 16px rgba(124, 58, 237, 0.3);
+    transition: background 0.2s, transform 0.2s;
+    cursor: pointer;
+    margin-bottom: 0;
+}
+
+#btn-start:hover, #btn-pause:hover, #btn-reset:hover, #btn-stop:hover {
+    background: linear-gradient(135deg, #6d28d9 0%, #9333ea 100%);
+    transform: translateY(-1px) scale(1.02);
+    box-shadow: 0 6px 20px rgba(124, 58, 237, 0.4);
+}
+
+#btn-start:disabled, #btn-pause:disabled, #btn-stop:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+    transform: none;
+}
+
+#pomodoro-tarea-select {
+    width: 100%;
+    padding: 9px 12px;
+    border-radius: 10px;
+    border: 1.5px solid rgba(255, 255, 255, 0.08);
+    font-size: 0.92rem;
+    margin-bottom: 0;
+    background: rgba(255, 255, 255, 0.05);
+    color: #cbd5e1;
+    font-weight: 500;
+}
+
+#pomodoro-tarea-select:focus {
+    border-color: #a78bfa;
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(167, 139, 250, 0.12);
+}
+
+#pomodoro-modo {
+    color: #a78bfa;
+    font-weight: 700;
+    font-size: 1rem;
+}
+
+#pomodoro-sesiones {
+    color: #c4b5fd;
+    font-weight: 700;
+    font-size: 1rem;
+}
+
+#pomodoro-tarea-tiempo {
+    color: rgba(148, 163, 184, 0.7);
+    font-size: 0.92rem;
+    font-weight: 400;
+}
+
+
+/* ============================================================
+   14. RESPONSIVE — pantallas pequeñas
    ============================================================ */
 @media (max-width: 768px) {
     .app {
@@ -787,42 +1080,34 @@ body:has(.app) {
     .sidebar {
         width: 100%;
         min-width: unset;
-        padding: 25px 20px;
+        padding: 20px 16px;
         flex-direction: row;
         flex-wrap: wrap;
-        gap: 10px;
+        gap: 8px;
         align-items: center;
     }
 
     .sidebar h2 {
         width: 100%;
         font-size: 1.1rem;
-        margin-bottom: 10px;
+        margin-bottom: 8px;
     }
 
     .list-menu {
         display: flex;
         flex-wrap: wrap;
-        gap: 6px;
+        gap: 4px;
     }
 
     .list-menu li {
-        padding: 8px 14px;
+        padding: 6px 12px;
         margin-bottom: 0;
-        font-size: 0.9rem;
-    }
-
-    .list-menu li:hover,
-    .list-menu li.active {
-        transform: none;
-    }
-
-    .sidebar-proximas {
-        width: 100%;
+        font-size: 0.85rem;
+        border-left: none;
     }
 
     .main {
-        padding: 25px 15px;
+        padding: 24px 16px;
     }
 
     .main h1,
@@ -831,7 +1116,7 @@ body:has(.app) {
     }
 
     .todo-form {
-        padding: 12px;
+        padding: 10px 12px;
     }
 
     .form-row-top {
@@ -842,14 +1127,408 @@ body:has(.app) {
     .form-row-top button[name="add"] {
         width: 100%;
         height: auto;
-        padding: 14px;
+        padding: 12px;
     }
 
     .form-row-bottom {
         flex-direction: column;
     }
 
-    .logout-link {
-        margin-top: 10px;
+    .stats-cards {
+        gap: 10px;
+    }
+
+    .pomodoro-box {
+        margin: 20px;
+        padding: 28px 20px;
+    }
+
+
+/* ============================================================
+   19. MENSAJES INLINE 
+   ============================================================ */
+
+/* Mensaje de error inline genérico */
+.msg-inline {
+    font-size: 0.8rem;
+    font-weight: 500;
+    padding: 6px 10px;
+    border-radius: 8px;
+    margin-top: 4px;
+    display: none;
+}
+
+.msg-inline.visible {
+    display: block;
+}
+
+.msg-inline--error {
+    color: #fca5a5;
+    background: rgba(239, 68, 68, 0.1);
+    border: 1px solid rgba(239, 68, 68, 0.2);
+}
+
+.msg-inline--info {
+    color: #93c5fd;
+    background: rgba(59, 130, 246, 0.08);
+    border: 1px solid rgba(59, 130, 246, 0.15);
+}
+
+/* Confirmación de eliminar inline: reemplaza el confirm() del navegador */
+.confirmar-eliminar {
+    display: none;
+    align-items: center;
+    gap: 6px;
+    margin-top: 6px;
+}
+
+.confirmar-eliminar.visible {
+    display: flex;
+}
+
+.confirmar-eliminar span {
+    font-size: 0.8rem;
+    color: rgba(148, 163, 184, 0.8);
+    white-space: nowrap;
+}
+
+.btn-confirmar-si {
+    background: rgba(239, 68, 68, 0.15);
+    color: #fca5a5;
+    border: 1px solid rgba(239, 68, 68, 0.3);
+    font-size: 0.78rem;
+    padding: 4px 12px;
+    border-radius: 8px;
+    width: auto;
+    margin-bottom: 0;
+    cursor: pointer;
+    font-weight: 600;
+    transition: background 0.2s;
+}
+
+.btn-confirmar-si:hover {
+    background: rgba(239, 68, 68, 0.28);
+    transform: none;
+    box-shadow: none;
+}
+
+.btn-confirmar-no {
+    background: rgba(255, 255, 255, 0.05);
+    color: rgba(148, 163, 184, 0.7);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    font-size: 0.78rem;
+    padding: 4px 12px;
+    border-radius: 8px;
+    width: auto;
+    margin-bottom: 0;
+    cursor: pointer;
+    font-weight: 500;
+    transition: background 0.2s;
+}
+
+.btn-confirmar-no:hover {
+    background: rgba(255, 255, 255, 0.1);
+    transform: none;
+    box-shadow: none;
+}
+}
+/* ============================================================
+   20. PANEL DE GAMIFICACIÓN Y LAYOUT INTERIOR DEL MAIN
+   ============================================================ */
+
+/* main-inner es el contenedor que pone la lista de tareas
+   y el panel de gamificación uno al lado del otro.
+   Lo separamos del .main para no romper su padding ni su scroll. */
+.main-inner {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    gap: 24px;
+    width: 100%;
+    max-width: 1100px;
+}
+
+/* La columna de tareas crece para ocupar el espacio disponible.
+   min-width: 0 evita que el flexbox desborde cuando el contenido
+   es más ancho que el contenedor. */
+.main-content {
+    flex: 1;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+}
+
+/* El formulario y la lista ya no necesitan max-width fijo
+   porque .main-content ya controla el ancho */
+.main-content .todo-form,
+.main-content #todo-list {
+    max-width: 100%;
+    width: 100%;
+}
+
+/* El main-header también se adapta al nuevo ancho */
+.main-header {
+    width: 100%;
+    max-width: 1100px;
+    margin-bottom: 28px;
+}
+
+/* Panel lateral de gamificación */
+.gami-panel {
+    width: 210px;
+    min-width: 210px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    position: sticky;
+    top: 24px; /* se queda fijo mientras haces scroll en las tareas */
+}
+
+/* Cada tarjeta del panel */
+.gami-card {
+    background: rgba(15, 23, 42, 0.55);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid rgba(255, 255, 255, 0.07);
+    border-radius: 14px;
+    padding: 14px 16px;
+}
+
+.gami-card-titulo {
+    font-size: 0.68rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: rgba(148, 163, 184, 0.45);
+    margin: 0 0 10px;
+}
+
+/* Nivel — el icono flota suavemente */
+.gami-nivel-icono {
+    font-size: 2rem;
+    text-align: center;
+    margin-bottom: 6px;
+    animation: gami-flotar 3s ease-in-out infinite;
+}
+
+@keyframes gami-flotar {
+    0%, 100% { transform: translateY(0);    }
+    50%       { transform: translateY(-5px); }
+}
+
+.gami-nivel-nombre {
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: #f1f5f9;
+    text-align: center;
+    margin: 0 0 2px;
+}
+
+.gami-nivel-sub {
+    font-size: 0.7rem;
+    color: rgba(148, 163, 184, 0.55);
+    text-align: center;
+    margin: 0 0 12px;
+    line-height: 1.4;
+}
+
+/* Barra de XP */
+.gami-xp-fila {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.68rem;
+    color: rgba(148, 163, 184, 0.5);
+    margin-bottom: 5px;
+}
+
+.gami-barra-fondo {
+    height: 5px;
+    border-radius: 10px;
+    background: rgba(255, 255, 255, 0.07);
+    overflow: hidden;
+}
+
+.gami-barra-relleno {
+    height: 100%;
+    border-radius: 10px;
+    background: linear-gradient(90deg, #7c3aed, #a78bfa);
+    transition: width 0.8s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+/* Racha */
+.gami-racha-fila {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.gami-racha-num {
+    font-size: 2rem;
+    font-weight: 700;
+    color: #f1f5f9;
+    line-height: 1;
+}
+
+.gami-racha-label {
+    font-size: 0.7rem;
+    color: rgba(148, 163, 184, 0.5);
+    margin: 3px 0 0;
+}
+
+.gami-racha-fuego {
+    font-size: 1.8rem;
+}
+
+/* Logros en cuadrícula de 3 columnas */
+.gami-logros-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 8px;
+}
+
+.gami-logro {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 3px;
+}
+
+.gami-logro-icono {
+    font-size: 1.3rem;
+    line-height: 1;
+}
+
+.gami-logro-nombre {
+    font-size: 0.6rem;
+    color: rgba(148, 163, 184, 0.6);
+    text-align: center;
+    line-height: 1.2;
+}
+
+.gami-logro--off .gami-logro-icono {
+    filter: grayscale(1);
+    opacity: 0.2;
+}
+
+.gami-logro--off .gami-logro-nombre {
+    opacity: 0.3;
+}
+
+/* Animación +XP flotante al completar tarea */
+.gami-xp-popup {
+    position: fixed;
+    pointer-events: none;
+    font-size: 0.9rem;
+    font-weight: 700;
+    color: #a78bfa;
+    opacity: 0;
+    z-index: 9999;
+}
+
+.gami-xp-popup.animando {
+    animation: gami-subir 1s ease forwards;
+}
+
+@keyframes gami-subir {
+    0%   { opacity: 1; transform: translateY(0);     }
+    100% { opacity: 0; transform: translateY(-45px); }
+}
+
+/* Mensajes inline (validaciones) */
+.msg-inline {
+    font-size: 0.8rem;
+    font-weight: 500;
+    padding: 6px 10px;
+    border-radius: 8px;
+    margin-top: 4px;
+    display: none;
+}
+
+.msg-inline.visible {
+    display: block;
+}
+
+.msg-inline--error {
+    color: #fca5a5;
+    background: rgba(239, 68, 68, 0.1);
+    border: 1px solid rgba(239, 68, 68, 0.2);
+}
+
+/* Confirmación eliminar inline */
+.confirmar-eliminar {
+    display: none;
+    align-items: center;
+    gap: 6px;
+    margin-top: 6px;
+}
+
+.confirmar-eliminar.visible {
+    display: flex;
+}
+
+.confirmar-eliminar span {
+    font-size: 0.8rem;
+    color: rgba(148, 163, 184, 0.8);
+    white-space: nowrap;
+}
+
+.btn-confirmar-si {
+    background: rgba(239, 68, 68, 0.15);
+    color: #fca5a5;
+    border: 1px solid rgba(239, 68, 68, 0.3);
+    font-size: 0.78rem;
+    padding: 4px 12px;
+    border-radius: 8px;
+    width: auto;
+    margin-bottom: 0;
+    cursor: pointer;
+    font-weight: 600;
+    transition: background 0.2s;
+}
+
+.btn-confirmar-si:hover {
+    background: rgba(239, 68, 68, 0.28);
+    transform: none;
+    box-shadow: none;
+}
+
+.btn-confirmar-no {
+    background: rgba(255, 255, 255, 0.05);
+    color: rgba(148, 163, 184, 0.7);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    font-size: 0.78rem;
+    padding: 4px 12px;
+    border-radius: 8px;
+    width: auto;
+    margin-bottom: 0;
+    cursor: pointer;
+    font-weight: 500;
+    transition: background 0.2s;
+}
+
+.btn-confirmar-no:hover {
+    background: rgba(255, 255, 255, 0.1);
+    transform: none;
+    box-shadow: none;
+}
+
+/* Responsive: en pantallas pequeñas el panel va debajo */
+@media (max-width: 900px) {
+    .main-inner {
+        flex-direction: column;
+    }
+
+    .gami-panel {
+        width: 100%;
+        min-width: unset;
+        flex-direction: row;
+        flex-wrap: wrap;
+        position: static;
+    }
+
+    .gami-card {
+        flex: 1;
+        min-width: 140px;
     }
 }

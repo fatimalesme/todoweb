@@ -130,6 +130,21 @@ if (isset($_POST['completar_id'])) {
         $stmt->bind_param('ii', $id, $usuario_id);
         $stmt->execute();
         $stmt->close();
+        
+        // Cuando la tarea pasa de pendiente a completada, sumamos 20 XP.
+        // Lo hacemos solo si la acción es "completar", no "desmarcar".
+        // Para saber si era pendiente antes del UPDATE, comprobamos si ahora está completada.
+        $check = $conexion->prepare('SELECT completada FROM tareas WHERE id = ? AND id_usuario = ?');
+        $check->bind_param('ii', $id, $usuario_id);
+        $check->execute();
+        $check->bind_result($ahora_completada);
+        $check->fetch();
+        $check->close();
+
+        if ($ahora_completada) {
+            sumarXP($usuario_id, 20);
+            comprobarLogros($usuario_id);
+        }
     }
 
     header('Content-Type: application/json');

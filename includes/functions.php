@@ -178,3 +178,182 @@ function tiempo_restante($fecha_limite) {
     if ($diff->days === 1) return 'Vence mañana';
     return "Vence en {$diff->days} días";
 }
+// ============================================================
+// GAMIFICACIÓN: niveles, XP y logros
+// ============================================================
+
+/**
+ * Devuelve la información del nivel actual según los XP del usuario.
+ * Los niveles siguen el ciclo de vida de una estrella, de menos a más.
+ * Cuantos más XP tienes, más "brillas".
+ */
+function obtenerNivel($xp) {
+    // Definimos los niveles de menor a mayor XP necesario
+    $niveles = [
+        ['nombre' => 'Nebulosa',  'icono' => '🌫️', 'min' => 0,   'sub' => 'Apenas empiezas a tomar forma'],
+        ['nombre' => 'Destello',  'icono' => '✨',  'min' => 100, 'sub' => 'Tu energía empieza a notarse'],
+        ['nombre' => 'Fulgor',    'icono' => '💫',  'min' => 250, 'sub' => 'Brillas con luz propia'],
+        ['nombre' => 'Supernova', 'icono' => '🌟',  'min' => 500, 'sub' => 'Tu productividad es imparable'],
+    ];
+
+    // Recorremos al revés para quedarnos con el nivel más alto alcanzado
+    $nivel_actual = $niveles[0];
+    foreach ($niveles as $n) {
+        if ($xp >= $n['min']) {
+            $nivel_actual = $n;
+        }
+    }
+
+    // Buscamos el siguiente nivel para calcular el porcentaje de progreso
+    $siguiente = null;
+    foreach ($niveles as $n) {
+        if ($n['min'] > $xp) {
+            $siguiente = $n;
+            break;
+        }
+    }
+
+    // Calculamos qué % de la barra está rellena entre el nivel actual y el siguiente
+    $porcentaje = 100;
+    if ($siguiente !== null) {
+        $rango      = $siguiente['min'] - $nivel_actual['min'];
+        $avance     = $xp - $nivel_actual['min'];
+        $porcentaje = (int) (($avance / $rango) * 100);
+    }
+
+    return [
+        'actual'      => $nivel_actual,
+        'siguiente'   => $siguiente,
+        'porcentaje'  => $porcentaje,
+    ];
+}
+
+/**
+ * Suma XP al usuario y actualiza la racha diaria.
+ * La racha sube si el usuario completa al menos una tarea cada día.
+ * Si pasa un día sin completar nada, la racha vuelve a 1.
+ */
+function sumarXP($usuario_id, $cantidad) {
+    global $conexion;
+    if (!$usuario_id) return;
+
+    $hoy = date('Y-m-d');
+
+    // Leemos el último día que el usuario completó una tarea
+    $stmt = $conexion->prepare('SELECT ultimo_dia, racha FROM usuarios WHERE id = ?');
+    $stmt->bind_param('i', $usuario_id);
+    $stmt->execute();
+    $stmt->bind_result($ultimo_dia, $racha_actual);
+    $stmt->fetch();
+    $stmt->close();
+
+    // Calculamos la nueva racha
+    if ($ultimo_dia === null) {
+        // Primera vez que completa algo
+        $nueva_racha = 1;
+    } elseif ($ultimo_dia === $hoy) {
+        // Ya completó algo hoy, la racha no cambia
+        $nueva_racha = $racha_actual;
+    } elseif ($ultimo_dia === date('Y-m-d', strtotime('-1 day'))) {
+        // Completó algo ayer, sigue la racha
+        $nueva_racha = $racha_actual + 1;
+    } else {
+        // Ha pasado más de un día, la racha se rompe
+        $nueva_racha = 1;
+    }
+
+    // Guardamos los nuevos valores en la base de datos
+    $stmt = $conexion->prepare(
+        'UPDATE usuarios SET xp = xp + ?, racha = ?, ultimo_dia = ? WHERE id = ?'
+    );
+    $stmt->bind_param('iisi', $cantidad, $nueva_racha, $hoy, $usuario_id);
+    $stmt->execute();
+    $stmt->close();
+}
+
+/**
+ * Comprueba qué logros ha desbloqueado el usuario y los guarda en BD.
+ * Se llama cada vez que el usuario completa una tarea.
+ */
+function comprobarLogros($usuario_id) {
+    global $conexion;
+    if (!$usuario_id) return;
+
+    // Leemos datos actuales del usuario
+    $stmt = $conexion->prepare('SELECT xp, racha, logros FROM usuarios WHERE id = ?');
+    $stmt->bind_param('i', $usuario_id);
+    $stmt->execute();
+    $stmt->bind_result($xp, $racha, $logros_json);
+    $stmt->fetch();
+    $stmt->close();
+
+    // Convertimos el JSON de logros a array de PHP (o array vacío si es null)
+    $logros = $logros_json ? json_decode($logros_json, true) : [];
+
+    // Contamos las tareas completadas del usuario
+    $stmt2 = $conexion->prepare(
+        'SELECT COUNT(*) FROM tareas WHERE id_usuario = ? AND completada = 1'
+    );
+    $stmt2->bind_param('i', $usuario_id);
+    $stmt2->execute();
+    $stmt2->bind_result($total_completadas);
+    $stmt2->fetch();
+    $stmt2->close();
+
+    // Lista de todos los logros posibles con sus condiciones
+    $posibles = [
+        'primera_chispa'    => $total_completadas >= 1,
+        'orbita_estable'    => $racha >= 3,
+        'campo_asteroides'  => $total_completadas >= 10,
+        'tormenta_solar'    => false, // este se gestiona en el controller del día
+        'gravedad_propia'   => $racha >= 7,
+        'explosion_estelar' => $xp >= 500,
+    ];
+
+    // Añadimos al array solo los que se acaban de desbloquear
+    $nuevo = false;
+    foreach ($posibles as $clave => $cumple) {
+        if ($cumple && !in_array($clave, $logros)) {
+            $logros[] = $clave;
+            $nuevo    = true;
+        }
+    }
+
+    // Solo actualizamos la BD si hay algo nuevo que guardar
+    if ($nuevo) {
+        $json = json_encode($logros);
+        $stmt3 = $conexion->prepare('UPDATE usuarios SET logros = ? WHERE id = ?');
+        $stmt3->bind_param('si', $json, $usuario_id);
+        $stmt3->execute();
+        $stmt3->close();
+    }
+
+    return $logros;
+}
+
+/**
+ * Devuelve todos los datos de gamificación del usuario de una vez.
+ * Así en index.php solo llamamos a esta función y tenemos todo.
+ */
+function obtenerDatosGamificacion($usuario_id) {
+    global $conexion;
+    if (!$usuario_id) {
+        return ['xp' => 0, 'racha' => 0, 'logros' => [], 'nivel' => obtenerNivel(0)];
+    }
+
+    $stmt = $conexion->prepare('SELECT xp, racha, logros FROM usuarios WHERE id = ?');
+    $stmt->bind_param('i', $usuario_id);
+    $stmt->execute();
+    $stmt->bind_result($xp, $racha, $logros_json);
+    $stmt->fetch();
+    $stmt->close();
+
+    $logros = $logros_json ? json_decode($logros_json, true) : [];
+
+    return [
+        'xp'    => (int) $xp,
+        'racha' => (int) $racha,
+        'logros'=> $logros,
+        'nivel' => obtenerNivel((int) $xp),
+    ];
+}

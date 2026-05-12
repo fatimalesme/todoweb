@@ -94,11 +94,12 @@ $csrf               = generarTokenCSRF();
     </main>
   </div>
 
-  <script src="assets/js/graficas.js"></script>
-  <script>
+<script>
     const completadas = <?= $tareas_completadas ?>;
     const pendientes  = <?= $tareas_pendientes ?>;
     window.datosProgreso = { completadas, pendientes };
   </script>
+  <script src="assets/js/graficas.js"></script>
+  
 </body>
 </html>
