@@ -773,181 +773,172 @@ body:has(.app) { display:block; }
 }
 .cal-ley-dot { width:5px; height:5px; border-radius:50%; flex-shrink:0; }
 
+/* ── PÁGINA DE PROGRESO ──────────────────────────────────────*/
 
-/* ── PÁGINA DE PROGRESO REDISEÑADA ───────────────────────────*/
-
-/* El main de progreso no centra — alinea a la izquierda */
 .prog-main {
     align-items: flex-start;
     padding: 0;
-    gap: 0;
+    overflow-y: auto;
 }
 
-/* Cabecera con gradiente — se distingue claramente */
+/* Cabecera */
 .prog-header {
     width: 100%;
-    background: linear-gradient(135deg, rgba(124,58,237,0.4) 0%, rgba(192,132,252,0.2) 100%);
-    border-bottom: 1px solid rgba(192,132,252,0.15);
-    padding: 32px 48px;
+    background: linear-gradient(135deg, rgba(124,58,237,0.4) 0%, rgba(192,132,252,0.18) 100%);
+    border-bottom: 1px solid rgba(192,132,252,0.12);
+    padding: 28px 40px;
     display: flex;
     align-items: center;
     justify-content: space-between;
+    gap: 24px;
 }
 .prog-header-sub {
-    font-size: 0.72rem;
+    font-size: 0.65rem;
     font-weight: 600;
     text-transform: uppercase;
     letter-spacing: 1.2px;
-    color: rgba(192,132,252,0.7);
-    margin-bottom: 6px;
+    color: rgba(192,132,252,0.6);
+    margin-bottom: 5px;
 }
 .prog-header-titulo {
     font-family: 'DM Serif Display', serif;
-    font-size: 2rem;
+    font-size: 1.8rem;
     font-weight: 400;
     color: #faf5ff;
     letter-spacing: -0.3px;
 }
-/* Porcentaje grande en la esquina derecha de la cabecera */
-.prog-header-pct {
+/* Barra de progreso en la cabecera — más elegante que un número gigante */
+.prog-header-right {
     display: flex;
     flex-direction: column;
-    align-items: center;
-    background: rgba(192,132,252,0.12);
-    border: 1px solid rgba(192,132,252,0.2);
-    border-radius: 14px;
-    padding: 14px 24px;
+    gap: 8px;
+    min-width: 200px;
+}
+.prog-header-barra-info {
+    display: flex;
+    align-items: baseline;
+    gap: 8px;
 }
 .prog-header-pct-num {
-    font-size: 2.2rem;
+    font-size: 1.6rem;
     font-weight: 700;
     color: #e9d5ff;
     line-height: 1;
 }
 .prog-header-pct-label {
-    font-size: 0.7rem;
-    color: rgba(192,132,252,0.6);
+    font-size: 0.72rem;
+    color: rgba(192,132,252,0.5);
     text-transform: uppercase;
-    letter-spacing: 0.8px;
-    margin-top: 3px;
+    letter-spacing: 0.5px;
 }
-
-/* Área de contenido con padding */
-.prog-cards,
-.prog-grafica-wrap,
-.prog-historial {
-    padding: 28px 48px;
+.prog-header-barra-bg {
+    height: 6px;
+    border-radius: 10px;
+    background: rgba(192,132,252,0.12);
+    overflow: hidden;
     width: 100%;
 }
-
-/* ── Tarjetas de resumen ── */
-.prog-cards {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 16px;
-    padding-bottom: 0;
-}
-.prog-card {
-    background: rgba(245,240,255,0.06);
-    border: 1px solid rgba(192,132,252,0.12);
-    border-radius: 14px;
-    padding: 20px 22px;
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-    position: relative;
-    overflow: hidden;
-}
-.prog-card-icono {
-    font-size: 1.4rem;
-    line-height: 1;
-}
-.prog-card-info {
-    display: flex;
-    flex-direction: column;
-    gap: 2px;
-}
-.prog-card-num {
-    font-size: 2.2rem;
-    font-weight: 700;
-    line-height: 1;
-}
-.prog-card-label {
-    font-size: 0.78rem;
-    font-weight: 500;
-}
-/* Barra de progreso dentro de la tarjeta */
-.prog-card-barra-wrap {
-    height: 4px;
-    border-radius: 10px;
-    background: rgba(255,255,255,0.07);
-    overflow: hidden;
-    margin-top: 4px;
-}
-.prog-card-barra {
+.prog-header-barra-fill {
     height: 100%;
     border-radius: 10px;
+    background: linear-gradient(90deg, #7c3aed, #c084fc);
     transition: width 1s ease;
 }
 
-/* Colores por tipo */
-.prog-card--completadas { border-color: rgba(34,197,94,0.2); }
-.prog-card--completadas .prog-card-num   { color: #86efac; }
-.prog-card--completadas .prog-card-label { color: rgba(134,239,172,0.6); }
-.prog-card--completadas .prog-card-barra { background: #22c55e; }
-
-.prog-card--pendientes { border-color: rgba(239,68,68,0.2); }
-.prog-card--pendientes .prog-card-num   { color: #fca5a5; }
-.prog-card--pendientes .prog-card-label { color: rgba(252,165,165,0.6); }
-.prog-card--pendientes .prog-card-barra { background: #ef4444; }
-
-.prog-card--total { border-color: rgba(192,132,252,0.2); }
-.prog-card--total .prog-card-num   { color: #e9d5ff; }
-.prog-card--total .prog-card-label { color: rgba(233,213,255,0.6); }
-
-/* ── Gráfica ── */
-.prog-grafica-wrap {
+/* Tarjetas de resumen */
+.prog-resumen {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 12px;
+    padding: 24px 40px 0;
+}
+.prog-stat {
+    background: rgba(245,240,255,0.05);
+    border: 1px solid rgba(192,132,252,0.1);
+    border-radius: 12px;
+    padding: 16px 18px;
     display: flex;
     flex-direction: column;
     gap: 10px;
 }
+.prog-stat-icono { font-size: 1.1rem; }
+.prog-stat-datos { display: flex; flex-direction: column; gap: 2px; }
+.prog-stat-num   { font-size: 1.8rem; font-weight: 700; line-height: 1; }
+.prog-stat-label { font-size: 0.75rem; font-weight: 500; }
+.prog-stat-barra-bg { height: 3px; border-radius: 10px; background: rgba(255,255,255,0.07); overflow: hidden; }
+.prog-stat-barra    { height: 100%; border-radius: 10px; transition: width 1s ease; }
+
+.prog-stat--verde .prog-stat-num   { color: #86efac; }
+.prog-stat--verde .prog-stat-label { color: rgba(134,239,172,0.5); }
+.prog-stat--verde .prog-stat-barra { background: #22c55e; }
+.prog-stat--verde { border-color: rgba(34,197,94,0.15); }
+
+.prog-stat--rojo .prog-stat-num   { color: #fca5a5; }
+.prog-stat--rojo .prog-stat-label { color: rgba(252,165,165,0.5); }
+.prog-stat--rojo .prog-stat-barra { background: #ef4444; }
+.prog-stat--rojo { border-color: rgba(239,68,68,0.15); }
+
+.prog-stat--lila .prog-stat-num   { color: #e9d5ff; }
+.prog-stat--lila .prog-stat-label { color: rgba(233,213,255,0.5); }
+.prog-stat--lila { border-color: rgba(192,132,252,0.15); }
+
+.prog-stat--dorado .prog-stat-num   { color: #fbbf24; font-size: 1rem !important; margin-top: 4px; }
+.prog-stat--dorado .prog-stat-label { color: rgba(251,191,36,0.5); }
+.prog-stat--dorado { border-color: rgba(251,191,36,0.15); }
+
+/* Gráficas */
+.prog-graficas {
+    display: grid;
+    grid-template-columns: 1fr 1.8fr;
+    gap: 12px;
+    padding: 20px 40px 0;
+}
+.prog-grafica-card {
+    background: rgba(245,240,255,0.04);
+    border: 1px solid rgba(192,132,252,0.1);
+    border-radius: 12px;
+    padding: 16px 18px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
 .prog-grafica-titulo {
-    font-size: 0.85rem;
+    font-size: 0.65rem;
     font-weight: 600;
-    color: rgba(216,180,254,0.6);
     text-transform: uppercase;
     letter-spacing: 0.8px;
+    color: rgba(192,132,252,0.4);
+    margin: 0;
 }
+/* Altura fija para que Chart.js sepa cuánto espacio tiene */
 .prog-grafica-canvas {
-    max-width: 260px;
-    height: 260px;
+    position: relative;
+    height: 220px;
+    width: 100%;
 }
 
-/* ── Historial ── */
+/* Historial */
 .prog-historial {
-    border-top: 1px solid rgba(192,132,252,0.08);
-    padding-top: 24px;
+    padding: 20px 40px 40px;
 }
-.prog-historial-header {
+.prog-historial-cabecera {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    margin-bottom: 16px;
+    margin-bottom: 14px;
 }
 .prog-historial-titulo {
     font-family: 'DM Serif Display', serif;
-    font-size: 1.3rem;
+    font-size: 1.2rem;
     font-weight: 400;
     color: #faf5ff;
 }
-.prog-historial-count {
-    font-size: 0.75rem;
+.prog-historial-badge {
+    font-size: 0.72rem;
     color: rgba(192,132,252,0.5);
     background: rgba(192,132,252,0.08);
     border: 1px solid rgba(192,132,252,0.15);
     border-radius: 20px;
     padding: 3px 12px;
 }
-
-/* Celda sin fecha */
 .sin-fecha { color: rgba(216,180,254,0.2); }
