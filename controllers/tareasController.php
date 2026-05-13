@@ -118,18 +118,42 @@ if (isset($_POST['completar_id'])) {
                 : null;
         }
     } else {
-        // IF(completada = 0, NOW(), NULL):
-        // - Si la tarea estaba pendiente → la marca como completada y guarda NOW() con hora
-        // - Si ya estaba completada → la desmarca y borra la fecha de finalización
+        // Primero leemos el estado actual de la tarea
+        // (necesitamos saber si está completada ANTES de cambiarla)
         $stmt = $conexion->prepare(
-            'UPDATE tareas
-             SET completada         = NOT completada,
-                 fecha_finalizacion = IF(completada = 0, NOW(), NULL)
-             WHERE id = ? AND id_usuario = ?'
+            'SELECT completada FROM tareas WHERE id = ? AND id_usuario = ?'
         );
         $stmt->bind_param('ii', $id, $usuario_id);
         $stmt->execute();
+        $stmt->bind_result($esta_completada);
+        $stmt->fetch();
         $stmt->close();
+
+        // Ahora hacemos el UPDATE sabiendo el estado real anterior
+        // Si estaba pendiente (0) → la completamos y guardamos NOW() con hora exacta
+        // Si estaba completada (1) → la desmarcamos y borramos la fecha
+        if ($esta_completada) {
+            $stmt = $conexion->prepare(
+                'UPDATE tareas
+                 SET completada = 0, fecha_finalizacion = NULL
+                 WHERE id = ? AND id_usuario = ?'
+            );
+        } else {
+            $stmt = $conexion->prepare(
+                'UPDATE tareas
+                 SET completada = 1, fecha_finalizacion = NOW()
+                 WHERE id = ? AND id_usuario = ?'
+            );
+        }
+        $stmt->bind_param('ii', $id, $usuario_id);
+        $stmt->execute();
+        $stmt->close();
+
+        // Si acabamos de completar la tarea, sumamos XP y comprobamos logros
+        if (!$esta_completada) {
+            sumarXP($usuario_id, 20);
+            comprobarLogros($usuario_id);
+        }
     }
 
     header('Content-Type: application/json');
