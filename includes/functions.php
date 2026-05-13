@@ -32,7 +32,7 @@ function obtenerTareasUsuario($usuario_id) {
     $stmt = $conexion->prepare(
         'SELECT * FROM tareas
          WHERE id_usuario = ?
-         ORDER BY fecha_alta ASC'
+         ORDER BY completada ASC, fecha_alta ASC'
     );
     $stmt->bind_param('i', $usuario_id);
     $stmt->execute();
