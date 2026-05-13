@@ -452,145 +452,6 @@ body:has(.app) { display:block; }
 }
 .logout-link:hover { background:rgba(192,132,252,0.15); color:#e9d5ff; border-color:rgba(192,132,252,0.5); transform:translateY(-1px); }
 
-/* ── 13. PÁGINA DE PROGRESO ───────────────────────────────────*/
-.stats-cards { display:flex; gap:16px; margin-bottom:28px; flex-wrap:wrap; }
-.stat-card { border-radius:var(--radio); padding:18px 24px; min-width:130px; border:1px solid transparent; }
-.stat-card--completadas { background:rgba(34,197,94,.08);  border-color:rgba(34,197,94,.2); }
-.stat-card--pendientes  { background:rgba(239,68,68,.08);  border-color:rgba(239,68,68,.2); }
-.stat-card--total       { background:rgba(192,132,252,.08); border-color:rgba(192,132,252,.2); }
-.stat-card-numero { font-size:2rem; font-weight:700; line-height:1; margin-bottom:4px; }
-.stat-card--completadas .stat-card-numero { color:var(--exito); }
-.stat-card--pendientes  .stat-card-numero { color:#fca5a5; }
-.stat-card--total       .stat-card-numero { color:var(--violeta-cl); }
-.stat-card-label { font-size:.85rem; font-weight:500; }
-.stat-card--completadas .stat-card-label { color:rgba(134,239,172,.7); }
-.stat-card--pendientes  .stat-card-label { color:rgba(252,165,165,.7); }
-.stat-card--total       .stat-card-label { color:rgba(192,132,252,.7); }
-
-.chart-wrapper  { max-width:280px; margin-bottom:32px; height:300px; position:relative; }
-.chart-wrapper canvas { height:100% !important; }
-.progreso-empty { color:var(--texto-dim); font-style:italic; font-size:.9rem; }
-.historial-titulo { font-family:'DM Serif Display',serif; font-weight:400; font-size:1.4rem; color:var(--texto-ppal); margin-bottom:16px; width:100%; max-width:720px; }
-.tabla-wrapper  { overflow-x:auto; width:100%; max-width:720px; }
-.tabla-historial { width:100%; border-collapse:collapse; font-size:.88rem; }
-.tabla-historial thead tr { background:rgba(192,132,252,0.05); text-align:left; }
-.tabla-historial th { padding:10px 14px; border-bottom:1px solid var(--borde-sutil); color:var(--texto-dim); font-weight:600; font-size:.78rem; text-transform:uppercase; letter-spacing:.5px; }
-.tabla-historial tbody tr { border-bottom:1px solid rgba(192,132,252,0.06); transition:background .2s; }
-.tabla-historial tbody tr:hover { background:rgba(192,132,252,0.05); }
-.tabla-historial td { padding:10px 14px; color:var(--texto-sec); vertical-align:middle; }
-.badge-completada { background:rgba(34,197,94,.1); color:var(--exito); padding:3px 10px; border-radius:20px; font-size:.78rem; font-weight:600; }
-.badge-pendiente  { background:rgba(239,68,68,.1); color:#fca5a5; padding:3px 10px; border-radius:20px; font-size:.78rem; font-weight:600; }
-
-/* ── 14. POMODORO ─────────────────────────────────────────────*/
-.pomodoro-box {
-    background:rgba(42,16,64,0.82);
-    backdrop-filter:var(--blur); -webkit-backdrop-filter:var(--blur);
-    border-radius:var(--radio-lg); box-shadow:0 20px 50px rgba(0,0,0,.5);
-    border:1px solid var(--borde-sutil); padding:40px 36px 32px;
-    max-width:420px; width:100%; margin:0 auto; text-align:center;
-    display:flex; flex-direction:column; align-items:center; gap:16px;
-}
-.pomodoro-box h1 { font-family:'DM Serif Display',serif; font-weight:400; font-size:2.2rem; color:var(--texto-ppal); letter-spacing:-.3px; }
-.pomodoro-tarea-form { width:100%; }
-#pomodoro-display { font-size:3.5rem; font-family:'DM Serif Display',serif; color:var(--texto-ppal); letter-spacing:2px; font-weight:400; width:100%; }
-.pomodoro-buttons { display:flex; flex-direction:column; gap:8px; width:100%; align-items:center; }
-#btn-start,#btn-pause,#btn-reset,#btn-stop {
-    width:75%; min-width:120px; padding:11px 0; margin:0;
-    border-radius:10px; font-size:.95rem; font-weight:600;
-    background:linear-gradient(135deg, var(--violeta) 0%, var(--violeta-cl) 100%);
-    color:#fff; border:none; box-shadow:0 4px 16px rgba(147,51,234,.35);
-    transition:background .2s, transform .2s; cursor:pointer; margin-bottom:0;
-}
-#btn-start:hover,#btn-pause:hover,#btn-reset:hover,#btn-stop:hover {
-    background:linear-gradient(135deg, var(--violeta-hover) 0%, var(--violeta) 100%);
-    transform:translateY(-1px) scale(1.02);
-}
-#btn-start:disabled,#btn-pause:disabled,#btn-stop:disabled { opacity:.4; cursor:not-allowed; transform:none; }
-#pomodoro-tarea-select { width:100%; padding:9px 12px; border-radius:10px; border:1.5px solid var(--borde-sutil); font-size:.92rem; margin-bottom:0; background:rgba(192,132,252,0.07); color:var(--texto-sec); }
-#pomodoro-tarea-select:focus { border-color:var(--violeta-cl); outline:none; }
-#pomodoro-modo     { color:var(--violeta-cl); font-weight:700; font-size:1rem; }
-#pomodoro-sesiones { color:#e9d5ff; font-weight:700; font-size:1rem; }
-#pomodoro-tarea-tiempo { color:var(--texto-dim); font-size:.92rem; }
-
-/* ── 15. PANEL DE GAMIFICACIÓN ────────────────────────────────*/
-.gami-panel {
-    width:210px; min-width:210px;
-    display:flex; flex-direction:column; gap:12px;
-    position:sticky; top:24px;
-}
-.gami-card {
-    background:rgba(42,16,64,0.7);
-    backdrop-filter:var(--blur); -webkit-backdrop-filter:var(--blur);
-    border:1px solid var(--borde-sutil); border-radius:var(--radio); padding:14px 16px;
-}
-.gami-card-titulo { font-size:.68rem; font-weight:600; text-transform:uppercase; letter-spacing:1px; color:var(--texto-dim); margin:0 0 10px; }
-
-/* El icono flota suavemente */
-.gami-nivel-icono { font-size:2rem; font-style:normal; text-align:center; margin-bottom:6px; animation:gami-flotar 3s ease-in-out infinite; }
-@keyframes gami-flotar {
-    0%,100% { transform:translateY(0); }
-    50%      { transform:translateY(-5px); }
-}
-.gami-nivel-nombre { font-size:.95rem; font-weight:600; color:var(--texto-ppal); text-align:center; margin:0 0 2px; }
-.gami-nivel-sub { font-size:.7rem; color:var(--texto-dim); text-align:center; margin:0 0 12px; line-height:1.4; }
-
-/* Barra de XP */
-.gami-xp-fila { display:flex; justify-content:space-between; font-size:.68rem; color:var(--texto-dim); margin-bottom:5px; }
-.gami-barra-fondo { height:5px; border-radius:10px; background:rgba(192,132,252,0.1); overflow:hidden; }
-.gami-barra-relleno { height:100%; border-radius:10px; background:linear-gradient(90deg, var(--violeta), var(--violeta-cl)); transition:width .8s cubic-bezier(.34,1.56,.64,1); }
-
-/* Racha */
-.gami-racha-fila  { display:flex; align-items:center; justify-content:space-between; }
-.gami-racha-num   { font-size:2rem; font-weight:700; color:var(--texto-ppal); line-height:1; }
-.gami-racha-label { font-size:.7rem; color:var(--texto-dim); margin:3px 0 0; }
-.gami-racha-fuego { font-size:1.8rem; }
-
-/* Logros */
-.gami-logros-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:8px; }
-.gami-logro { display:flex; flex-direction:column; align-items:center; gap:3px; }
-.gami-logro-icono  { font-size:1.3rem; line-height:1; }
-.gami-logro-nombre { font-size:.6rem; color:var(--texto-dim); text-align:center; line-height:1.2; }
-.gami-logro--off .gami-logro-icono  { filter:grayscale(1); opacity:.2; }
-.gami-logro--off .gami-logro-nombre { opacity:.3; }
-
-/* Animación +XP flotante */
-.gami-xp-popup { position:fixed; pointer-events:none; font-size:.9rem; font-weight:700; color:var(--violeta-cl); opacity:0; z-index:9999; }
-.gami-xp-popup.animando { animation:gami-subir 1s ease forwards; }
-@keyframes gami-subir {
-    0%   { opacity:1; transform:translateY(0); }
-    100% { opacity:0; transform:translateY(-45px); }
-}
-
-/* Avisos (notifications.js) */
-.aviso { opacity:0; transform:translateY(-8px); transition:opacity .4s ease, transform .4s ease; }
-.aviso.visible { opacity:1; transform:translateY(0); }
-.aviso.oculto  { opacity:0; transform:translateY(-8px); }
-.aviso-cerrar  { float:right; background:none; border:none; cursor:pointer; font-weight:700; font-size:1rem; padding:0 0 0 10px; color:inherit; width:auto; margin-bottom:0; opacity:.7; transition:opacity .2s; }
-.aviso-cerrar:hover { opacity:1; transform:none; box-shadow:none; }
-
-/* ── 16. RESPONSIVE ───────────────────────────────────────────*/
-@media (max-width:900px) {
-    .main-inner { flex-direction:column; }
-    .gami-panel { width:100%; min-width:unset; flex-direction:row; flex-wrap:wrap; position:static; }
-    .gami-card  { flex:1; min-width:140px; }
-}
-@media (max-width:768px) {
-    .app { flex-direction:column; }
-    .sidebar { width:100%; min-width:unset; padding:20px 16px; flex-direction:row; flex-wrap:wrap; gap:8px; align-items:center; }
-    .sidebar h2 { width:100%; font-size:1.1rem; margin-bottom:8px; }
-    .list-menu { display:flex; flex-wrap:wrap; gap:4px; }
-    .list-menu li { padding:6px 12px; margin-bottom:0; font-size:.85rem; border-left:none; }
-    .main { padding:24px 16px; }
-    .main h1,.main-header h1 { font-size:1.6rem; }
-    .todo-form { padding:10px 12px; }
-    .form-row-top { flex-direction:column; gap:8px; }
-    .form-row-top button[name="add"] { width:100%; height:auto; padding:12px; }
-    .form-row-bottom { flex-direction:column; }
-    .stats-cards { gap:10px; }
-    .pomodoro-box { margin:20px; padding:28px 20px; }
-}
-
-
 /* ── SIDEBAR MEJORADO ─────────────────────────────────────────*/
 
 /* Título de sección dentro del sidebar (MIS LISTAS, HERRAMIENTAS) */
@@ -772,173 +633,73 @@ body:has(.app) { display:block; }
     color: rgba(216,180,254,0.35);
 }
 .cal-ley-dot { width:5px; height:5px; border-radius:50%; flex-shrink:0; }
-
-/* ── PÁGINA DE PROGRESO ──────────────────────────────────────*/
-
-.prog-main {
-    align-items: flex-start;
-    padding: 0;
-    overflow-y: auto;
+/* ── PANEL DE GAMIFICACIÓN (index.php) ───────────────────────*/
+.gami-panel {
+    width:210px; min-width:210px;
+    display:flex; flex-direction:column; gap:12px;
+    position:sticky; top:24px;
+}
+.gami-card {
+    background:rgba(42,16,64,0.7);
+    backdrop-filter:var(--blur); -webkit-backdrop-filter:var(--blur);
+    border:1px solid var(--borde-sutil); border-radius:var(--radio); padding:14px 16px;
+}
+.gami-card-titulo { font-size:.68rem; font-weight:600; text-transform:uppercase; letter-spacing:1px; color:var(--texto-dim); margin:0 0 10px; }
+.gami-nivel-icono { font-size:2rem; font-style:normal; text-align:center; margin-bottom:6px; animation:gami-flotar 3s ease-in-out infinite; }
+@keyframes gami-flotar {
+    0%,100% { transform:translateY(0); }
+    50%      { transform:translateY(-5px); }
+}
+.gami-nivel-nombre { font-size:.95rem; font-weight:600; color:var(--texto-ppal); text-align:center; margin:0 0 2px; }
+.gami-nivel-sub { font-size:.7rem; color:var(--texto-dim); text-align:center; margin:0 0 12px; line-height:1.4; }
+.gami-xp-fila { display:flex; justify-content:space-between; font-size:.68rem; color:var(--texto-dim); margin-bottom:5px; }
+.gami-barra-fondo { height:5px; border-radius:10px; background:rgba(192,132,252,0.1); overflow:hidden; }
+.gami-barra-relleno { height:100%; border-radius:10px; background:linear-gradient(90deg,var(--violeta),var(--violeta-cl)); transition:width .8s cubic-bezier(.34,1.56,.64,1); }
+.gami-racha-fila  { display:flex; align-items:center; justify-content:space-between; }
+.gami-racha-num   { font-size:2rem; font-weight:700; color:var(--texto-ppal); line-height:1; }
+.gami-racha-label { font-size:.7rem; color:var(--texto-dim); margin:3px 0 0; }
+.gami-racha-fuego { font-size:1.8rem; }
+.gami-logros-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:8px; }
+.gami-logro { display:flex; flex-direction:column; align-items:center; gap:3px; }
+.gami-logro-icono  { font-size:1.3rem; line-height:1; }
+.gami-logro-nombre { font-size:.6rem; color:var(--texto-dim); text-align:center; line-height:1.2; }
+.gami-logro--off .gami-logro-icono  { filter:grayscale(1); opacity:.2; }
+.gami-logro--off .gami-logro-nombre { opacity:.3; }
+.gami-xp-popup { position:fixed; pointer-events:none; font-size:.9rem; font-weight:700; color:var(--violeta-cl); opacity:0; z-index:9999; }
+.gami-xp-popup.animando { animation:gami-subir 1s ease forwards; }
+@keyframes gami-subir {
+    0%   { opacity:1; transform:translateY(0); }
+    100% { opacity:0; transform:translateY(-45px); }
 }
 
-/* Cabecera */
-.prog-header {
-    width: 100%;
-    background: linear-gradient(135deg, rgba(124,58,237,0.4) 0%, rgba(192,132,252,0.18) 100%);
-    border-bottom: 1px solid rgba(192,132,252,0.12);
-    padding: 28px 40px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 24px;
-}
-.prog-header-sub {
-    font-size: 0.65rem;
-    font-weight: 600;
-    text-transform: uppercase;
-    letter-spacing: 1.2px;
-    color: rgba(192,132,252,0.6);
-    margin-bottom: 5px;
-}
-.prog-header-titulo {
-    font-family: 'DM Serif Display', serif;
-    font-size: 1.8rem;
-    font-weight: 400;
-    color: #faf5ff;
-    letter-spacing: -0.3px;
-}
-/* Barra de progreso en la cabecera — más elegante que un número gigante */
-.prog-header-right {
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-    min-width: 200px;
-}
-.prog-header-barra-info {
-    display: flex;
-    align-items: baseline;
-    gap: 8px;
-}
-.prog-header-pct-num {
-    font-size: 1.6rem;
-    font-weight: 700;
-    color: #e9d5ff;
-    line-height: 1;
-}
-.prog-header-pct-label {
-    font-size: 0.72rem;
-    color: rgba(192,132,252,0.5);
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
-}
-.prog-header-barra-bg {
-    height: 6px;
-    border-radius: 10px;
-    background: rgba(192,132,252,0.12);
-    overflow: hidden;
-    width: 100%;
-}
-.prog-header-barra-fill {
-    height: 100%;
-    border-radius: 10px;
-    background: linear-gradient(90deg, #7c3aed, #c084fc);
-    transition: width 1s ease;
-}
+/* ── TABLA HISTORIAL (progreso.php) ──────────────────────────*/
+.tabla-wrapper  { overflow-x:auto; width:100%; }
+.tabla-historial { width:100%; border-collapse:collapse; font-size:.88rem; }
+.tabla-historial thead tr { background:rgba(192,132,252,0.05); text-align:left; }
+.tabla-historial th { padding:10px 14px; border-bottom:1px solid var(--borde-sutil); color:var(--texto-dim); font-weight:600; font-size:.78rem; text-transform:uppercase; letter-spacing:.5px; }
+.tabla-historial tbody tr { border-bottom:1px solid rgba(192,132,252,0.06); transition:background .2s; }
+.tabla-historial tbody tr:hover { background:rgba(192,132,252,0.04); }
+.tabla-historial td { padding:10px 14px; color:var(--texto-sec); vertical-align:middle; }
+.badge-completada { background:rgba(34,197,94,.1); color:var(--exito); padding:3px 10px; border-radius:20px; font-size:.78rem; font-weight:600; white-space:nowrap; }
+.badge-pendiente  { background:rgba(239,68,68,.1); color:#fca5a5; padding:3px 10px; border-radius:20px; font-size:.78rem; font-weight:600; white-space:nowrap; }
+.progreso-empty { color:var(--texto-dim); font-style:italic; font-size:.9rem; }
 
-/* Tarjetas de resumen */
-.prog-resumen {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 12px;
-    padding: 24px 40px 0;
+/* ── RESPONSIVE ──────────────────────────────────────────────*/
+@media (max-width:900px) {
+    .main-inner { flex-direction:column; }
+    .gami-panel { width:100%; min-width:unset; flex-direction:row; flex-wrap:wrap; position:static; }
+    .gami-card  { flex:1; min-width:140px; }
 }
-.prog-stat {
-    background: rgba(245,240,255,0.05);
-    border: 1px solid rgba(192,132,252,0.1);
-    border-radius: 12px;
-    padding: 16px 18px;
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
+@media (max-width:768px) {
+    .app { flex-direction:column; }
+    .sidebar { width:100%; min-width:unset; padding:20px 16px; flex-direction:row; flex-wrap:wrap; gap:8px; align-items:center; }
+    .sidebar h2 { width:100%; font-size:1.1rem; margin-bottom:8px; }
+    .list-menu { display:flex; flex-wrap:wrap; gap:4px; }
+    .list-menu li { padding:6px 12px; margin-bottom:0; font-size:.85rem; border-left:none; }
+    .main { padding:24px 16px; }
+    .main h1,.main-header h1 { font-size:1.6rem; }
+    .todo-form { padding:10px 12px; }
+    .form-row-top { flex-direction:column; gap:8px; }
+    .form-row-top button[name="add"] { width:100%; height:auto; padding:12px; }
+    .form-row-bottom { flex-direction:column; }
 }
-.prog-stat-icono { font-size: 1.1rem; }
-.prog-stat-datos { display: flex; flex-direction: column; gap: 2px; }
-.prog-stat-num   { font-size: 1.8rem; font-weight: 700; line-height: 1; }
-.prog-stat-label { font-size: 0.75rem; font-weight: 500; }
-.prog-stat-barra-bg { height: 3px; border-radius: 10px; background: rgba(255,255,255,0.07); overflow: hidden; }
-.prog-stat-barra    { height: 100%; border-radius: 10px; transition: width 1s ease; }
-
-.prog-stat--verde .prog-stat-num   { color: #86efac; }
-.prog-stat--verde .prog-stat-label { color: rgba(134,239,172,0.5); }
-.prog-stat--verde .prog-stat-barra { background: #22c55e; }
-.prog-stat--verde { border-color: rgba(34,197,94,0.15); }
-
-.prog-stat--rojo .prog-stat-num   { color: #fca5a5; }
-.prog-stat--rojo .prog-stat-label { color: rgba(252,165,165,0.5); }
-.prog-stat--rojo .prog-stat-barra { background: #ef4444; }
-.prog-stat--rojo { border-color: rgba(239,68,68,0.15); }
-
-.prog-stat--lila .prog-stat-num   { color: #e9d5ff; }
-.prog-stat--lila .prog-stat-label { color: rgba(233,213,255,0.5); }
-.prog-stat--lila { border-color: rgba(192,132,252,0.15); }
-
-.prog-stat--dorado .prog-stat-num   { color: #fbbf24; font-size: 1rem !important; margin-top: 4px; }
-.prog-stat--dorado .prog-stat-label { color: rgba(251,191,36,0.5); }
-.prog-stat--dorado { border-color: rgba(251,191,36,0.15); }
-
-/* Gráficas */
-.prog-graficas {
-    display: grid;
-    grid-template-columns: 1fr 1.8fr;
-    gap: 12px;
-    padding: 20px 40px 0;
-}
-.prog-grafica-card {
-    background: rgba(245,240,255,0.04);
-    border: 1px solid rgba(192,132,252,0.1);
-    border-radius: 12px;
-    padding: 16px 18px;
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
-}
-.prog-grafica-titulo {
-    font-size: 0.65rem;
-    font-weight: 600;
-    text-transform: uppercase;
-    letter-spacing: 0.8px;
-    color: rgba(192,132,252,0.4);
-    margin: 0;
-}
-/* Altura fija para que Chart.js sepa cuánto espacio tiene */
-.prog-grafica-canvas {
-    position: relative;
-    height: 220px;
-    width: 100%;
-}
-
-/* Historial */
-.prog-historial {
-    padding: 20px 40px 40px;
-}
-.prog-historial-cabecera {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    margin-bottom: 14px;
-}
-.prog-historial-titulo {
-    font-family: 'DM Serif Display', serif;
-    font-size: 1.2rem;
-    font-weight: 400;
-    color: #faf5ff;
-}
-.prog-historial-badge {
-    font-size: 0.72rem;
-    color: rgba(192,132,252,0.5);
-    background: rgba(192,132,252,0.08);
-    border: 1px solid rgba(192,132,252,0.15);
-    border-radius: 20px;
-    padding: 3px 12px;
-}
-.sin-fecha { color: rgba(216,180,254,0.2); }

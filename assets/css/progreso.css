@@ -1,0 +1,139 @@
+/* progreso.css — Estilos exclusivos de la página de progreso */
+
+.prog-main { align-items:flex-start; padding:0; overflow-y:auto; }
+
+/* ── Cabecera ─────────────────────────────────────────────── */
+.prog-header {
+    width:100%;
+    background:linear-gradient(135deg,rgba(124,58,237,0.45),rgba(192,132,252,0.2));
+    border-bottom:1px solid rgba(192,132,252,0.12);
+    padding:20px 32px;
+    display:flex; align-items:center; justify-content:space-between;
+}
+.prog-header-sub {
+    font-size:0.65rem; font-weight:600; text-transform:uppercase;
+    letter-spacing:1.2px; color:rgba(192,132,252,0.6); margin-bottom:3px;
+}
+.prog-header-titulo {
+    font-family:'DM Serif Display',serif; font-size:1.5rem;
+    color:#faf5ff; font-weight:400;
+}
+.prog-header-right { display:flex; flex-direction:column; gap:5px; min-width:160px; }
+.prog-header-barra-info { display:flex; align-items:baseline; gap:6px; }
+.prog-header-pct-num  { font-size:1.3rem; font-weight:700; color:#e9d5ff; line-height:1; }
+.prog-header-pct-label { font-size:0.65rem; color:rgba(192,132,252,0.5); text-transform:uppercase; letter-spacing:0.5px; }
+.prog-header-barra-bg { height:4px; border-radius:10px; background:rgba(192,132,252,0.12); overflow:hidden; }
+.prog-header-barra-fill { height:100%; border-radius:10px; background:linear-gradient(90deg,#7c3aed,#c084fc); transition:width 1s ease; }
+
+/* ── Tarjetas resumen ─────────────────────────────────────── */
+.prog-resumen {
+    display:grid; grid-template-columns:repeat(4,1fr);
+    gap:10px; padding:16px 32px 0; width:100%;
+}
+.prog-stat {
+    background:rgba(245,240,255,0.05); border:1px solid rgba(192,132,252,0.1);
+    border-radius:10px; padding:12px 14px;
+    display:flex; align-items:center; gap:10px;
+}
+.prog-stat-icono { width:30px; height:30px; border-radius:8px; display:flex; align-items:center; justify-content:center; font-size:12px; flex-shrink:0; }
+.prog-stat-datos { display:flex; flex-direction:column; gap:1px; flex:1; min-width:0; }
+.prog-stat-num   { font-size:1.4rem; font-weight:700; line-height:1; }
+.prog-stat-label { font-size:0.7rem; font-weight:500; }
+.prog-stat-barra-bg { height:3px; border-radius:10px; background:rgba(255,255,255,0.06); overflow:hidden; margin-top:5px; }
+.prog-stat-barra    { height:100%; border-radius:10px; transition:width 1s ease; }
+
+.prog-stat--verde  { border-color:rgba(34,197,94,0.15); }
+.prog-stat--verde  .prog-stat-icono { background:rgba(34,197,94,0.12); }
+.prog-stat--verde  .prog-stat-num   { color:#86efac; }
+.prog-stat--verde  .prog-stat-label { color:rgba(134,239,172,0.5); }
+.prog-stat--verde  .prog-stat-barra { background:#22c55e; }
+
+.prog-stat--rojo   { border-color:rgba(239,68,68,0.15); }
+.prog-stat--rojo   .prog-stat-icono { background:rgba(239,68,68,0.12); }
+.prog-stat--rojo   .prog-stat-num   { color:#fca5a5; }
+.prog-stat--rojo   .prog-stat-label { color:rgba(252,165,165,0.5); }
+.prog-stat--rojo   .prog-stat-barra { background:#ef4444; }
+
+.prog-stat--lila   { border-color:rgba(192,132,252,0.15); }
+.prog-stat--lila   .prog-stat-icono { background:rgba(192,132,252,0.12); }
+.prog-stat--lila   .prog-stat-num   { color:#e9d5ff; }
+.prog-stat--lila   .prog-stat-label { color:rgba(233,213,255,0.5); }
+
+.prog-stat--dorado { border-color:rgba(251,191,36,0.15); }
+.prog-stat--dorado .prog-stat-icono { background:rgba(251,191,36,0.12); }
+.prog-stat--dorado .prog-stat-num   { font-size:0.9rem; color:#fbbf24; margin-top:2px; }
+.prog-stat--dorado .prog-stat-label { color:rgba(251,191,36,0.5); }
+
+/* ── Fila central: gráficas + motivación ─────────────────── */
+.prog-mid {
+    display:grid;
+    grid-template-columns:200px 1fr 240px;
+    gap:12px; padding:14px 32px 0; width:100%; box-sizing:border-box;
+}
+.prog-grafica-card {
+    background:rgba(245,240,255,0.04); border:1px solid rgba(192,132,252,0.1);
+    border-radius:10px; padding:12px 14px;
+    display:flex; flex-direction:column; gap:8px;
+}
+.prog-grafica-titulo {
+    font-size:0.62rem; font-weight:600; text-transform:uppercase;
+    letter-spacing:0.8px; color:rgba(192,132,252,0.4); margin:0;
+}
+.prog-grafica-canvas { position:relative; height:155px; width:100%; }
+
+/* Panel de motivación */
+.prog-motiv {
+    background:rgba(245,240,255,0.04); border:1px solid rgba(192,132,252,0.1);
+    border-radius:10px; padding:12px 14px;
+    display:flex; flex-direction:column; gap:8px;
+}
+.prog-motiv-titulo {
+    font-size:0.62rem; font-weight:600; text-transform:uppercase;
+    letter-spacing:0.8px; color:rgba(192,132,252,0.4);
+}
+.prog-motiv-item {
+    display:flex; align-items:flex-start; gap:8px;
+    padding:8px 10px; border-radius:8px;
+    background:rgba(192,132,252,0.06);
+    border-left:3px solid rgba(192,132,252,0.3);
+}
+.prog-motiv-item--verde  { background:rgba(34,197,94,0.06);  border-left-color:rgba(34,197,94,0.4); }
+.prog-motiv-item--dorado { background:rgba(251,191,36,0.06); border-left-color:rgba(251,191,36,0.4); }
+.prog-motiv-icono { font-size:1.1rem; flex-shrink:0; line-height:1; margin-top:1px; }
+.prog-motiv-texto { display:flex; flex-direction:column; gap:2px; }
+.prog-motiv-texto strong { font-size:0.75rem; color:#e9d5ff; font-weight:600; }
+.prog-motiv-texto span   { font-size:0.68rem; color:rgba(216,180,254,0.5); line-height:1.4; }
+
+/* ── Frase motivadora ─────────────────────────────────────── */
+.prog-frase {
+    display:flex; align-items:center; gap:14px;
+    margin:0 32px;
+    margin-top: 18px;
+    background:linear-gradient(135deg,rgba(124,58,237,0.12),rgba(192,132,252,0.06));
+    border:1px solid rgba(192,132,252,0.12);
+    border-radius:10px; padding:12px 18px;
+}
+.prog-frase-icono { font-size:1.6rem; flex-shrink:0; }
+.prog-frase-texto { font-size:0.85rem; font-weight:500; color:#e9d5ff; line-height:1.5; margin:0; }
+.prog-frase-sub   { font-size:0.7rem; color:rgba(192,132,252,0.45); margin-top:2px; display:block; }
+
+/* ── Historial ────────────────────────────────────────────── */
+.prog-historial { padding:14px 32px 32px; width:100%; }
+.prog-historial-cabecera {
+    display:flex; align-items:center; justify-content:space-between; margin-bottom:10px;
+}
+.prog-historial-titulo {
+    font-family:'DM Serif Display',serif; font-size:1rem; color:#faf5ff; font-weight:400;
+}
+.prog-historial-badge {
+    font-size:0.65rem; color:rgba(192,132,252,0.5);
+    background:rgba(192,132,252,0.08); border:1px solid rgba(192,132,252,0.15);
+    border-radius:20px; padding:2px 10px;
+}
+.prog-tabla {
+    background:rgba(245,240,255,0.03);
+    border:1px solid rgba(192,132,252,0.08);
+    border-radius:10px; overflow:hidden;
+    width:100%; max-width:100%;
+}
+.sin-fecha { color:rgba(216,180,254,0.2); }
