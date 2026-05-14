@@ -77,7 +77,7 @@ document.addEventListener('DOMContentLoaded', () => {
             .then(r => r.json())
             .then(data => {
                 if (data && typeof data.segundos !== 'undefined' && data.segundos > 0) {
-                    tareaTiempoDiv.textContent = `tiempo dedicado: ${fmtTotal(data.segundos)}`;
+                    tareaTiempoDiv.textContent = `Tiempo dedicado: ${fmtTotal(data.segundos)}`;
                 } else {
                     tareaTiempoDiv.textContent = '';
                 }
