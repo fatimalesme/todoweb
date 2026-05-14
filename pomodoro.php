@@ -56,7 +56,7 @@ $tareasPendientes = array_filter($tareasPom, fn($t) => empty($t['completada']));
             </svg>
             <div class="pom-ring-inner">
                 <div class="pom-display" id="pomodoro-display">25:00</div>
-                <div class="pom-modo" id="pomodoro-modo">trabajo</div>
+                <div class="pom-modo" id="pomodoro-modo">Trabajo</div>
             </div>
         </div>
 
@@ -86,8 +86,8 @@ $tareasPendientes = array_filter($tareasPom, fn($t) => empty($t['completada']));
 
         <!-- Links -->
         <div class="pom-links">
-            <a href="index.php">← volver</a>
-            <a href="progreso.php">ver progreso</a>
+            <a href="index.php">← Volver</a>
+            <a href="progreso.php">Ver progreso</a>
         </div>
 
     </div>
