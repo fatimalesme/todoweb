@@ -3,8 +3,9 @@ include_once 'includes/db.php';
 include_once 'includes/session.php';
 include_once 'includes/functions.php';
 
-// Puedes agregar lógica específica del Pomodoro aquí
 $csrf = generarTokenCSRF();
+$tareasPom = ($_SESSION['rol'] === 'guest') ? obtenerTareasInvitado() : obtenerTareasUsuario($_SESSION['usuario_id']);
+$tareasPendientes = array_filter($tareasPom, fn($t) => empty($t['completada']));
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -16,39 +17,82 @@ $csrf = generarTokenCSRF();
     <link rel="stylesheet" href="assets/css/pomodoro.css">
 </head>
 <body>
-    <div class="pomodoro-box">
-    <h1>Pomodoro</h1>
-    <form id="pomodoro-tarea-form" class="pomodoro-tarea-form">
-        <label for="pomodoro-tarea-select">Selecciona una tarea:</label>
-        <select id="pomodoro-tarea-select" name="tarea_id" required>
-            <option value="">-- Elige una tarea --</option>
-            <?php
-            $tareasPom = ($_SESSION['rol'] === 'guest') ? obtenerTareasInvitado() : obtenerTareasUsuario($_SESSION['usuario_id']);
-            foreach ($tareasPom as $t) {
-                if (!empty($t['completada'])) continue;
-                $texto = htmlspecialchars($t['texto'], ENT_QUOTES, 'UTF-8');
-                $id = (int) ($t['id'] ?? 0);
-                echo "<option value=\"$id\">$texto</option>";
-            }
-            ?>
-        </select>
-    </form>
-    <div id="pomodoro-display">25:00</div>
-    <div class="pomodoro-buttons">
-        <button id="btn-start">Iniciar</button>
-        <button id="btn-pause">Pausar</button>
-        <button id="btn-reset">Reiniciar</button>
-        <button id="btn-stop">Parar</button>
+<div class="pom-wrap">
+
+    <div class="pom-card">
+
+        <!-- Cabecera -->
+        <div class="pom-header">
+            <span class="pom-subtitulo">modo concentración</span>
+            <h1 class="pom-titulo">Pomodoro</h1>
+        </div>
+
+        <!-- Selector de tarea -->
+        <div class="pom-selector">
+            <select id="pomodoro-tarea-select" name="tarea_id">
+                <option value="">— elige una tarea —</option>
+                <?php foreach ($tareasPendientes as $t): ?>
+                    <option value="<?= (int)$t['id'] ?>">
+                        <?= htmlspecialchars($t['texto'], ENT_QUOTES, 'UTF-8') ?>
+                    </option>
+                <?php endforeach; ?>
+            </select>
+        </div>
+
+        <!-- Mensaje error -->
+        <div id="pomodoro-msg-error"></div>
+
+        <!-- Anillo + timer -->
+        <div class="pom-ring-wrap">
+            <svg class="pom-ring-svg" viewBox="0 0 220 220" xmlns="http://www.w3.org/2000/svg">
+                <defs>
+                    <linearGradient id="rg" x1="0%" y1="0%" x2="100%" y2="100%">
+                        <stop offset="0%" stop-color="#9333ea"/>
+                        <stop offset="100%" stop-color="#c084fc"/>
+                    </linearGradient>
+                </defs>
+                <circle class="pom-ring-bg" cx="110" cy="110" r="96"/>
+                <circle class="pom-ring-fg" id="pom-ring" cx="110" cy="110" r="96"/>
+            </svg>
+            <div class="pom-ring-inner">
+                <div class="pom-display" id="pomodoro-display">25:00</div>
+                <div class="pom-modo" id="pomodoro-modo">trabajo</div>
+            </div>
+        </div>
+
+        <!-- Botones -->
+        <div class="pom-btns">
+            <button class="pom-btn-main" id="btn-start">Iniciar</button>
+            <button class="pom-btn-sec" id="btn-pause">Pausar</button>
+            <button class="pom-btn-sec" id="btn-reset">Reiniciar</button>
+            <button class="pom-btn-sec pom-btn-stop" id="btn-stop">Parar</button>
+        </div>
+
+        <!-- Sesiones como puntos -->
+        <div class="pom-sesiones-wrap">
+            <div class="pom-dots" id="pom-dots">
+                <div class="pom-dot"></div>
+                <div class="pom-dot"></div>
+                <div class="pom-dot"></div>
+                <div class="pom-dot"></div>
+            </div>
+            <span class="pom-sesiones-label">
+                <span id="pomodoro-sesiones">0</span> de 4 sesiones
+            </span>
+        </div>
+
+        <!-- Tiempo en tarea -->
+        <div id="pomodoro-tarea-tiempo" class="pom-tarea-tiempo"></div>
+
+        <!-- Links -->
+        <div class="pom-links">
+            <a href="index.php">← volver</a>
+            <a href="progreso.php">ver progreso</a>
+        </div>
+
     </div>
-    <div>
-        <span id="pomodoro-modo">Trabajo</span> |
-        Sesiones completadas: <span id="pomodoro-sesiones">0</span>
-    </div>
-    <div id="pomodoro-tarea-tiempo"></div>
-    <br>
-    <a href="index.php" class="sidebar-link">&larr; Volver al menú principal</a>
-    <a href="progreso.php" class="sidebar-link">Ver progreso</a>
-    </div>
-    <script src="assets/js/pomodoro.js"></script>
+</div>
+<input type="hidden" id="csrf_token" value="<?= $csrf ?>">
+<script src="assets/js/pomodoro.js"></script>
 </body>
 </html>
