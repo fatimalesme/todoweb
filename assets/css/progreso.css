@@ -2,7 +2,7 @@
 
 .prog-main { align-items:flex-start; padding:0; overflow-y:auto; }
 
-/* ── Cabecera ─────────────────────────────────────────────── */
+/* Cabecera  */
 .prog-header {
     width:100%;
     background:linear-gradient(135deg,rgba(124,58,237,0.45),rgba(192,132,252,0.2));
@@ -25,7 +25,7 @@
 .prog-header-barra-bg { height:4px; border-radius:10px; background:rgba(192,132,252,0.12); overflow:hidden; }
 .prog-header-barra-fill { height:100%; border-radius:10px; background:linear-gradient(90deg,#7c3aed,#c084fc); transition:width 1s ease; }
 
-/* ── Tarjetas resumen ─────────────────────────────────────── */
+/* Tarjetas resumen */
 .prog-resumen {
     display:grid; grid-template-columns:repeat(4,1fr);
     gap:10px; padding:16px 32px 0; width:100%;
@@ -64,7 +64,7 @@
 .prog-stat--dorado .prog-stat-num   { font-size:0.9rem; color:#fbbf24; margin-top:2px; }
 .prog-stat--dorado .prog-stat-label { color:rgba(251,191,36,0.5); }
 
-/* ── Fila central: gráficas + motivación ─────────────────── */
+/* Fila central: gráficas + motivación */
 .prog-mid {
     display:grid;
     grid-template-columns:200px 1fr 240px;
@@ -104,7 +104,7 @@
 .prog-motiv-texto strong { font-size:0.75rem; color:#e9d5ff; font-weight:600; }
 .prog-motiv-texto span   { font-size:0.68rem; color:rgba(216,180,254,0.5); line-height:1.4; }
 
-/* ── Frase motivadora ─────────────────────────────────────── */
+/* Frase motivadora */
 .prog-frase {
     display:flex; align-items:center; gap:14px;
     margin:0 32px;
@@ -117,7 +117,7 @@
 .prog-frase-texto { font-size:0.85rem; font-weight:500; color:#e9d5ff; line-height:1.5; margin:0; }
 .prog-frase-sub   { font-size:0.7rem; color:rgba(192,132,252,0.45); margin-top:2px; display:block; }
 
-/* ── Historial ────────────────────────────────────────────── */
+/* Historial */
 .prog-historial { padding:14px 32px 32px; width:100%; }
 .prog-historial-cabecera {
     display:flex; align-items:center; justify-content:space-between; margin-bottom:10px;

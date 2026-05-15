@@ -14,9 +14,8 @@ if (isset($_SESSION['usuario_id']) || (isset($_SESSION['rol']) && $_SESSION['rol
 include_once '../includes/db.php';
 include_once '../includes/functions.php';
 
-// -----------------------------------------------------------------------
+
 // ENTRAR COMO INVITADO
-// -----------------------------------------------------------------------
 if (isset($_POST['invitado'])) {
     // No hace falta validar CSRF aqui porque no hay datos sensibles
     $_SESSION['usuario_id'] = null;
@@ -27,9 +26,7 @@ if (isset($_POST['invitado'])) {
     exit();
 }
 
-// -----------------------------------------------------------------------
 // LOGIN
-// -----------------------------------------------------------------------
 if (isset($_POST['login'])) {
     // Validar token CSRF antes de procesar cualquier formulario POST
     validarTokenCSRF($_POST['csrf_token'] ?? '');
@@ -80,9 +77,7 @@ if (isset($_POST['login'])) {
     }
 }
 
-// -----------------------------------------------------------------------
 // REGISTRO
-// -----------------------------------------------------------------------
 if (isset($_POST['register'])) {
     validarTokenCSRF($_POST['csrf_token'] ?? '');
 
@@ -134,9 +129,7 @@ if (isset($_POST['register'])) {
     }
 }
 
-// -----------------------------------------------------------------------
 // LOGOUT
-// -----------------------------------------------------------------------
 if (isset($_GET['logout'])) {
     // Destruir completamente la sesion
     session_unset();

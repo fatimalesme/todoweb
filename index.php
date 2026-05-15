@@ -55,7 +55,7 @@ $nombresMes = ['','Enero','Febrero','Marzo','Abril','Mayo','Junio',
 <body>
 <div class="app">
 
-  <!-- ── SIDEBAR ──────────────────────────────────────────── -->
+  <!--  SIDEBAR  -->
   <aside class="sidebar">
     <h2>Hola, <?= htmlspecialchars($_SESSION['username'], ENT_QUOTES, 'UTF-8') ?></h2>
 
@@ -165,7 +165,7 @@ $nombresMes = ['','Enero','Febrero','Marzo','Abril','Mayo','Junio',
     <a href="logout.php" class="sidebar-logout">↩ Cerrar sesión</a>
   </aside>
 
-  <!-- ── CONTENIDO PRINCIPAL ───────────────────────────────── -->
+  <!--  CONTENIDO PRINCIPAL -->
   <main class="main">
     <header class="main-header">
       <h1 id="current-list-title">Mi Día</h1>
@@ -310,7 +310,7 @@ $nombresMes = ['','Enero','Febrero','Marzo','Abril','Mayo','Junio',
           No hay tareas en esta categoría todavía.
         </p>
 
-      </div><!-- fin .main-content -->
+      </div>
 
       <!-- Columna derecha: panel de gamificación -->
       <?php if ($_SESSION['rol'] !== 'guest'): ?>
@@ -372,7 +372,7 @@ $nombresMes = ['','Enero','Febrero','Marzo','Abril','Mayo','Junio',
       </aside>
       <?php endif; ?>
 
-    </div><!-- fin .main-inner -->
+    </div>
   </main>
 
 </div>

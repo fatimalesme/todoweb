@@ -57,7 +57,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (msg) msg.remove();
     }
 
-    // Botón de acceso como invitado: quitar required para que no bloquee el submit
+    // Botón de acceso como invitado: sin required para que no bloquee el submit
     const btnInvitado = document.querySelector('button[name="invitado"]');
     if (btnInvitado) {
         btnInvitado.addEventListener('click', () => {

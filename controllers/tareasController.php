@@ -23,9 +23,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     validarTokenCSRF($_POST['csrf_token'] ?? '');
 }
 
-// -----------------------------------------------------------------------
-// AÑADIR NUEVA LISTA / CATEGORÍA
-// -----------------------------------------------------------------------
+// añadir nueva lista
 if (isset($_POST['add_list'])) {
     $nombre = trim($_POST['nombre_lista'] ?? '');
 
@@ -40,11 +38,8 @@ if (isset($_POST['add_list'])) {
     exit();
 }
 
-// -----------------------------------------------------------------------
-// AÑADIR NUEVA TAREA
-// Cambio principal: ahora recibimos 'fecha_limite' como datetime-local
+// añadir nueva tarea
 // (formato: "YYYY-MM-DDTHH:MM") en lugar de un DATE simple.
-// -----------------------------------------------------------------------
 if (isset($_POST['add'])) {
     $texto        = trim($_POST['texto'] ?? '');
     $descripcion  = trim($_POST['descripcion'] ?? '');
@@ -102,10 +97,10 @@ if (isset($_POST['add'])) {
     exit();
 }
 
-// -----------------------------------------------------------------------
+
 // COMPLETAR TAREA (llamada AJAX)
 // NOW() ya devuelve DATETIME, así que fecha_finalizacion guarda hora exacta.
-// -----------------------------------------------------------------------
+
 if (isset($_POST['completar_id'])) {
     $id = (int) $_POST['completar_id'];
 
@@ -161,9 +156,8 @@ if (isset($_POST['completar_id'])) {
     exit();
 }
 
-// -----------------------------------------------------------------------
 // ELIMINAR TAREA (llamada AJAX)
-// -----------------------------------------------------------------------
+
 if (isset($_POST['eliminar_id'])) {
     $id = (int) $_POST['eliminar_id'];
 
@@ -185,9 +179,8 @@ if (isset($_POST['eliminar_id'])) {
     exit();
 }
 
-// -----------------------------------------------------------------------
 // EDITAR TAREA (llamada AJAX)
-// -----------------------------------------------------------------------
+
 if (isset($_POST['editar_id']) && isset($_POST['nuevo_texto'])) {
 
 
@@ -238,10 +231,9 @@ if (isset($_POST['editar_id']) && isset($_POST['nuevo_texto'])) {
     exit();
 }
 
-// -----------------------------------------------------------------------
+
 // POSTERGAR TAREA (llamada AJAX)
-// DATE_ADD funciona igual con DATETIME, así que no hay que cambiar nada aquí.
-// -----------------------------------------------------------------------
+
 if (isset($_POST['postergar_id'])) {
     $id   = (int) $_POST['postergar_id'];
     $dias = 1;

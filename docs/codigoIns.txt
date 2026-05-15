@@ -1,3 +1,0 @@
-style="display:flex; justify-content:center; align-items:center;" (body de login)
-style="background:white; padding:30px; border-radius:10px;" (login-container)
-style="background:#718096;" (boton - login)

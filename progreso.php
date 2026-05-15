@@ -11,7 +11,7 @@ $tareas             = $usuario_id ? obtenerTareasUsuario($usuario_id) : [];
 $porcentaje         = $tareas_totales > 0
                       ? round(($tareas_completadas / $tareas_totales) * 100) : 0;
 
-// ── Datos por día esta semana ─────────────────────────────────
+//  Datos por día esta semana  
 $inicioSemana = new DateTime('monday this week');
 $datosSemana  = array_fill(0, 7, 0);
 foreach ($tareas as $t) {
@@ -27,7 +27,7 @@ $maxDia     = max($datosSemana);
 $diasNombre = ['Lunes','Martes','Miércoles','Jueves','Viernes','Sábado','Domingo'];
 $mejorDia   = $maxDia > 0 ? $diasNombre[array_search($maxDia, $datosSemana)] : null;
 
-// ── Datos de gamificación (XP, racha, logros) ─────────────────
+//  Datos de gamificación (XP, racha, logros) 
 $xp    = 0;
 $racha = 0;
 $logros = [];

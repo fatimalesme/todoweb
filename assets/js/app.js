@@ -8,7 +8,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const msgSinTareas    = document.getElementById('msg-sin-tareas');
     const selectCategoria = document.getElementById('select-categoria');
 
-    // ── FILTRADO POR CATEGORÍA ────────────────────────────────────────────
+    // FILTRADO POR CATEGORÍA 
     // Muestra solo las tareas de la categoría activa.
     // listId === '0' significa "Mi Día" → se muestran todas.
     function filtrarTareas(listId) {
@@ -25,7 +25,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     filtrarTareas('0');
 
-    // ── CLICK EN EL SIDEBAR ───────────────────────────────────────────────
+    // CLICK EN EL SIDEBAR
     if (listMenu) {
         listMenu.addEventListener('click', (e) => {
             if (e.target.tagName !== 'LI') return;
@@ -48,7 +48,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // ── PETICIONES AL SERVIDOR (AJAX) ─────────────────────────────────────
+    // PETICIONES AL SERVIDOR (AJAX)
     // Usamos fetch() para mandar datos al servidor sin recargar la página.
     // CSRF_TOKEN lo define PHP en index.php para proteger contra ataques.
     function enviarAccion(datos) {
@@ -62,7 +62,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }).then(res => res.json());
     }
 
-    // ── DELEGACIÓN DE EVENTOS ─────────────────────────────────────────────
+    // DELEGACIÓN DE EVENTOS
     // Un solo listener en el documento detecta todos los clicks.
     // Esto es más eficiente que poner un listener en cada botón.
     document.addEventListener('click', (e) => {
@@ -76,7 +76,7 @@ document.addEventListener('DOMContentLoaded', () => {
             });
         }
 
-        // ELIMINAR tarea — sin confirm() feo, directamente con animación
+        // ELIMINAR tarea — sin confirm() que me parecía feo, directamente con animación
         const btnEliminar = e.target.closest('.eliminar-tarea');
         if (btnEliminar) {
             const item = btnEliminar.closest('.todo-item');
@@ -169,13 +169,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
     });
 
-    // ── POLVO DE ESTRELLAS ────────────────────────────────────────────────
+    // POLVO DE ESTRELLAS
     // Animación al eliminar una tarea. Creamos partículas SVG que salen
     // disparadas en todas direcciones mientras la tarjeta se desvanece.
     //
-    // Usamos requestAnimationFrame en vez de setInterval porque es la forma
-    // que tiene el navegador de sincronizar animaciones con la pantalla
-    // (60fps suaves, sin saltos).
+    // uso requestAnimationFrame porque con setInterval me salian saltos raros
+    // esto va sincronizado con la pantalla y queda mucho mas suave
+
     function polvoEstrellas(el) {
         const W = el.offsetWidth;
         const H = el.offsetHeight;

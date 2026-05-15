@@ -5,8 +5,6 @@ include_once 'db.php';
  * Devuelve avisos de tareas próximas a vencer y tareas ya vencidas.
  * Solo para usuarios registrados (los invitados usan sesión, no BD).
  *
- * CAMBIO: ahora compara con NOW() (datetime) en lugar de con la fecha actual (date),
- * porque fecha_limite ya es DATETIME e incluye hora de vencimiento.
  */
 function obtenerAvisosUsuario($usuario_id) {
     global $conexion;

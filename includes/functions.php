@@ -1,9 +1,8 @@
 <?php
 include_once 'db.php';
 
-// ============================================================
+
 // FUNCIONES DE CONSULTA DE DATOS
-// ============================================================
 
 // Devuelve todas las listas del usuario ordenadas por id
 function obtenerListasUsuario($usuario_id) {
@@ -114,9 +113,7 @@ function contarTareasPendientes($usuario_id) {
     return (int) $row['total'];
 }
 
-// ============================================================
 // SEGURIDAD: CSRF
-// ============================================================
 
 // Genera un token CSRF y lo guarda en sesión para proteger formularios
 function generarTokenCSRF() {
@@ -134,13 +131,10 @@ function validarTokenCSRF($token) {
     }
 }
 
-// ============================================================
 // UTILIDADES DE FORMATO
-// ============================================================
 
 /**
  * Formatea una fecha (DATE o DATETIME) para mostrarla al usuario.
- *
  * - Si recibe un DATETIME con hora real (no 00:00:00) muestra día y hora.
  * - Si la hora es medianoche exacta (o es un DATE) muestra solo el día.
  *
@@ -160,7 +154,7 @@ function formatear_fecha($fecha) {
 
 /**
  * Devuelve cuánto tiempo queda hasta una fecha límite DATETIME.
- * Útil para los avisos del sidebar.
+ * para los avisos del sidebar.
  * Ejemplos: "Vence en 2 h", "Vence hoy", "Vence mañana"
  */
 function tiempo_restante($fecha_limite) {
@@ -178,15 +172,10 @@ function tiempo_restante($fecha_limite) {
     if ($diff->days === 1) return 'Vence mañana';
     return "Vence en {$diff->days} días";
 }
-// ============================================================
 // GAMIFICACIÓN: niveles, XP y logros
-// ============================================================
 
-/**
- * Devuelve la información del nivel actual según los XP del usuario.
- * Los niveles siguen el ciclo de vida de una estrella, de menos a más.
- * Cuantos más XP tienes, más "brillas".
- */
+// devuelve el nivel del usuario segun sus xp
+// los niveles son: Nebulosa, Destello, Fulgor, Supernova
 function obtenerNivel($xp) {
     // Definimos los niveles de menor a mayor XP necesario
     $niveles = [

@@ -1,9 +1,9 @@
-/* style.css — ToDoWeb | Único archivo de estilos */
+/* style.css — ToDoWeb */
 
-/* ── VARIABLES GLOBALES ───────────────────────────────────────
+/* VARIABLES GLOBALES
    Paleta B: Lila y ciruela cálido.
    Fondo ciruela oscuro, tarjetas en blanco roto, acento lila rosado.
-   Cambiando estas variables se actualiza toda la web.           */
+   Cambiando estas variables se actualiza toda la web (por si acaso)  */
 :root {
     --fondo-base: #020108;
     --fondo-sidebar: #0d0a20;
@@ -26,7 +26,7 @@
     --blur: blur(20px);
 }
 
-/* ── 1. RESET Y FUENTES ───────────────────────────────────────*/
+/* 1. RESET Y FUENTES */
 @import url('https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Inter:wght@300;400;500;600;700&display=swap');
 
 * {
@@ -36,7 +36,7 @@
     font-family: 'Inter', sans-serif;
 }
 
-/* ── 2. FONDO (todas las páginas) ────────────────────────────*/
+/* 2. FONDO (todas las páginas) */
 body {
     background: radial-gradient(ellipse at 20% 50%, #0d0a2a 0%, #050318 40%, #020108 100%);
     background-attachment: fixed;
@@ -90,7 +90,7 @@ body::before {
     z-index: 0;
 }
 
-/* ── 3. LOGIN Y REGISTRO ──────────────────────────────────────*/
+/* 3. LOGIN Y REGISTRO */
 .login-container,
 .login-card {
     background: rgba(42, 16, 64, 0.85);
@@ -181,7 +181,7 @@ body::before {
     line-height: 1.6;
 }
 
-/* ── 4. INPUTS ────────────────────────────────────────────────*/
+/* 4. INPUTS */
 input[type="text"],
 input[type="password"],
 input[type="date"],
@@ -232,7 +232,7 @@ select option {
     box-shadow: 0 0 0 3px rgba(248, 113, 113, .15) !important;
 }
 
-/* ── 5. BOTONES ───────────────────────────────────────────────*/
+/* 5. BOTONES */
 button {
     width: 100%;
     padding: 14px;
@@ -345,7 +345,7 @@ button[name="invitado"]:hover {
     display: none;
 }
 
-/* ── 6. LAYOUT PRINCIPAL ──────────────────────────────────────*/
+/* 6. LAYOUT PRINCIPAL */
 body:has(.app) {
     display: block;
 }
@@ -356,7 +356,7 @@ body:has(.app) {
     min-height: 100vh;
 }
 
-/* ── 7. SIDEBAR ───────────────────────────────────────────────*/
+/* 7. SIDEBAR */
 .sidebar {
     width: 270px;
     min-width: 270px;
@@ -518,7 +518,7 @@ body:has(.app) {
     margin-top: 2px;
 }
 
-/* ── 8. ÁREA PRINCIPAL ────────────────────────────────────────*/
+/* 8. ÁREA PRINCIPAL */
 .main {
     flex-grow: 1;
     padding: 52px 60px;
@@ -545,7 +545,7 @@ body:has(.app) {
     letter-spacing: -.3px;
 }
 
-/* ── 9. LAYOUT INTERIOR (tareas + panel gamificación) ─────────*/
+/* 9. LAYOUT INTERIOR (tareas + panel gamificación) */
 .main-inner {
     display: flex;
     flex-direction: row;
@@ -569,7 +569,7 @@ body:has(.app) {
     width: 100%;
 }
 
-/* ── 10. FORMULARIO DE NUEVA TAREA ───────────────────────────*/
+/* 10. FORMULARIO DE NUEVA TAREA */
 .todo-form {
     width: 100%;
     display: flex;
@@ -682,7 +682,7 @@ body:has(.app) {
     box-shadow: none;
 }
 
-/* ── 11. LISTA DE TAREAS ──────────────────────────────────────*/
+/* 11. LISTA DE TAREAS */
 #todo-list {
     width: 100%;
     list-style: none;
@@ -708,7 +708,7 @@ body:has(.app) {
     transform: translateY(-1px);
 }
 
-/* ── TAREA COMPLETADA ── */
+/* TAREA COMPLETADA */
 .todo-item--done {
     background: rgba(20, 80, 70, 0.12);
     border: 1px solid rgba(30, 120, 100, 0.18);
@@ -978,7 +978,7 @@ body:has(.app) {
     border: 1px solid rgba(239, 68, 68, .2);
 }
 
-/* ── 12. PÁGINAS SECUNDARIAS ──────────────────────────────────*/
+/* 12. PÁGINAS SECUNDARIAS */
 .page-container {
     background: rgba(42, 16, 64, 0.82);
     backdrop-filter: var(--blur);
@@ -1021,7 +1021,7 @@ body:has(.app) {
     transform: translateY(-1px);
 }
 
-/* ── SIDEBAR MEJORADO ─────────────────────────────────────────*/
+/* SIDEBAR */
 
 /* Título de sección dentro del sidebar (MIS LISTAS, HERRAMIENTAS) */
 .sidebar-seccion-titulo {
@@ -1111,7 +1111,7 @@ body:has(.app) {
     color: #f87171;
 }
 
-/* ── CALENDARIO EN EL SIDEBAR ─────────────────────────────────*/
+/* CALENDARIO EN EL SIDEBAR */
 .sidebar-cal {
     border-radius: 12px;
     overflow: hidden;
@@ -1294,7 +1294,7 @@ body:has(.app) {
     flex-shrink: 0;
 }
 
-/* ── PANEL DE GAMIFICACIÓN (index.php) ───────────────────────*/
+/* PANEL DE GAMIFICACIÓN (index.php) */
 .gami-panel {
     width: 210px;
     min-width: 210px;
@@ -1464,7 +1464,7 @@ body:has(.app) {
     }
 }
 
-/* ── TABLA HISTORIAL (progreso.php) ──────────────────────────*/
+/* TABLA HISTORIAL (progreso.php) */
 .tabla-wrapper {
     overflow-x: auto;
     width: 100%;
@@ -1532,7 +1532,7 @@ body:has(.app) {
     font-size: .9rem;
 }
 
-/* ── RESPONSIVE ──────────────────────────────────────────────*/
+/* RESPONSIVE */
 @media (max-width:900px) {
     .main-inner {
         flex-direction: column;

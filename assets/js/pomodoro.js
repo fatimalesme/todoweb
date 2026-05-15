@@ -27,7 +27,7 @@ document.addEventListener('DOMContentLoaded', () => {
     let sesionesCompletadas = 0;
     let tareaIdActual      = null;
 
-    // ── Anillo ────────────────────────────────────────────
+    // Anillo 
     function actualizarAnillo() {
         if (!ring) return;
         const total = modoTrabajo ? TRABAJO : DESCANSO;
@@ -35,7 +35,7 @@ document.addEventListener('DOMContentLoaded', () => {
         ring.style.strokeDashoffset = CIRC * (1 - pct);
     }
 
-    // ── Display ───────────────────────────────────────────
+    //  Display 
     function fmt(seg) {
         return String(Math.floor(seg / 60)).padStart(2, '0') + ':' + String(seg % 60).padStart(2, '0');
     }
@@ -46,7 +46,7 @@ document.addEventListener('DOMContentLoaded', () => {
         actualizarAnillo();
     }
 
-    // ── Puntos de sesión ──────────────────────────────────
+    //  Puntos de sesión 
     function actualizarPuntos() {
         const dots = document.querySelectorAll('.pom-dot');
         dots.forEach((d, i) => {
@@ -55,7 +55,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (contadorSesiones) contadorSesiones.textContent = sesionesCompletadas;
     }
 
-    // ── Error ─────────────────────────────────────────────
+    //  Error 
     function mostrarError(msg) {
         if (!msgError) return;
         msgError.textContent = msg;
@@ -63,7 +63,7 @@ document.addEventListener('DOMContentLoaded', () => {
         setTimeout(() => msgError.classList.remove('visible'), 3000);
     }
 
-    // ── Tiempo acumulado en tarea ─────────────────────────
+    //  Tiempo acumulado en tarea 
     function fmtTotal(seg) {
         const h = Math.floor(seg / 3600);
         const m = Math.floor((seg % 3600) / 60);
@@ -95,7 +95,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    // ── Guardar segundos en BD ────────────────────────────
+    //  Guardar segundos en BD 
     function guardarSegundos(seg) {
         if (!tareaIdActual || seg <= 0) return;
         const csrf = document.getElementById('csrf_token')?.value || '';
@@ -108,7 +108,7 @@ document.addEventListener('DOMContentLoaded', () => {
         .then(() => mostrarTiempoTarea(tareaIdActual));
     }
 
-    // ── Cambio de modo trabajo/descanso ───────────────────
+    //  Cambio de modo trabajo/descanso 
     function cambiarModo() {
         modoTrabajo = !modoTrabajo;
         segundosRestantes = modoTrabajo ? TRABAJO : DESCANSO;
@@ -124,14 +124,14 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    // ── Tick ──────────────────────────────────────────────
+    //  Tick 
     function tick() {
         if (segundosRestantes <= 0) { cambiarModo(); return; }
         segundosRestantes--;
         actualizarDisplay();
     }
 
-    // ── Botones ───────────────────────────────────────────
+    //  Botones 
     if (btnPause) btnPause.disabled = true;
     if (btnStop)  btnStop.disabled  = true;
 

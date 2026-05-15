@@ -7,7 +7,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if (!avisos.length) return;
 
     avisos.forEach((aviso) => {
-        // Añadir botón de cerrar con clase CSS 
+        
         const btnCerrar = document.createElement('button');
         btnCerrar.textContent = '×';
         btnCerrar.title       = 'Cerrar aviso';
