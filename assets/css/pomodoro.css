@@ -508,3 +508,34 @@
     .pom-ring-wrap { width: 180px; height: 180px; }
     .pom-display { font-size: 2.4rem; }
 }
+@media (max-width: 480px) {
+
+  .pom-wrap {
+    padding: 12px;
+    align-items: flex-start;
+    padding-top: 30px;
+  }
+
+  .pom-card {
+    max-width: 100%;
+    gap: 16px;
+  }
+
+  .pom-btns {
+    flex-direction: column;
+    width: 100%;
+  }
+
+  .pom-btn-main,
+  .pom-btn-sec {
+    width: 100%;
+    text-align: center;
+    padding: 12px 0;
+  }
+
+  .pom-links {
+    gap: 20px;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+}

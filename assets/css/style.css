@@ -1533,7 +1533,14 @@ body:has(.app) {
 }
 
 /* RESPONSIVE */
-@media (max-width:900px) {
+/* ============================================================
+   RESPONSIVE FIX — ToDoWeb
+   Añadir al FINAL de style.css, sustituyendo el bloque
+   @media (max-width:768px) que ya tienes (línea ~1555)
+   ============================================================ */
+
+/* --- TABLET (≤ 900px): panel de gamificación en fila --- */
+@media (max-width: 900px) {
     .main-inner {
         flex-direction: column;
     }
@@ -1552,65 +1559,185 @@ body:has(.app) {
     }
 }
 
-@media (max-width:768px) {
+/* --- MÓVIL GRANDE (≤ 768px): sidebar en barra superior --- */
+@media (max-width: 768px) {
+
+    /* Layout principal pasa a columna */
     .app {
         flex-direction: column;
     }
 
+    /* Sidebar: se convierte en barra horizontal compacta arriba */
     .sidebar {
         width: 100%;
         min-width: unset;
-        padding: 20px 16px;
-        flex-direction: row;
-        flex-wrap: wrap;
-        gap: 8px;
-        align-items: center;
+        min-height: unset;
+        padding: 12px 16px;
+        flex-direction: column;   /* columna para que el menú quede ordenado */
+        gap: 6px;
+        border-right: none;
+        border-bottom: 1px solid rgba(192, 132, 252, 0.12);
+        /* Sin posición fija: fluye con el resto */
     }
 
+    /* Título del sidebar más pequeño */
     .sidebar h2 {
-        width: 100%;
-        font-size: 1.1rem;
-        margin-bottom: 8px;
+        font-size: 1rem;
+        margin-bottom: 6px;
     }
 
+    /* Menú de listas: en fila horizontal con scroll si hace falta */
     .list-menu {
         display: flex;
+        flex-direction: row;
         flex-wrap: wrap;
         gap: 4px;
+        padding: 0;
+        margin-bottom: 4px;
     }
 
     .list-menu li {
-        padding: 6px 12px;
+        padding: 5px 10px;
         margin-bottom: 0;
-        font-size: .85rem;
+        font-size: .82rem;
         border-left: none;
+        border-radius: 20px;       /* pastillas en vez de filas */
+        border: 1px solid rgba(192, 132, 252, 0.15);
     }
 
+    .list-menu li.active {
+        border-color: var(--violeta-cl);
+        background: rgba(192, 132, 252, 0.18);
+    }
+
+    /* Links de navegación (Pomodoro, Progreso, Cerrar sesión) en fila */
+    .sidebar-link {
+        padding: 6px 10px;
+        font-size: .85rem;
+        margin-top: 0;
+    }
+
+    /* Ocultar el bloque de "Próximas a vencer" en móvil para no saturar */
+    .sidebar-proximas {
+        display: none;
+    }
+
+    /* Formulario nueva categoría: más compacto */
+    .sidebar-form {
+        margin: 4px 0 0;
+    }
+
+    .sidebar-form input {
+        padding: 8px 12px;
+        font-size: .85rem;
+    }
+
+    /* Área principal: menos padding */
     .main {
-        padding: 24px 16px;
+        padding: 20px 14px;
     }
 
     .main h1,
     .main-header h1 {
-        font-size: 1.6rem;
+        font-size: 1.4rem;
     }
 
+    .main-header {
+        margin-bottom: 16px;
+    }
+
+    /* Formulario de nueva tarea */
     .todo-form {
         padding: 10px 12px;
     }
 
+    /* Fila superior: texto + botón Añadir en columna */
     .form-row-top {
         flex-direction: column;
         gap: 8px;
+        align-items: stretch;
     }
 
     .form-row-top button[name="add"] {
         width: 100%;
-        height: auto;
-        padding: 12px;
+        height: 42px;
+        padding: 0 16px;
     }
 
+    /* Fila inferior: fecha y categoría en columna */
     .form-row-bottom {
         flex-direction: column;
+        gap: 6px;
+    }
+
+    .form-label-group {
+        width: 100%;
+    }
+
+    .form-label-group input[type="datetime-local"],
+    .form-label-group select {
+        width: 100%;
+        flex: 1;
+    }
+}
+
+/* --- MÓVIL PEQUEÑO (≤ 520px): fix botones de tareas --- */
+@media (max-width: 520px) {
+
+    /* Cada tarea: reorganizar para que los botones no se salgan */
+    .todo-item {
+        padding: 12px 12px;
+    }
+
+    /* La fila texto+botones pasa a columna cuando la pantalla es muy pequeña */
+    .todo-view-top {
+        flex-wrap: wrap;          /* permite que los botones bajen a la línea siguiente */
+        gap: 8px;
+    }
+
+    .todo-text {
+        width: 100%;              /* texto ocupa toda la línea */
+        flex-grow: 1;
+    }
+
+    /* Los botones de acción se agrupan en su propia fila */
+    .actions {
+        width: 100%;
+        justify-content: flex-end; /* alineados a la derecha */
+        gap: 6px;
+    }
+
+    /* Botones de icono: ligeramente más grandes para facilitar el toque */
+    .btn-icon {
+        padding: 7px 10px;
+        font-size: 15px;
+    }
+
+    /* Tareas completadas: también en columna */
+    .todo-item--done {
+        flex-direction: column !important;
+        align-items: flex-start !important;
+        gap: 6px;
+    }
+
+    .todo-item--done .actions {
+        margin-left: 0;
+        opacity: 0.5;             /* siempre visibles en móvil, no hace falta hover */
+    }
+
+    /* Panel gamificación: tarjetas en una sola columna */
+    .gami-panel {
+        flex-direction: column;
+    }
+
+    .gami-card {
+        min-width: unset;
+        width: 100%;
+    }
+
+    /* Login: menos padding en pantallas muy pequeñas */
+    .login-container,
+    .login-card {
+        padding: 32px 20px;
     }
 }

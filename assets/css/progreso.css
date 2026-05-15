@@ -137,3 +137,49 @@
     width:100%; max-width:100%;
 }
 .sin-fecha { color:rgba(216,180,254,0.2); }
+@media (max-width: 768px) {
+
+  .prog-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+    padding: 16px 18px;
+  }
+
+  .prog-header-right {
+    width: 100%;
+    min-width: unset;
+  }
+
+  .prog-resumen {
+    grid-template-columns: 1fr 1fr;
+    padding: 12px 18px 0;
+  }
+
+  .prog-mid {
+    grid-template-columns: 1fr;
+    padding: 12px 18px 0;
+  }
+
+  .prog-grafica-canvas {
+    height: 200px;
+  }
+
+  .prog-frase {
+    margin: 12px 18px 0;
+  }
+
+  .prog-historial {
+    padding: 12px 18px 24px;
+  }
+
+  .prog-tabla {
+    font-size: 0.8rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .prog-resumen {
+    grid-template-columns: 1fr;
+  }
+}
